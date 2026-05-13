@@ -715,6 +715,10 @@ function formatMsg(text) {
   return text.replace(/\n/g,'<br>');
 }
 
+// ── PASTE YOUR ANTHROPIC API KEY HERE ──────────────────────────────────────
+const ANTHROPIC_KEY = 'sk-ant-api03-0xJ...GwAA';
+// ───────────────────────────────────────────────────────────────────────────
+
 async function sendMessage() {
   const input = document.getElementById('userInput');
   const text = input.value.trim();
@@ -726,10 +730,17 @@ async function sendMessage() {
   document.getElementById('sendBtn').disabled = true;
   const thinkTime = 1200 + Math.random() * 1000;
   try {
-    const res = await fetch('https://thealdconcierge.aestheticdinnerswithclass.workers.dev/', {
+    const res = await fetch('https://api.anthropic.com/v1/messages', {
       method:'POST',
-      headers:{'Content-Type':'application/json'},
+      headers:{
+        'Content-Type':'application/json',
+        'x-api-key': ANTHROPIC_KEY,
+        'anthropic-version':'2023-06-01',
+        'anthropic-dangerous-direct-browser-access':'true'
+      },
       body:JSON.stringify({
+        model:'claude-opus-4-5',
+        max_tokens:1024,
         system: isRep ? REP_SYSTEM : SYSTEM_PROMPT,
         messages: conversationHistory
       })
