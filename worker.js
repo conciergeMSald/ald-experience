@@ -726,7 +726,7 @@ async function sendMessage() {
   document.getElementById('sendBtn').disabled = true;
   const thinkTime = 1200 + Math.random() * 1000;
   try {
-    const res = await fetch('https://thealdconcierge.aestheticdinnerswithclass.workers.dev/api/chat', {
+    const res = await fetch('https://thealdconcierge.aestheticdinnerswithclass.workers.dev/', {
       method:'POST',
       headers:{'Content-Type':'application/json'},
       body:JSON.stringify({
