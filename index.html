@@ -2,487 +2,2532 @@
 <html lang="en">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
-<title>Aesthetic Leaders Dinner</title>
-<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;1,400&family=Montserrat:wght@200;300;400&display=swap" rel="stylesheet">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>VECTOR — Clarity. Direction. Possibility.</title>
+<meta name="description" content="VECTOR helps ambitious families navigate toward fulfilling futures with clarity, intention, and confidence. The algorithm of success, made visible.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Lora:ital,wght@0,300;0,400;0,500;1,300;1,400;1,500&family=Inter:wght@300;400;500&display=swap" rel="stylesheet">
 <style>
-  :root {
-    --bg:          #000000;
-    --panel:       #0D0D0D;
-    --gold:        #C9A87A;
-    --gold-dim:    rgba(201,168,122,0.35);
-    --cream:       #F5EEE0;
-    --cream-dim:   rgba(245,238,224,0.55);
-    --cream-faint: rgba(245,238,224,0.18);
-    --rule:        rgba(201,168,122,0.15);
-  }
 
-  *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
-  html, body { width: 100%; height: 100%; background: var(--bg); overflow: hidden; touch-action: pan-y; }
+/* ── TOKENS (inlined from vector-tokens.css) ── */
+:root {
+  --bg-primary:    #F4F1EC;
+  --bg-secondary:  #EDE9E2;
+  --bg-tertiary:   #E7DFD2;
+  --bg-dark:       #2C2C2C;
+  --bg-deep:       #0E1B2A;
+  --bg-white:      #FDFCFA;
+  --ink-primary:   #2C2C2C;
+  --ink-secondary: #5A5248;
+  --ink-tertiary:  #8A8278;
+  --ink-ghost:     #B0A89E;
+  --ink-inverse:   #F4F1EC;
+  --ink-inverse-dim:#C8BFB4;
+  --accent:        #C8A97A;
+  --accent-deep:   #A8854A;
+  --accent-pale:   #EDE3D4;
+  --accent-muted:  #D4BF9E;
+  --stone:         #CBBEAA;
+  --stone-light:   #DDD5C8;
+  --positive:      #4A6741;
+  --caution:       #8B6B3A;
+  --rule:          rgba(44,44,44,0.08);
+  --rule-accent:   rgba(200,169,122,0.25);
+  --rule-strong:   rgba(44,44,44,0.16);
+  --serif:         'Lora', Georgia, serif;
+  --sans:          'Inter', system-ui, sans-serif;
+  --text-xs:  11px; --text-sm: 13px; --text-base: 15px;
+  --text-md:  18px; --text-lg: 22px; --text-xl:  28px;
+  --text-2xl: 36px; --text-3xl: 48px; --text-4xl: 64px;
+  --text-hero: clamp(44px,6vw,80px);
+  --leading-tight: 1.2; --leading-normal: 1.6;
+  --leading-loose: 2.0; --leading-editorial: 2.3;
+  --tracking-tight: -0.02em; --tracking-wide: 0.06em;
+  --tracking-wider: 0.12em; --tracking-widest: 0.2em;
+  --weight-light: 300; --weight-regular: 400; --weight-medium: 500;
+  --space-1:4px; --space-2:8px; --space-3:12px; --space-4:16px;
+  --space-5:24px; --space-6:32px; --space-7:48px; --space-8:64px;
+  --space-9:96px; --space-10:128px;
+  --section-pad: clamp(96px,11vw,160px);
+  --section-pad-sm: clamp(64px,7vw,100px);
+  --container: 880px; --container-wide: 1100px;
+  --dur-fast: 240ms; --dur-base: 400ms;
+  --dur-slow: 700ms; --dur-cinematic: 1100ms;
+  --ease-soft: cubic-bezier(0.25,0.1,0.25,1);
+  --ease-out:  cubic-bezier(0,0,0.2,1);
+  --border-thin: 0.5px; --border-base: 1px;
+}
 
-  /* grain */
-  body::before {
-    content: ''; position: fixed; inset: 0;
-    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='300' height='300'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.72' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='300' height='300' filter='url(%23n)' opacity='0.025'/%3E%3C/svg%3E");
-    background-size: 300px 300px; pointer-events: none; z-index: 0;
-  }
-  /* vignette */
-  body::after {
-    content: ''; position: fixed; inset: 0;
-    background: radial-gradient(ellipse 65% 65% at 50% 48%, transparent 20%, rgba(0,0,0,0.65) 100%);
-    pointer-events: none; z-index: 0;
-  }
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0;}
+html{scroll-behavior:smooth;-webkit-font-smoothing:antialiased;}
+body{
+  background:var(--bg-primary);color:var(--ink-primary);
+  font-family:var(--sans);font-size:var(--text-base);
+  font-weight:var(--weight-light);line-height:var(--leading-loose);
+  overflow-x:hidden;
+}
 
-  /* ═══════════════════════════════
-     CORNER BRACKETS — fade in at end
-  ═══════════════════════════════ */
-  .brackets {
-    position: fixed; inset: 0; z-index: 2;
-    pointer-events: none; opacity: 0;
-    transition: opacity 3s ease;
-  }
-  .brackets.visible { opacity: 1; }
-  .brackets img {
-    position: absolute; inset: 0;
-    width: 100%; height: 100%;
-    object-fit: fill; mix-blend-mode: screen;
-  }
+/* ── LAYOUT ── */
+.container{max-width:var(--container);margin:0 auto;padding:0 var(--space-6);}
+.container-wide{max-width:var(--container-wide);margin:0 auto;padding:0 var(--space-6);}
+.section{padding:var(--section-pad) 0;}
+.section-sm{padding:var(--section-pad-sm) 0;}
+.section-alt{background:var(--bg-secondary);}
+.section-dark{background:var(--bg-dark);}
 
-  /* ═══════════════════════════════
-     STAGE — horizontal slide container
-  ═══════════════════════════════ */
-  .stage {
-    position: fixed; inset: 0;
-    display: flex; flex-direction: column;
-    align-items: center; justify-content: center;
-    z-index: 1;
-    transition: filter 1s ease, opacity 1s ease;
-  }
-  .stage.blurred { filter: blur(12px); opacity: 0.12; pointer-events: none; }
+/* ── REVEAL ── */
+.v-rise{
+  opacity:0;transform:translateY(14px);
+  transition:opacity var(--dur-slow) var(--ease-soft),
+             transform var(--dur-slow) var(--ease-soft);
+}
+.v-rise.visible{opacity:1;transform:translateY(0);}
+.v-rise:nth-child(2){transition-delay:80ms;}
+.v-rise:nth-child(3){transition-delay:160ms;}
+.v-rise:nth-child(4){transition-delay:240ms;}
+.v-rise:nth-child(5){transition-delay:320ms;}
 
-  /* ═══════════════════════════════
-     SEAL — state 1, fades in on load
-  ═══════════════════════════════ */
-  .seal-wrap {
-    opacity: 0; transform: scale(0.88);
-    animation: sealin 4s cubic-bezier(0.16, 1, 0.3, 1) 1.5s forwards;
-  }
-  .seal-wrap img {
-    width: clamp(170px, 52vw, 250px);
-    height: auto; display: block; mix-blend-mode: screen;
-  }
+/* ── TYPE ── */
+.t-eyebrow{
+  font-family:var(--sans);font-size:var(--text-xs);
+  font-weight:var(--weight-regular);
+  letter-spacing:var(--tracking-widest);
+  text-transform:uppercase;color:var(--accent);
+}
+.t-hero{
+  font-family:var(--serif);font-size:var(--text-hero);
+  font-weight:var(--weight-light);line-height:var(--leading-tight);
+  letter-spacing:var(--tracking-tight);color:var(--ink-primary);
+}
+.t-hero em{font-style:italic;color:var(--ink-secondary);}
+.t-headline{
+  font-family:var(--serif);font-size:clamp(28px,4vw,48px);
+  font-weight:var(--weight-light);line-height:var(--leading-tight);
+  color:var(--ink-primary);
+}
+.t-headline em{font-style:italic;}
+.t-subhead{
+  font-family:var(--serif);font-size:var(--text-xl);
+  font-weight:var(--weight-light);line-height:var(--leading-normal);
+  color:var(--ink-primary);
+}
+.t-body{
+  font-family:var(--sans);font-size:var(--text-base);
+  font-weight:var(--weight-light);line-height:var(--leading-loose);
+  color:var(--ink-secondary);
+}
+.t-caption{
+  font-family:var(--sans);font-size:var(--text-xs);
+  letter-spacing:var(--tracking-wide);color:var(--ink-tertiary);
+}
+.t-quote{
+  font-family:var(--serif);font-style:italic;
+  font-weight:var(--weight-light);line-height:var(--leading-editorial);
+  color:var(--ink-secondary);
+}
+.t-data{
+  font-family:var(--sans);font-size:var(--text-sm);
+  font-weight:var(--weight-regular);letter-spacing:var(--tracking-wide);
+  color:var(--ink-secondary);
+}
 
-  /* ═══════════════════════════════
-     DIAMOND ROW — state 2
-     Hidden off-screen right, slides in on first swipe
-  ═══════════════════════════════ */
-  .diamond-row {
-    margin-top: 40px;
-    display: flex; align-items: center; gap: 20px;
-    opacity: 0;
-    transform: translateX(60px);
-    transition: opacity 1.8s ease, transform 1.8s cubic-bezier(0.16, 1, 0.3, 1);
-  }
-  .diamond-row.revealed { opacity: 1; transform: translateX(0); }
-  .diamond-row img {
-    width: clamp(9px, 2.5vw, 13px);
-    height: auto; display: block; flex-shrink: 0; mix-blend-mode: screen;
-  }
-  .hairline { width: clamp(40px, 12vw, 80px); height: 1px; flex-shrink: 0; }
-  .hairline.left  { background: linear-gradient(90deg, transparent, var(--gold)); }
-  .hairline.right { background: linear-gradient(90deg, var(--gold), transparent); }
+/* ── NAV ── */
+nav{
+  padding:var(--space-5) var(--space-6);
+  display:flex;align-items:center;justify-content:space-between;
+  border-bottom:var(--border-thin) solid var(--rule);
+  position:sticky;top:0;
+  background:rgba(244,241,236,0.96);
+  backdrop-filter:blur(16px);-webkit-backdrop-filter:blur(16px);
+  z-index:200;
+}
+.wordmark{
+  font-family:var(--serif);font-size:18px;
+  font-weight:var(--weight-light);
+  letter-spacing:var(--tracking-widest);
+  color:var(--ink-primary);text-decoration:none;
+}
+.nav-tagline{
+  font-family:var(--sans);font-size:var(--text-xs);
+  letter-spacing:var(--tracking-widest);
+  text-transform:uppercase;color:var(--ink-tertiary);
+}
+.nav-links{display:flex;align-items:center;gap:var(--space-6);}
+.nav-link{
+  font-family:var(--sans);font-size:var(--text-xs);
+  letter-spacing:var(--tracking-wide);text-transform:uppercase;
+  color:var(--ink-tertiary);text-decoration:none;
+  transition:color var(--dur-base) var(--ease-soft);
+}
+.nav-link:hover{color:var(--ink-primary);}
+.nav-cta{
+  padding:10px 24px;background:var(--ink-primary);
+  color:var(--bg-primary);border:none;
+  font-family:var(--sans);font-size:var(--text-xs);
+  font-weight:var(--weight-regular);
+  letter-spacing:var(--tracking-widest);text-transform:uppercase;
+  cursor:pointer;text-decoration:none;
+  transition:background var(--dur-base) var(--ease-soft);
+}
+.nav-cta:hover{background:var(--accent);}
 
-  /* ═══════════════════════════════
-     BYLINE — state 3
-     Hidden, fades in on second swipe, holds, then dissolves
-  ═══════════════════════════════ */
-  .byline {
-    margin-top: 32px;
-    font-family: 'Playfair Display', serif;
-    font-style: italic; font-weight: 400;
-    font-size: clamp(13px, 3.8vw, 20px);
-    letter-spacing: 0.25em;
-    color: #F5EEE0;
-    opacity: 0;
-    transition: none;
-  }
-  .byline.fading {
-    animation: bylineplay 9s ease forwards;
-  }
+/* ── RULE ── */
+.v-rule{width:28px;height:1px;background:var(--accent);margin:var(--space-5) 0;}
+.v-rule-full{width:100%;height:var(--border-thin);background:var(--rule);}
 
-  /* ═══════════════════════════════
-     EDGE HINT — pulses at right edge after seal settles
-     Disappears after first swipe
-  ═══════════════════════════════ */
-  .edge-hint {
-    position: fixed; right: 0; top: 50%;
-    transform: translateY(-50%);
-    width: 2px; height: 60px;
-    background: linear-gradient(180deg, transparent, var(--gold), transparent);
-    opacity: 0; z-index: 4;
-    animation: hintpulse 2s ease-in-out 6s infinite;
-    transition: opacity 0.5s ease;
-  }
-  .edge-hint.hidden { opacity: 0 !important; animation: none; }
+/* ── BUTTONS ── */
+.btn{
+  display:inline-flex;align-items:center;gap:var(--space-3);
+  padding:15px 36px;background:var(--ink-primary);
+  color:var(--bg-primary);border:none;
+  font-family:var(--sans);font-size:var(--text-xs);
+  font-weight:var(--weight-regular);
+  letter-spacing:var(--tracking-widest);text-transform:uppercase;
+  cursor:pointer;text-decoration:none;
+  transition:background var(--dur-base) var(--ease-soft),
+             color var(--dur-base) var(--ease-soft);
+}
+.btn:hover{background:var(--accent);color:var(--bg-white);}
+.btn-ghost{
+  display:inline-flex;align-items:center;gap:var(--space-3);
+  padding:13px 28px;background:transparent;
+  color:var(--ink-secondary);
+  border:var(--border-thin) solid var(--rule-strong);
+  font-family:var(--sans);font-size:var(--text-xs);
+  letter-spacing:var(--tracking-widest);text-transform:uppercase;
+  cursor:pointer;text-decoration:none;
+  transition:border-color var(--dur-base) var(--ease-soft),
+             color var(--dur-base) var(--ease-soft);
+}
+.btn-ghost:hover{border-color:var(--accent);color:var(--accent);}
 
-  /* ═══════════════════════════════
-     ENQUIRE — rises in after byline dissolves
-  ═══════════════════════════════ */
-  .enquire-btn {
-    position: fixed; bottom: 48px; left: 50%;
-    transform: translateX(-50%);
-    background: none; border: none; cursor: pointer;
-    display: flex; flex-direction: column;
-    align-items: center; gap: 12px;
-    z-index: 3; opacity: 0;
-    transition: opacity 3s ease;
-  }
-  .enquire-btn.visible { opacity: 1; }
-  .enquire-btn:hover .eq-label { color: rgba(245,238,224,0.8); }
-  .enquire-btn:hover .eq-line  { background: var(--gold); }
-  .eq-label {
-    font-family: 'Montserrat', sans-serif; font-weight: 300;
-    font-size: 9px; letter-spacing: 0.55em; text-transform: uppercase;
-    color: rgba(245,238,224,0.55); text-indent: 0.55em; transition: color 0.3s;
-  }
-  .eq-line {
-    width: 1px; height: 32px;
-    background: rgba(201,168,122,0.65); transition: background 0.3s;
-  }
+/* ── HERO ── */
+.hero{
+  padding:clamp(100px,12vw,160px) 0 clamp(80px,10vw,128px);
+  border-bottom:var(--border-thin) solid var(--rule);
+  text-align:center;
+}
+.hero-inner{
+  max-width:720px;
+  margin:0 auto;
+}
+.hero-subtext{
+  font-family:var(--sans);font-size:var(--text-md);
+  font-weight:var(--weight-light);line-height:var(--leading-loose);
+  color:var(--ink-secondary);max-width:560px;
+  margin:0 auto var(--space-8);
+}
+.hero-cta-row{
+  display:flex;align-items:center;justify-content:center;
+  gap:var(--space-5);flex-wrap:wrap;
+}
+.hero-note{
+  font-family:var(--sans);font-size:var(--text-xs);
+  letter-spacing:var(--tracking-wide);color:var(--ink-ghost);
+}
 
-  /* ═══════════════════════════════
-     DRAWER
-  ═══════════════════════════════ */
-  .drawer {
-    position: fixed; inset: 0; z-index: 20;
-    display: flex; align-items: flex-end; justify-content: center;
-    pointer-events: none; opacity: 0;
-    transition: opacity 0.5s ease;
-  }
-  .drawer.open { pointer-events: all; opacity: 1; }
-  .drawer-backdrop {
-    position: absolute; inset: 0;
-    background: rgba(0,0,0,0.7); backdrop-filter: blur(3px);
-  }
-  .drawer-panel {
-    position: relative; width: 100%; max-width: 520px;
-    background: var(--panel); border-top: 1px solid var(--rule);
-    padding: 48px 32px 56px;
-    transform: translateY(100%);
-    transition: transform 0.65s cubic-bezier(0.16, 1, 0.3, 1);
-  }
-  .drawer.open .drawer-panel { transform: translateY(0); }
-  .drawer-panel::before, .drawer-panel::after {
-    content: ''; position: absolute;
-    width: 20px; height: 20px;
-    border-color: var(--rule); border-style: solid;
-  }
-  .drawer-panel::before { top: 16px; left: 16px;  border-width: 1px 0 0 1px; }
-  .drawer-panel::after  { top: 16px; right: 16px; border-width: 1px 1px 0 0; }
-  .drawer-close {
-    position: absolute; top: 20px; right: 20px;
-    background: none; border: none; cursor: pointer;
-    color: var(--cream-faint);
-    font-family: 'Montserrat', sans-serif;
-    font-size: 8px; letter-spacing: 0.35em; text-transform: uppercase;
-    padding: 6px 8px; transition: color 0.25s;
-  }
-  .drawer-close:hover { color: var(--cream-dim); }
-  .drawer-eyebrow { display: flex; align-items: center; gap: 14px; margin-bottom: 36px; }
-  .drawer-diamond { width: 7px; height: auto; flex-shrink: 0; mix-blend-mode: screen; }
-  .drawer-label {
-    font-family: 'Montserrat', sans-serif; font-weight: 200;
-    font-size: 8px; letter-spacing: 0.5em; text-transform: uppercase;
-    color: var(--gold); text-indent: 0.5em;
-  }
-  .chat-log {
-    min-height: 72px; max-height: 220px;
-    overflow-y: auto; margin-bottom: 28px;
-    display: flex; flex-direction: column; gap: 18px;
-    scrollbar-width: none;
-  }
-  .chat-log::-webkit-scrollbar { display: none; }
-  .msg { display: flex; gap: 10px; align-items: flex-start; }
-  .msg.user { flex-direction: row-reverse; }
-  .msg-dot {
-    width: 4px; height: 4px; border-radius: 50%;
-    margin-top: 9px; flex-shrink: 0;
-  }
-  .msg.agent .msg-dot { background: var(--gold); }
-  .msg.user  .msg-dot { background: var(--cream-faint); }
-  .msg-bubble {
-    max-width: 82%;
-    font-family: 'Playfair Display', serif;
-    font-style: italic; font-size: 14px;
-    line-height: 1.8; color: var(--cream-dim);
-  }
-  .msg.user .msg-bubble {
-    font-family: 'Montserrat', sans-serif;
-    font-style: normal; font-size: 11px;
-    font-weight: 300; letter-spacing: 0.06em;
-    color: var(--cream); text-align: right;
-  }
-  .typing { display: flex; gap: 5px; align-items: center; padding: 4px 0; }
-  .typing span {
-    width: 3px; height: 3px; border-radius: 50%;
-    background: var(--gold-dim);
-    animation: blink 1.4s ease-in-out infinite;
-  }
-  .typing span:nth-child(2) { animation-delay: 0.24s; }
-  .typing span:nth-child(3) { animation-delay: 0.48s; }
-  .chat-input-row { display: flex; border-bottom: 1px solid var(--rule); align-items: center; }
-  .chat-input {
-    flex: 1; background: none; border: none; outline: none;
-    color: var(--cream);
-    font-family: 'Montserrat', sans-serif;
-    font-size: 11px; font-weight: 300; letter-spacing: 0.1em;
-    padding: 14px 0; caret-color: var(--gold);
-  }
-  .chat-input::placeholder { color: var(--cream-faint); }
-  .chat-send {
-    background: none; border: none; cursor: pointer;
-    color: var(--gold-dim);
-    font-family: 'Montserrat', sans-serif;
-    font-size: 8px; letter-spacing: 0.35em; text-transform: uppercase;
-    padding: 14px 0 14px 18px; transition: color 0.2s;
-  }
-  .chat-send:hover { color: var(--gold); }
+/* ── DEMO CARD ── */
+.demo-card{
+  background:var(--bg-white);
+  border:var(--border-thin) solid var(--rule);
+  padding:var(--space-6);
+}
+.demo-label{
+  font-family:var(--sans);font-size:var(--text-xs);
+  letter-spacing:var(--tracking-widest);text-transform:uppercase;
+  color:var(--accent);margin-bottom:var(--space-5);
+}
+.demo-careers{display:flex;flex-wrap:wrap;gap:6px;margin-bottom:var(--space-5);}
+.demo-career{
+  padding:6px 12px;
+  border:var(--border-thin) solid var(--rule);
+  font-family:var(--sans);font-size:var(--text-xs);
+  letter-spacing:var(--tracking-wide);text-transform:uppercase;
+  color:var(--ink-tertiary);cursor:pointer;background:transparent;
+  transition:all var(--dur-fast) var(--ease-soft);
+}
+.demo-career:hover,.demo-career.active{
+  border-color:var(--accent);color:var(--accent);
+  background:var(--accent-pale);
+}
+.demo-age-label{
+  font-family:var(--sans);font-size:var(--text-xs);
+  letter-spacing:var(--tracking-widest);text-transform:uppercase;
+  color:var(--ink-tertiary);margin-bottom:var(--space-2);
+}
+.demo-age-num{
+  font-family:var(--serif);font-size:var(--text-2xl);
+  font-weight:var(--weight-light);color:var(--ink-primary);
+  line-height:1;margin-bottom:var(--space-3);
+}
+input[type=range]{width:100%;accent-color:var(--accent);margin-bottom:var(--space-5);}
+.demo-score-row{
+  background:var(--bg-dark);
+  padding:var(--space-5) var(--space-5);
+  display:flex;align-items:center;justify-content:space-between;
+  margin-bottom:var(--space-4);
+}
+.demo-score-num{
+  font-family:var(--serif);font-size:var(--text-3xl);
+  font-weight:var(--weight-light);color:var(--ink-inverse);
+  line-height:1;
+  transition:all var(--dur-slow) var(--ease-soft);
+}
+.demo-score-meta{text-align:right;}
+.demo-score-label{
+  font-family:var(--sans);font-size:var(--text-xs);
+  letter-spacing:var(--tracking-widest);text-transform:uppercase;
+  color:var(--accent-muted);
+}
+.demo-score-sub{
+  font-family:var(--sans);font-size:var(--text-xs);
+  color:rgba(244,241,236,0.35);margin-top:3px;
+  letter-spacing:var(--tracking-wide);
+}
+.demo-link{
+  display:block;text-align:center;
+  font-family:var(--sans);font-size:var(--text-xs);
+  letter-spacing:var(--tracking-widest);text-transform:uppercase;
+  color:var(--ink-tertiary);text-decoration:none;
+  padding:var(--space-3) 0;
+  border-top:var(--border-thin) solid var(--rule);
+  transition:color var(--dur-base) var(--ease-soft);
+}
+.demo-link:hover{color:var(--accent);}
 
-  /* ═══════════════════════════════
-     KEYFRAMES
-  ═══════════════════════════════ */
-  @keyframes sealin {
-    from { opacity: 0; transform: scale(0.88); }
-    to   { opacity: 1; transform: scale(1); }
+/* ── STATEMENT BAND ── */
+.statement-band{
+  padding:clamp(80px,10vw,140px) 0;
+  border-top:var(--border-thin) solid var(--rule);
+  border-bottom:var(--border-thin) solid var(--rule);
+  background:var(--bg-secondary);
+}
+.statement-num{
+  font-family:var(--serif);font-size:clamp(80px,14vw,160px);
+  font-weight:var(--weight-light);color:var(--ink-primary);
+  line-height:1;letter-spacing:var(--tracking-tight);
+  opacity:0.12;
+}
+.statement-grid{display:grid;grid-template-columns:1fr 1fr;gap:var(--space-9);align-items:center;}
+.statement-text{
+  font-family:var(--serif);font-size:clamp(20px,2.5vw,30px);
+  font-weight:var(--weight-light);line-height:var(--leading-normal);
+  color:var(--ink-secondary);font-style:italic;
+}
+
+/* ── TRUTH SECTION ── */
+.truth-grid{display:grid;grid-template-columns:1fr 1fr;gap:var(--space-9);align-items:start;}
+.truth-body{max-width:440px;}
+.truth-body p{
+  font-family:var(--sans);font-size:var(--text-base);
+  font-weight:var(--weight-light);line-height:var(--leading-loose);
+  color:var(--ink-secondary);margin-bottom:var(--space-7);
+}
+.truth-body p strong{color:var(--ink-primary);font-weight:var(--weight-regular);}
+.truth-facts{}
+.truth-fact{
+  padding:var(--space-5) 0;
+  border-bottom:var(--border-thin) solid var(--rule);
+  display:flex;gap:var(--space-5);align-items:flex-start;
+}
+.truth-fact:first-child{border-top:var(--border-thin) solid var(--rule);}
+.truth-idx{
+  font-family:var(--sans);font-size:var(--text-xs);
+  letter-spacing:var(--tracking-wider);color:var(--accent);
+  min-width:20px;padding-top:3px;
+}
+.truth-item{
+  font-family:var(--serif);font-size:var(--text-md);
+  font-weight:var(--weight-light);color:var(--ink-primary);
+  line-height:var(--leading-normal);
+}
+.truth-item em{font-style:italic;color:var(--ink-secondary);}
+
+/* ── DARK BAND ── */
+.dark-band{background:var(--bg-dark);padding:var(--section-pad) 0;}
+.dark-band .t-eyebrow{color:var(--accent-muted);}
+.dark-band .t-headline{color:var(--ink-inverse);}
+.dark-band .t-headline em{color:var(--accent-muted);font-style:italic;}
+.dark-band .t-body{color:var(--ink-inverse-dim);}
+
+/* ── PROBLEM CARDS ── */
+.problem-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:1px;background:var(--rule);}
+.problem-card{
+  background:rgba(253,252,250,0.04);
+  padding:var(--space-6) var(--space-5);
+}
+.problem-card-idx{
+  font-family:var(--sans);font-size:var(--text-xs);
+  letter-spacing:var(--tracking-widest);
+  color:var(--accent-muted);text-transform:uppercase;
+  margin-bottom:var(--space-5);
+}
+.problem-card-title{
+  font-family:var(--serif);font-size:var(--text-lg);
+  font-weight:var(--weight-light);color:var(--ink-inverse);
+  line-height:var(--leading-normal);margin-bottom:var(--space-4);
+}
+.problem-card-body{
+  font-family:var(--sans);font-size:var(--text-sm);
+  font-weight:var(--weight-light);line-height:var(--leading-loose);
+  color:rgba(244,241,236,0.40);
+}
+
+/* ── VARIABLES ── */
+.var-intro-grid{display:grid;grid-template-columns:1fr 1fr;gap:var(--space-9);align-items:end;margin-bottom:var(--space-7);}
+.var-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:1px;background:var(--rule);}
+.var-item{
+  background:var(--bg-primary);padding:var(--space-5) var(--space-5);
+  transition:background var(--dur-base) var(--ease-soft);
+}
+.var-item:hover{background:var(--accent-pale);}
+.var-letter{
+  font-family:var(--serif);font-size:var(--text-3xl);
+  font-weight:var(--weight-light);color:var(--accent);
+  line-height:1;margin-bottom:var(--space-3);opacity:0.3;
+}
+.var-name{
+  font-family:var(--serif);font-size:var(--text-md);
+  font-weight:var(--weight-light);color:var(--ink-primary);
+  margin-bottom:var(--space-2);
+}
+.var-desc{
+  font-family:var(--sans);font-size:var(--text-xs);
+  color:var(--ink-tertiary);line-height:var(--leading-normal);
+}
+
+/* ── STORY ── */
+.story-grid{display:grid;grid-template-columns:1fr 1fr;gap:var(--space-9);align-items:center;}
+.story-pull{
+  border-left:1px solid var(--accent-muted);
+  padding-left:var(--space-6);margin-bottom:var(--space-5);
+}
+.story-pull-attr{
+  font-family:var(--sans);font-size:var(--text-xs);
+  letter-spacing:var(--tracking-widest);text-transform:uppercase;
+  color:var(--accent-muted);padding-left:var(--space-6);
+}
+
+/* ── WHO ── */
+.who-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:1px;background:var(--rule);}
+.who-card{background:var(--bg-primary);padding:var(--space-6) var(--space-5);}
+.who-who{
+  font-family:var(--sans);font-size:var(--text-xs);
+  letter-spacing:var(--tracking-widest);text-transform:uppercase;
+  color:var(--accent);margin-bottom:var(--space-4);
+}
+.who-what{
+  font-family:var(--serif);font-size:var(--text-md);
+  font-weight:var(--weight-light);color:var(--ink-primary);
+  line-height:var(--leading-normal);font-style:italic;
+}
+
+/* ── MODES ── */
+.modes-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:var(--space-5);}
+.mode-card{
+  background:var(--bg-white);
+  border:var(--border-thin) solid var(--rule);
+  padding:var(--space-6);position:relative;overflow:hidden;
+}
+.mode-card::before{
+  content:'';position:absolute;top:0;left:0;right:0;height:1px;
+}
+.mode-card.youth::before{background:var(--accent);}
+.mode-card.prime::before{background:var(--accent-deep);}
+.mode-card.pivot::before{background:#7A5C32;}
+.mode-age{
+  font-family:var(--sans);font-size:var(--text-xs);
+  letter-spacing:var(--tracking-widest);text-transform:uppercase;
+  margin-bottom:var(--space-5);
+}
+.mode-card.youth .mode-age{color:var(--accent);}
+.mode-card.prime .mode-age{color:var(--accent-deep);}
+.mode-card.pivot .mode-age{color:#7A5C32;}
+.mode-name{
+  font-family:var(--serif);font-size:var(--text-xl);
+  font-weight:var(--weight-light);color:var(--ink-primary);
+  margin-bottom:var(--space-3);
+}
+.mode-tagline{
+  font-family:var(--serif);font-style:italic;
+  font-size:var(--text-sm);color:var(--ink-tertiary);
+  line-height:var(--leading-normal);margin-bottom:var(--space-5);
+}
+.mode-body{
+  font-family:var(--sans);font-size:var(--text-xs);
+  color:var(--ink-tertiary);line-height:var(--leading-loose);
+}
+
+/* ── FEATURES ── */
+.feature-row{
+  display:grid;grid-template-columns:72px 1fr 1fr;
+  gap:var(--space-6);align-items:start;
+  padding:var(--space-6) 0;
+  border-bottom:var(--border-thin) solid var(--rule);
+}
+.feature-row:first-child{border-top:var(--border-thin) solid var(--rule);}
+.feature-idx{
+  font-family:var(--sans);font-size:var(--text-xs);
+  letter-spacing:var(--tracking-widest);
+  color:var(--accent);padding-top:3px;
+}
+.feature-badge{
+  display:inline-block;
+  font-family:var(--sans);font-size:9px;
+  letter-spacing:var(--tracking-wide);text-transform:uppercase;
+  padding:3px 8px;margin-bottom:var(--space-3);
+}
+.badge-free{background:rgba(74,103,65,0.08);color:var(--positive);}
+.badge-paid{background:rgba(200,169,122,0.12);color:var(--accent-deep);}
+.feature-name{
+  font-family:var(--serif);font-size:var(--text-lg);
+  font-weight:var(--weight-light);color:var(--ink-primary);
+}
+.feature-desc{
+  font-family:var(--sans);font-size:var(--text-sm);
+  color:var(--ink-secondary);line-height:var(--leading-loose);
+}
+
+/* ── CENTRE LINE ── */
+.centre-line{
+  padding:var(--section-pad) 0;
+  text-align:center;
+  border-bottom:var(--border-thin) solid var(--rule);
+}
+.centre-line .t-headline{max-width:700px;margin:0 auto var(--space-5);}
+.centre-line .t-body{max-width:520px;margin:0 auto var(--space-7);}
+
+/* ── PRICING ── */
+.pricing-grid{display:grid;grid-template-columns:1fr 1fr;gap:1px;background:var(--rule);}
+.price-card{background:var(--bg-white);padding:var(--space-7) var(--space-6);}
+.price-card.featured{background:var(--bg-dark);}
+.price-tier{
+  font-family:var(--sans);font-size:var(--text-xs);
+  letter-spacing:var(--tracking-widest);text-transform:uppercase;
+  color:var(--accent);margin-bottom:var(--space-6);
+}
+.price-card.featured .price-tier{color:var(--accent-muted);}
+.price-amount{
+  font-family:var(--serif);font-size:var(--text-4xl);
+  font-weight:var(--weight-light);color:var(--ink-primary);
+  line-height:1;margin-bottom:var(--space-2);
+}
+.price-card.featured .price-amount{color:var(--ink-inverse);}
+.price-period{
+  font-family:var(--sans);font-size:var(--text-xs);
+  letter-spacing:var(--tracking-wide);
+  color:var(--ink-tertiary);margin-bottom:var(--space-6);
+}
+.price-card.featured .price-period{color:rgba(244,241,236,0.35);}
+.price-divider{height:var(--border-thin);background:var(--rule);margin-bottom:var(--space-6);}
+.price-card.featured .price-divider{background:rgba(255,255,255,0.08);}
+.price-list{list-style:none;margin-bottom:var(--space-6);}
+.price-list li{
+  font-family:var(--sans);font-size:var(--text-sm);
+  font-weight:var(--weight-light);color:var(--ink-secondary);
+  padding:var(--space-3) 0;
+  border-bottom:var(--border-thin) solid var(--rule);
+  display:flex;align-items:center;gap:var(--space-3);
+}
+.price-card.featured .price-list li{
+  color:var(--ink-inverse-dim);
+  border-bottom-color:rgba(255,255,255,0.06);
+}
+.price-list li::before{
+  content:'';width:3px;height:3px;
+  background:var(--accent);border-radius:50%;flex-shrink:0;
+}
+.price-list li.dim{color:var(--ink-ghost);}
+.price-list li.dim::before{background:var(--rule);}
+.price-cta{
+  display:block;width:100%;padding:14px;
+  background:transparent;
+  border:var(--border-thin) solid var(--rule-accent);
+  font-family:var(--sans);font-size:var(--text-xs);
+  letter-spacing:var(--tracking-widest);text-transform:uppercase;
+  color:var(--accent);cursor:pointer;text-align:center;
+  text-decoration:none;
+  transition:all var(--dur-base) var(--ease-soft);
+}
+.price-cta:hover{background:var(--accent-pale);}
+.price-cta.featured-cta{
+  background:var(--accent);border-color:var(--accent);
+  color:var(--bg-white);
+}
+.price-cta.featured-cta:hover{background:var(--accent-deep);border-color:var(--accent-deep);}
+.pricing-note{
+  font-family:var(--serif);font-style:italic;
+  font-size:var(--text-md);font-weight:var(--weight-light);
+  color:var(--ink-secondary);line-height:var(--leading-editorial);
+  max-width:640px;margin:var(--space-7) auto 0;text-align:center;
+}
+
+/* ── EMAIL ── */
+.email-section{background:var(--bg-dark);padding:var(--section-pad) 0;text-align:center;}
+.email-section .t-headline{color:var(--ink-inverse);}
+.email-section .t-body{color:var(--ink-inverse-dim);max-width:440px;margin:var(--space-4) auto var(--space-7);}
+.email-row{display:flex;max-width:440px;margin:0 auto;}
+.email-inp{
+  flex:1;
+  border:var(--border-thin) solid rgba(255,255,255,0.12);
+  border-right:none;
+  padding:13px var(--space-5);
+  background:rgba(255,255,255,0.05);
+  font-family:var(--sans);font-size:var(--text-base);
+  color:var(--ink-inverse);outline:none;
+  transition:border-color var(--dur-base) var(--ease-soft);
+}
+.email-inp::placeholder{color:rgba(244,241,236,0.25);}
+.email-inp:focus{border-color:var(--accent-muted);}
+.email-btn{
+  padding:13px var(--space-5);
+  background:var(--accent);border:none;
+  font-family:var(--sans);font-size:var(--text-xs);
+  letter-spacing:var(--tracking-widest);text-transform:uppercase;
+  color:var(--bg-white);cursor:pointer;
+  transition:background var(--dur-base) var(--ease-soft);
+  white-space:nowrap;
+}
+.email-btn:hover{background:var(--accent-deep);}
+.email-note{
+  font-family:var(--sans);font-size:var(--text-xs);
+  letter-spacing:var(--tracking-wide);
+  color:rgba(244,241,236,0.2);margin-top:var(--space-4);
+}
+#emailSuccess{
+  display:none;
+  font-family:var(--serif);font-style:italic;
+  font-size:var(--text-lg);color:var(--accent-muted);
+}
+
+/* ── FOOTER ── */
+footer{
+  padding:var(--space-7) var(--space-6);
+  border-top:var(--border-thin) solid var(--rule);
+}
+.footer-inner{
+  max-width:var(--container);margin:0 auto;
+  display:flex;align-items:center;justify-content:space-between;
+}
+.footer-mark{
+  font-family:var(--serif);font-size:16px;
+  font-weight:var(--weight-light);
+  letter-spacing:var(--tracking-widest);color:var(--ink-primary);
+}
+.footer-sub{
+  font-family:var(--sans);font-size:var(--text-xs);
+  letter-spacing:var(--tracking-wide);
+  color:var(--ink-ghost);margin-top:3px;
+}
+.footer-links{display:flex;gap:var(--space-6);}
+.footer-link{
+  font-family:var(--sans);font-size:var(--text-xs);
+  letter-spacing:var(--tracking-wide);text-transform:uppercase;
+  color:var(--ink-tertiary);text-decoration:none;
+  transition:color var(--dur-base) var(--ease-soft);
+}
+.footer-link:hover{color:var(--accent);}
+.footer-copy{
+  font-family:var(--sans);font-size:var(--text-xs);
+  color:var(--ink-ghost);letter-spacing:var(--tracking-wide);
+}
+
+/* ── RESPONSIVE ── */
+@media(max-width:900px){
+  .hero-grid,.truth-grid,.statement-grid,.story-grid,.var-intro-grid{grid-template-columns:1fr;}
+  .problem-grid,.who-grid,.modes-grid{grid-template-columns:1fr;}
+  .var-grid{grid-template-columns:repeat(2,1fr);}
+  .feature-row{grid-template-columns:40px 1fr;}
+  .feature-desc{grid-column:2;}
+  .pricing-grid{grid-template-columns:1fr;}
+  .nav-links{display:none;}
+  .nav-tagline{display:none;}
+}
+
+/* ════════════════════════════════════════════════════
+   INTRO SEQUENCE — ACT 1 + ACT 2
+   Total duration: ~14s then JS removes overlay
+════════════════════════════════════════════════════ */
+
+/* Master overlay */
+#intro{
+  position:fixed;inset:0;z-index:9999;
+  background:#F4F1EC;
+  display:none;
+  flex-direction:column;
+  align-items:center;justify-content:center;
+  overflow:hidden;
+  pointer-events:all;
+  transition:background 800ms ease;
+}
+#intro.active{
+  display:flex;
+  animation:introAutoHide 31s linear forwards;
+}
+/* Nuclear fallback: CSS alone will hide overlay after 31s no matter what */
+@keyframes introAutoHide{
+  0%,96%{opacity:1;pointer-events:all;}
+  99%{opacity:0;pointer-events:none;}
+  100%{opacity:0;pointer-events:none;visibility:hidden;}
+}
+/* Click anywhere to skip */
+#intro.active{cursor:pointer;}
+/* When dismissed, ensure nothing blocks the page */
+#intro[style*="display: none"],
+#intro[style*="display:none"]{
+  pointer-events:none !important;
+}
+#intro.going-dark{background:#0a0a0a;}
+#intro.fade-out{
+  opacity:0;
+  transition:opacity 800ms cubic-bezier(0,0,0.2,1);
+}
+
+/* ── ACT 1: COMPASS MARK ── */
+.intro-act1{
+  display:flex;flex-direction:column;
+  align-items:center;justify-content:center;
+  position:absolute;
+  transition:opacity 600ms ease, transform 600ms ease;
+}
+.intro-act1.dissolve{
+  opacity:0;
+  transform:translateY(-20px);
+}
+
+.intro-mark{
+  width:110px;height:110px;
+  margin-bottom:24px;
+}
+
+/* Circle draws clockwise from top */
+.intro-circle{
+  stroke-dasharray:276.5;
+  stroke-dashoffset:276.5;
+  animation:drawCircle 900ms cubic-bezier(0.4,0,0.2,1) 400ms forwards;
+}
+@keyframes drawCircle{to{stroke-dashoffset:0;}}
+
+/* V letterform draws */
+.intro-v{
+  stroke-dasharray:80;
+  stroke-dashoffset:80;
+  animation:drawV 600ms cubic-bezier(0,0,0.2,1) 1100ms forwards;
+}
+@keyframes drawV{to{stroke-dashoffset:0;}}
+
+/* Arrow stem */
+.intro-stem{
+  stroke-dasharray:16;
+  stroke-dashoffset:16;
+  animation:drawStem 300ms ease-out 1050ms forwards;
+}
+@keyframes drawStem{to{stroke-dashoffset:0;}}
+
+/* Arrow point drops in */
+.intro-arrow{
+  opacity:0;transform:translateY(-5px);
+  transform-origin:center;transform-box:fill-box;
+  animation:dropArrow 350ms cubic-bezier(0,0,0.2,1) 1050ms forwards;
+}
+@keyframes dropArrow{to{opacity:1;transform:translateY(0);}}
+
+/* Three dots pop with spring */
+.intro-dot{
+  opacity:0;transform:scale(0);
+  transform-origin:center;transform-box:fill-box;
+}
+.intro-dot:nth-child(1){animation:popDot 280ms cubic-bezier(0.34,1.56,0.64,1) 1450ms forwards;}
+.intro-dot:nth-child(2){animation:popDot 280ms cubic-bezier(0.34,1.56,0.64,1) 1530ms forwards;}
+.intro-dot:nth-child(3){animation:popDot 280ms cubic-bezier(0.34,1.56,0.64,1) 1610ms forwards;}
+@keyframes popDot{to{opacity:1;transform:scale(1);}}
+
+/* Wordmark rises */
+.intro-wordmark{
+  font-family:'Lora',Georgia,serif;
+  font-size:26px;font-weight:300;
+  letter-spacing:0.32em;color:#2C2C2C;
+  opacity:0;transform:translateY(5px);
+  animation:riseWord 600ms cubic-bezier(0,0,0.2,1) 1900ms forwards;
+  margin-bottom:10px;
+}
+@keyframes riseWord{to{opacity:1;transform:translateY(0);}}
+
+/* Tagline fades */
+.intro-tagline{
+  font-family:'Inter',system-ui,sans-serif;
+  font-size:10px;font-weight:300;
+  letter-spacing:0.22em;text-transform:uppercase;
+  color:#8A8278;opacity:0;
+  animation:fadeOnly 500ms ease-out 2500ms forwards;
+}
+@keyframes fadeOnly{to{opacity:1;}}
+
+/* Mark breathes before exit */
+@keyframes markBreathe{
+  0%{transform:scale(1);}
+  50%{transform:scale(1.04);}
+  100%{transform:scale(1);}
+}
+
+/* ── BRONZE RULE MOMENT ── */
+.intro-rule{
+  width:0;
+  height:1px;
+  background:#C8A97A;
+  opacity:0;
+  transition:width 600ms cubic-bezier(0.4,0,0.2,1),
+             opacity 400ms ease;
+  margin:0 auto;
+}
+.intro-rule.visible{
+  width:40px;
+  opacity:1;
+}
+
+/* ── ACT 2: PROVOCATION SENTENCES ── */
+.intro-act2{
+  position:absolute;
+  display:flex;flex-direction:column;
+  align-items:center;justify-content:center;
+  text-align:center;
+  padding:0 40px;
+  opacity:0;
+  pointer-events:none;
+}
+.intro-act2.active{opacity:1;}
+
+.prov-line{
+  font-family:'Lora',Georgia,serif;
+  font-style:italic;
+  font-size:clamp(22px,3.5vw,36px);
+  font-weight:300;
+  line-height:1.4;
+  color:#2C2C2C;
+  opacity:0;
+  transition:opacity 700ms ease, color 800ms ease;
+  text-align:center;
+  max-width:680px;
+}
+.prov-line.on-dark{color:#F4F1EC;}
+.prov-line.visible{opacity:1;}
+.prov-line.fade{opacity:0;}
+
+/* ── DARK TRANSITION ── */
+#intro.going-dark .intro-wordmark,
+#intro.going-dark .intro-tagline{
+  color:#F4F1EC;
+}
+
+/* ════════════════════════════════════════════════════
+   PIECE 2 — BRANCHING TIMELINE VISUAL
+════════════════════════════════════════════════════ */
+
+.timeline-section{
+  padding:clamp(80px,10vw,140px) 0;
+  background:var(--bg-primary);
+  border-bottom:var(--border-thin) solid var(--rule);
+  overflow:hidden;
+}
+.timeline-intro{
+  text-align:center;
+  max-width:620px;
+  margin:0 auto var(--space-9);
+  padding:0 var(--space-6);
+}
+.timeline-headline{
+  font-family:var(--serif);
+  font-size:clamp(26px,3.5vw,42px);
+  font-weight:var(--weight-light);
+  line-height:var(--leading-tight);
+  color:var(--ink-primary);
+  margin-bottom:var(--space-5);
+}
+.timeline-headline em{font-style:italic;}
+.timeline-sub{
+  font-family:var(--sans);
+  font-size:var(--text-sm);
+  color:var(--ink-tertiary);
+  line-height:var(--leading-loose);
+  font-weight:var(--weight-light);
+}
+
+/* SVG canvas */
+.timeline-canvas-wrap{
+  position:relative;
+  width:100%;
+  max-width:960px;
+  margin:0 auto;
+  padding:0 var(--space-6);
+}
+#timelineSvg{
+  width:100%;
+  height:auto;
+  overflow:visible;
+}
+
+/* Branch labels */
+.branch-label-wrap{display:none;} /* removed — replaced by legend cards */
+
+/* Age markers */
+.age-marker{
+  font-family:var(--sans);
+  font-size:9px;
+  letter-spacing:var(--tracking-wide);
+  fill:var(--ink-ghost);
+}
+
+/* Bottom question */
+.timeline-question{
+  text-align:center;
+  margin-top:var(--space-8);
+  padding:0 var(--space-6);
+  opacity:0;
+  transform:translateY(8px);
+  transition:opacity 700ms ease 200ms, transform 700ms ease 200ms;
+}
+.timeline-question.visible{
+  opacity:1;
+  transform:translateY(0);
+}
+.timeline-q-text{
+  font-family:var(--serif);
+  font-style:italic;
+  font-size:clamp(18px,2.5vw,26px);
+  font-weight:var(--weight-light);
+  color:var(--ink-secondary);
+  margin-bottom:var(--space-4);
+}
+.timeline-q-cta{
+  display:inline-flex;
+  align-items:center;
+  gap:var(--space-3);
+  font-family:var(--sans);
+  font-size:var(--text-xs);
+  letter-spacing:var(--tracking-widest);
+  text-transform:uppercase;
+  color:var(--accent);
+  text-decoration:none;
+  border-bottom:1px solid var(--rule-accent);
+  padding-bottom:2px;
+  transition:color var(--dur-base) var(--ease-soft),
+             border-color var(--dur-base) var(--ease-soft);
+}
+.timeline-q-cta:hover{
+  color:var(--accent-deep);
+  border-color:var(--accent-deep);
+}
+
+/* ── INTERACTIVE LEGEND CARDS ── */
+.timeline-legend{
+  display:flex;
+  flex-wrap:wrap;
+  gap:var(--space-3);
+  margin-top:var(--space-7);
+  margin-bottom:var(--space-4);
+  justify-content:center;
+}
+.legend-card{
+  flex:1 1 160px;
+  max-width:200px;
+  padding:var(--space-4) var(--space-5);
+  border:var(--border-thin) solid var(--rule);
+  background:var(--bg-white);
+  cursor:pointer;
+  transition:border-color 250ms ease,
+             background 250ms ease,
+             opacity 300ms ease;
+  user-select:none;
+  opacity:0;
+  transform:translateY(6px);
+  transition:opacity 500ms ease, transform 500ms ease,
+             border-color 250ms ease, background 250ms ease;
+}
+.legend-card.visible{
+  opacity:1;
+  transform:translateY(0);
+}
+.legend-card:hover{
+  border-color:var(--accent);
+  background:var(--accent-pale);
+}
+.legend-card.active{
+  border-color:var(--accent);
+  background:var(--accent-pale);
+}
+.legend-card.dimmed{
+  opacity:0.3;
+}
+.lc-var{
+  font-family:var(--sans);
+  font-size:9px;
+  letter-spacing:var(--tracking-widest);
+  text-transform:uppercase;
+  color:var(--accent);
+  margin-bottom:var(--space-2);
+}
+.lc-name{
+  font-family:var(--serif);
+  font-size:14px;
+  font-weight:var(--weight-light);
+  color:var(--ink-primary);
+  margin-bottom:var(--space-2);
+  font-style:italic;
+}
+.lc-story{
+  font-family:var(--sans);
+  font-size:11px;
+  color:var(--ink-tertiary);
+  line-height:1.7;
+  max-height:0;
+  overflow:hidden;
+  transition:max-height 400ms ease, opacity 300ms ease;
+  opacity:0;
+}
+.legend-card.active .lc-story{
+  max-height:100px;
+  opacity:1;
+}
+
+/* Tooltip — kept for desktop hover on SVG lines */
+.tl-tooltip{
+  position:fixed;
+  background:var(--bg-dark);
+  color:var(--ink-inverse);
+  padding:12px 16px;
+  pointer-events:none;
+  opacity:0;
+  transition:opacity 200ms ease;
+  z-index:100;
+  max-width:240px;
+  transform:translate(-50%,-100%) translateY(-12px);
+}
+.tl-tooltip.visible{opacity:1;}
+.tl-tt-name{
+  font-family:var(--serif);
+  font-size:14px;
+  font-weight:var(--weight-light);
+  color:var(--ink-inverse);
+  margin-bottom:4px;
+}
+.tl-tt-var{
+  font-family:var(--sans);
+  font-size:9px;
+  letter-spacing:var(--tracking-widest);
+  text-transform:uppercase;
+  color:var(--accent-muted);
+  margin-bottom:6px;
+}
+.tl-tt-desc{
+  font-family:var(--sans);
+  font-size:11px;
+  color:var(--ink-inverse-dim);
+  line-height:1.7;
+}
+
+@keyframes patronPulse{
+  0%,100%{r:4.5;opacity:1;}
+  50%{r:7;opacity:0.6;}
+}
+
+/* Mobile: legend stacks full width, tooltip hidden */
+@media(max-width:680px){
+  .tl-tooltip{display:none;}
+  .timeline-headline{font-size:22px;}
+  .legend-card{flex:1 1 100%;max-width:100%;}
+}
+
+
+/* ════════════════════════════════════════════════════
+   PIECE 3 — THE CASE FILE
+   Real-person paragraph. No name. Total specificity.
+════════════════════════════════════════════════════ */
+
+.casefile-section{
+  padding:clamp(120px,14vw,200px) 0;
+  background:var(--bg-primary);
+  border-bottom:var(--border-thin) solid var(--rule);
+}
+
+/* Outer wrapper — constrained, centered, breathing */
+.casefile-wrap{
+  max-width:640px;
+  margin:0 auto;
+  padding:0 var(--space-6);
+  text-align:center;
+}
+
+/* Eyebrow above */
+.casefile-eyebrow{
+  font-family:var(--sans);
+  font-size:var(--text-xs);
+  letter-spacing:var(--tracking-widest);
+  text-transform:uppercase;
+  color:var(--accent);
+  margin-bottom:var(--space-7);
+  opacity:0;
+  transform:translateY(8px);
+  transition:opacity 700ms ease, transform 700ms ease;
+}
+.casefile-eyebrow.visible{opacity:1;transform:translateY(0);}
+
+/* Each paragraph of the case file */
+.cf-para{
+  font-family:var(--serif);
+  font-size:clamp(17px,2.2vw,22px);
+  font-weight:var(--weight-light);
+  line-height:2.0;
+  color:var(--ink-secondary);
+  margin-bottom:var(--space-8);
+  opacity:0;
+  transform:translateY(10px);
+  transition:opacity 800ms ease, transform 800ms ease;
+}
+.cf-para.visible{opacity:1;transform:translateY(0);}
+
+/* The score line — monospace, data feel */
+.cf-score{
+  font-family:var(--sans);
+  font-size:var(--text-md);
+  font-weight:var(--weight-light);
+  letter-spacing:var(--tracking-wide);
+  color:var(--ink-tertiary);
+  margin-bottom:var(--space-6);
+  opacity:0;
+  transform:translateY(10px);
+  transition:opacity 800ms ease, transform 800ms ease;
+}
+.cf-score.visible{opacity:1;transform:translateY(0);}
+
+/* Score number — large, prominent */
+.cf-score-num{
+  font-family:var(--serif);
+  font-size:clamp(48px,8vw,80px);
+  font-weight:var(--weight-light);
+  color:var(--ink-primary);
+  line-height:1;
+  display:block;
+  margin-bottom:var(--space-3);
+  letter-spacing:var(--tracking-tight);
+}
+
+/* Variable breakdown — the eight scores inline */
+.cf-vars{
+  display:flex;
+  flex-wrap:wrap;
+  justify-content:center;
+  gap:var(--space-4) var(--space-5);
+  margin:var(--space-6) 0;
+  opacity:0;
+  transition:opacity 700ms ease;
+}
+.cf-vars.visible{opacity:1;}
+.cf-var-item{
+  display:flex;
+  flex-direction:column;
+  align-items:center;
+  gap:4px;
+}
+.cf-var-name{
+  font-family:var(--sans);
+  font-size:9px;
+  letter-spacing:var(--tracking-widest);
+  text-transform:uppercase;
+  color:var(--ink-ghost);
+}
+.cf-var-score{
+  font-family:var(--serif);
+  font-size:var(--text-xl);
+  font-weight:var(--weight-light);
+  color:var(--ink-primary);
+  line-height:1;
+}
+.cf-var-score.low{color:var(--caution);}
+.cf-var-score.high{color:var(--accent);}
+
+/* The pivot moment — highlighted differently */
+.cf-pivot{
+  font-family:var(--serif);
+  font-size:clamp(17px,2.2vw,22px);
+  font-weight:var(--weight-light);
+  line-height:2.0;
+  color:var(--ink-primary);
+  margin-bottom:var(--space-8);
+  border-left:2px solid var(--accent);
+  padding-left:var(--space-6);
+  text-align:left;
+  opacity:0;
+  transform:translateY(10px);
+  transition:opacity 900ms ease, transform 900ms ease;
+}
+.cf-pivot.visible{opacity:1;transform:translateY(0);}
+
+/* The bronze rule */
+.cf-rule{
+  width:40px;
+  height:1px;
+  background:var(--accent);
+  margin:var(--space-7) auto;
+  opacity:0;
+  transition:opacity 600ms ease;
+}
+.cf-rule.visible{opacity:1;}
+
+/* The closing statement */
+.cf-close{
+  font-family:var(--serif);
+  font-style:italic;
+  font-size:clamp(18px,2.5vw,26px);
+  font-weight:var(--weight-light);
+  color:var(--ink-primary);
+  line-height:1.6;
+  margin-bottom:var(--space-7);
+  opacity:0;
+  transform:translateY(10px);
+  transition:opacity 900ms ease, transform 900ms ease;
+}
+.cf-close.visible{opacity:1;transform:translateY(0);}
+
+/* CTA beneath */
+.cf-cta-wrap{
+  opacity:0;
+  transform:translateY(8px);
+  transition:opacity 600ms ease, transform 600ms ease;
+}
+.cf-cta-wrap.visible{opacity:1;transform:translateY(0);}
+
+
+/* ── CENTRE STATEMENT SEQUENTIAL REVEAL ── */
+.cl-line{
+  display:block;
+  opacity:0;
+  transform:translateY(12px);
+  transition:opacity 900ms cubic-bezier(0,0,0.2,1),
+             transform 900ms cubic-bezier(0,0,0.2,1);
+}
+.cl-line.visible{
+  opacity:1;
+  transform:translateY(0);
+}
+/* Line 2 gets extra weight — the gut punch */
+.cl-line-2{
+  font-style:italic;
+  color:var(--ink-primary);
+}
+/* Line 3 — the resolution, slightly muted until it arrives */
+.cl-line-3{
+  color:var(--ink-secondary);
+}
+</style>
+
+<script>
+(function(){
+  var seen = false;
+  try{ seen = !!sessionStorage.getItem('v_intro_seen'); }catch(e){}
+  if(seen){
+    // Already seen — mark html element so CSS hides intro before paint
+    document.documentElement.classList.add('intro-seen');
+  } else {
+    // First visit — activate intro as soon as DOM is ready
+    document.addEventListener('DOMContentLoaded', function(){
+      var el = document.getElementById('intro');
+      if(el) el.classList.add('active');
+    });
   }
-  /* byline: fade in 3s | hold 3s | fade out 3s */
-  @keyframes bylineplay {
-    0%   { opacity: 0; }
-    33%  { opacity: 1; }
-    67%  { opacity: 1; }
-    100% { opacity: 0; }
-  }
-  @keyframes hintpulse {
-    0%, 100% { opacity: 0; }
-    50%       { opacity: 0.7; }
-  }
-  @keyframes blink {
-    0%, 80%, 100% { opacity: 0.2; transform: scale(1); }
-    40%           { opacity: 1;   transform: scale(1.4); }
-  }
+})();
+</script>
+<style>
+/* If intro already seen, hide it before paint via html class */
+.intro-seen #intro{ display:none !important; }
 </style>
 </head>
 <body>
-<div class="brackets" id="brackets"><img src="data:image/png;base64,/9j/4AAQSkZJRgABAQAAAQABAAD/4gHYSUNDX1BST0ZJTEUAAQEAAAHIAAAAAAQwAABtbnRyUkdCIFhZWiAH4AABAAEAAAAAAABhY3NwAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAQAA9tYAAQAAAADTLQAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAlkZXNjAAAA8AAAACRyWFlaAAABFAAAABRnWFlaAAABKAAAABRiWFlaAAABPAAAABR3dHB0AAABUAAAABRyVFJDAAABZAAAAChnVFJDAAABZAAAAChiVFJDAAABZAAAAChjcHJ0AAABjAAAADxtbHVjAAAAAAAAAAEAAAAMZW5VUwAAAAgAAAAcAHMAUgBHAEJYWVogAAAAAAAAb6IAADj1AAADkFhZWiAAAAAAAABimQAAt4UAABjaWFlaIAAAAAAAACSgAAAPhAAAts9YWVogAAAAAAAA9tYAAQAAAADTLXBhcmEAAAAAAAQAAAACZmYAAPKnAAANWQAAE9AAAApbAAAAAAAAAABtbHVjAAAAAAAAAAEAAAAMZW5VUwAAACAAAAAcAEcAbwBvAGcAbABlACAASQBuAGMALgAgADIAMAAxADb/2wBDAAUDBAQEAwUEBAQFBQUGBwwIBwcHBw8LCwkMEQ8SEhEPERETFhwXExQaFRERGCEYGh0dHx8fExciJCIeJBweHx7/2wBDAQUFBQcGBw4ICA4eFBEUHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh7/wAARCAVGBDgDASIAAhEBAxEB/8QAGQABAQEAAwAAAAAAAAAAAAAAAAYFAwQI/8QANBABAAAFAQQJAwMEAwAAAAAAAAECAwQFEQY3dLEUFiFVVpGS0tMSEzEiQUIVMlGhI2Hh/8QAGAEBAQEBAQAAAAAAAAAAAAAAAAMCAQT/xAAnEQEAAgAFBAMAAgMAAAAAAAAAAQIDERMxcRJB0fBSYYEhUSKxwf/aAAwDAQACEQMRAD8A8ZAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAApNnMLi7rC3OVyt3XoUaNWFP/AIofj8dseyMY6xmhD8f+c/Qdh++b70R+Mxm7TKcVLzpJR5q1m82/yndWZisR/Cr6DsP3zfeiPxnQdh++b70R+NKDejPyn38c6/qFX0HYfvm+9EfjOg7D9833oj8aUDRn5T7+HX9Qq+g7D9833oj8Z0HYfvm+9EfjSgaM/Kffw6/qFX0HYfvm+9EfjOg7D9833oj8aUDRn5T7+HX9Q289bbOUbOSbEX9zcV41IQmlqSxhCEukdY/2w/fRiApWvTGWebEznIA04AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA1dn6GDrff/rN5XttPp+19qEY/V+ddf0x/6a3Qdh++b70R+NKCVsOZnPqluLZRsq+g7D9833oj8Z0HYfvm+9EfjSg5oz8p9/Hev6hV9B2H75vvRH4zoOw/fN96I/GlA0Z+U+/h1/UKvoOw/fN96I/GdB2H75vvRH40oGjPyn38Ov6hV9B2H75vvRH4zoOw/fN96I/GlA0Z+U+/h1/UKnKYPCdXq+WxF9c1oUKksk33IdkdYwhGH9sI/wAoR1Syrxm7TKcVLzpJQwZn+Ymc8pMTL+JgAWTAAAAAAAAAAVeM3aZTipedJKKvGbtMpxUvOklEcHe3PhS/bgAWTAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAVeM3aZTipedJKKvGbtMpxUvOklEcHe3PhS/bgAWTAAAAAAAAAAVeM3aZTipedJKKvGbtMpxUvOklEcHe3PhS/bgAWTAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAVeM3aZTipedJKKvGbtMpxUvOklEcHe3PhS/bgAWTAAAAAAAAAAVeM3aZTipedJKKvGbtMpxUvOklEcHe3PhS/bgAWTAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAVeM3aZTipedJKKvGbtMpxUvOklEcHe3PhS/bgAWTAAAAAAAAAAVeM3aZTipedJKKvGbtMpxUvOklEcHe3PhS/bgAWTAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAVeM3aZTipedJKKvGbtMpxUvOklEcHe3PhS/bgAWTAAAAAAAAAAbdnlrajsheYiaSrGvXrQqSzQhD6IQ1k/Mddf4x/ZiAzWsVzy7uzMyANOAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAANuzy1tR2QvMRNJVjXr1oVJZoQh9EIayfmOuv8Y/sxAZrWK55d3ZmZAGnAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA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" alt=""></div>
-<div class="edge-hint" id="edgeHint"></div>
-<div class="stage" id="stage">
-  <div class="seal-wrap"><img src="data:image/png;base64,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" alt="Aesthetic Leaders Dinner"></div>
-  <div class="diamond-row" id="diamondRow"><div class="hairline left"></div><img src="data:image/png;base64,/9j/4AAQSkZJRgABAQAAAQABAAD/4gHYSUNDX1BST0ZJTEUAAQEAAAHIAAAAAAQwAABtbnRyUkdCIFhZWiAH4AABAAEAAAAAAABhY3NwAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAQAA9tYAAQAAAADTLQAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAlkZXNjAAAA8AAAACRyWFlaAAABFAAAABRnWFlaAAABKAAAABRiWFlaAAABPAAAABR3dHB0AAABUAAAABRyVFJDAAABZAAAAChnVFJDAAABZAAAAChiVFJDAAABZAAAAChjcHJ0AAABjAAAADxtbHVjAAAAAAAAAAEAAAAMZW5VUwAAAAgAAAAcAHMAUgBHAEJYWVogAAAAAAAAb6IAADj1AAADkFhZWiAAAAAAAABimQAAt4UAABjaWFlaIAAAAAAAACSgAAAPhAAAts9YWVogAAAAAAAA9tYAAQAAAADTLXBhcmEAAAAAAAQAAAACZmYAAPKnAAANWQAAE9AAAApbAAAAAAAAAABtbHVjAAAAAAAAAAEAAAAMZW5VUwAAACAAAAAcAEcAbwBvAGcAbABlACAASQBuAGMALgAgADIAMAAxADb/2wBDAAUDBAQEAwUEBAQFBQUGBwwIBwcHBw8LCwkMEQ8SEhEPERETFhwXExQaFRERGCEYGh0dHx8fExciJCIeJBweHx7/2wBDAQUFBQcGBw4ICA4eFBEUHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh7/wAARCAAoACgDASIAAhEBAxEB/8QAGQABAAMBAQAAAAAAAAAAAAAAAAMHCAQF/8QAKRAAAQMDBAAFBQEAAAAAAAAAAQIDEQAEBQYSEyEHCBQiMRUjMkGxcf/EABcBAQEBAQAAAAAAAAAAAAAAAAADBQT/xAAbEQADAQEBAQEAAAAAAAAAAAAAAQIDEQQhMf/aAAwDAQACEQMRAD8AxlSlSWzD1zctW1sy48+6sIbbbSVKWomAkAdkk9RQEdKv3D+APLoV36je8GpnodahUsW8A/ZVE7pn3KEwQNsgHfR2axl/hsrcYvKWrlreWy9jrSx2k/wgiCCOiCCJBqOe8atqX+FLyqEnSOOlKVYmKv3yr43Sbvq8jzc+pmZHE8kD07J63tdndMwpXRE7YAMroKuzC5O/w2Vt8pi7py1vLZe9p1B7Sf4QRIIPRBIMg1HfN6w5T4UytRSbRu6qh8zeN0m5pZvJZZ702bRLeOU0kKdf7ktqEiWxMlR/AnqSrath/HTAOaFdy2Sa483bw0rHNkjncIMKbJmGzBJJko+PcSnfnvV+pMtqvOvZjMXHLcOdJSnpDSB8IQP0kSf9kkkkknN8vl0WnX84du+8OOL708elKVsGcKUpQClKUApSlAf/2Q==" alt=""><div class="hairline right"></div></div>
-  <div class="byline" id="byline">By invitation.</div>
+
+<!-- ═══════════════════════════════════════════════
+     INTRO SEQUENCE — ACT 1 + ACT 2
+     Act 1: Compass draws → mark dissolves upward
+     Act 2: Three provocation sentences → darkness → page opens
+═══════════════════════════════════════════════ -->
+<div id="intro" onclick="dismissIntro()" title="Click to continue">
+
+  <!-- ACT 1: Compass mark + wordmark -->
+  <div class="intro-act1" id="introAct1">
+    <svg class="intro-mark" viewBox="0 0 100 100" fill="none" xmlns="http://www.w3.org/2000/svg">
+      <circle class="intro-circle" cx="50" cy="50" r="44" stroke="#C8A97A" stroke-width="1.2" fill="none"/>
+      <path class="intro-v" d="M34 30 L50 65 L66 30" stroke="#C8A97A" stroke-width="1.8" fill="none" stroke-linecap="round" stroke-linejoin="round"/>
+      <line class="intro-stem" x1="50" y1="6" x2="50" y2="21" stroke="#C8A97A" stroke-width="1.2"/>
+      <path class="intro-arrow" d="M50 6 L53.5 14 L50 12 L46.5 14 Z" fill="#C8A97A"/>
+      <circle class="intro-dot" cx="50" cy="72" r="2.2" fill="#C8A97A"/>
+      <circle class="intro-dot" cx="50" cy="79" r="2.2" fill="#C8A97A"/>
+      <circle class="intro-dot" cx="50" cy="86" r="2.2" fill="#C8A97A"/>
+    </svg>
+    <div class="intro-wordmark">VECTOR</div>
+    <div class="intro-tagline">Clarity. Direction. Possibility.</div>
+  </div>
+
+  <!-- ACT 2: Provocation sentences -->
+  <div class="intro-act2" id="introAct2">
+    <div class="prov-line" id="prov1">You have been optimizing for the wrong thing.</div>
+    <div class="prov-line" id="prov2">Think of the most successful person you know personally.</div>
+    <div class="intro-rule" id="introRule"></div>
+    <div class="prov-line" id="prov3">Where did they go to school?</div>
+    <div class="prov-line" id="prov4">The algorithm already knows the answer.</div>
+  </div>
+
 </div>
-<button class="enquire-btn" id="enquireBtn" onclick="openDrawer()"><span class="eq-label">Enquire</span><div class="eq-line"></div></button>
-<div class="drawer" id="drawer">
-  <div class="drawer-backdrop" onclick="closeDrawer()"></div>
-  <div class="drawer-panel">
-    <button class="drawer-close" onclick="closeDrawer()">Close</button>
-    <div class="drawer-eyebrow">
-      <img class="drawer-diamond" src="data:image/png;base64,/9j/4AAQSkZJRgABAQAAAQABAAD/4gHYSUNDX1BST0ZJTEUAAQEAAAHIAAAAAAQwAABtbnRyUkdCIFhZWiAH4AABAAEAAAAAAABhY3NwAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAQAA9tYAAQAAAADTLQAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAlkZXNjAAAA8AAAACRyWFlaAAABFAAAABRnWFlaAAABKAAAABRiWFlaAAABPAAAABR3dHB0AAABUAAAABRyVFJDAAABZAAAAChnVFJDAAABZAAAAChiVFJDAAABZAAAAChjcHJ0AAABjAAAADxtbHVjAAAAAAAAAAEAAAAMZW5VUwAAAAgAAAAcAHMAUgBHAEJYWVogAAAAAAAAb6IAADj1AAADkFhZWiAAAAAAAABimQAAt4UAABjaWFlaIAAAAAAAACSgAAAPhAAAts9YWVogAAAAAAAA9tYAAQAAAADTLXBhcmEAAAAAAAQAAAACZmYAAPKnAAANWQAAE9AAAApbAAAAAAAAAABtbHVjAAAAAAAAAAEAAAAMZW5VUwAAACAAAAAcAEcAbwBvAGcAbABlACAASQBuAGMALgAgADIAMAAxADb/2wBDAAUDBAQEAwUEBAQFBQUGBwwIBwcHBw8LCwkMEQ8SEhEPERETFhwXExQaFRERGCEYGh0dHx8fExciJCIeJBweHx7/2wBDAQUFBQcGBw4ICA4eFBEUHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh7/wAARCAAoACgDASIAAhEBAxEB/8QAGQABAAMBAQAAAAAAAAAAAAAAAAMHCAQF/8QAKRAAAQMDBAAFBQEAAAAAAAAAAQIDEQAEBQYSEyEHCBQiMRUjMkGxcf/EABcBAQEBAQAAAAAAAAAAAAAAAAADBQT/xAAbEQADAQEBAQEAAAAAAAAAAAAAAQIDEQQhMf/aAAwDAQACEQMRAD8AxlSlSWzD1zctW1sy48+6sIbbbSVKWomAkAdkk9RQEdKv3D+APLoV36je8GpnodahUsW8A/ZVE7pn3KEwQNsgHfR2axl/hsrcYvKWrlreWy9jrSx2k/wgiCCOiCCJBqOe8atqX+FLyqEnSOOlKVYmKv3yr43Sbvq8jzc+pmZHE8kD07J63tdndMwpXRE7YAMroKuzC5O/w2Vt8pi7py1vLZe9p1B7Sf4QRIIPRBIMg1HfN6w5T4UytRSbRu6qh8zeN0m5pZvJZZ702bRLeOU0kKdf7ktqEiWxMlR/AnqSrath/HTAOaFdy2Sa483bw0rHNkjncIMKbJmGzBJJko+PcSnfnvV+pMtqvOvZjMXHLcOdJSnpDSB8IQP0kSf9kkkkknN8vl0WnX84du+8OOL708elKVsGcKUpQClKUApSlAf/2Q==" alt="">
-      <div class="drawer-label">Enquiries</div>
-    </div>
-    <div class="chat-log" id="chatLog"></div>
-    <div class="chat-input-row">
-      <input class="chat-input" id="chatInput" type="text" placeholder="Ask anything..."
-        onkeydown="if(event.key==='Enter') sendMessage()" autocomplete="off"/>
-      <button class="chat-send" onclick="sendMessage()">Send</button>
+
+
+<!-- NAV -->
+<nav>
+  <a href="index.html" class="wordmark" style="display:flex;align-items:center;gap:12px;text-decoration:none;">
+    <svg width="32" height="32" viewBox="0 0 100 100" fill="none" xmlns="http://www.w3.org/2000/svg">
+      <circle cx="50" cy="50" r="44" stroke="#C8A97A" stroke-width="1.2" fill="none"/>
+      <path d="M34 30 L50 65 L66 30" stroke="#C8A97A" stroke-width="1.8" fill="none" stroke-linecap="round" stroke-linejoin="round"/>
+      <path d="M50 6 L53.5 14 L50 12 L46.5 14 Z" fill="#C8A97A"/>
+      <line x1="50" y1="6" x2="50" y2="21" stroke="#C8A97A" stroke-width="1.2"/>
+      <circle cx="50" cy="72" r="1.8" fill="#C8A97A"/>
+      <circle cx="50" cy="79" r="1.8" fill="#C8A97A"/>
+      <circle cx="50" cy="86" r="1.8" fill="#C8A97A"/>
+    </svg>
+    <span style="font-family:'Lora',Georgia,serif;font-size:17px;font-weight:300;letter-spacing:0.2em;color:#2C2C2C;">VECTOR</span>
+  </a>
+  <div class="nav-tagline">Clarity. Direction. Possibility.</div>
+  <div class="nav-links">
+    <a href="#how" class="nav-link">How it works</a>
+    <a href="#modes" class="nav-link">Who it's for</a>
+    <a href="#access" class="nav-link">Access</a>
+    <a href="VECTOR.html" class="nav-cta">Begin assessment</a>
+  </div>
+</nav>
+
+<!-- HERO -->
+<section class="hero">
+  <div class="container">
+    <div class="hero-inner">
+      <div class="v-rise" style="margin-bottom:var(--space-7);">
+        <svg width="56" height="56" viewBox="0 0 100 100" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <circle cx="50" cy="50" r="44" stroke="#C8A97A" stroke-width="1.2" fill="none"/>
+          <path d="M34 30 L50 65 L66 30" stroke="#C8A97A" stroke-width="1.8" fill="none" stroke-linecap="round" stroke-linejoin="round"/>
+          <path d="M50 6 L53.5 14 L50 12 L46.5 14 Z" fill="#C8A97A"/>
+          <line x1="50" y1="6" x2="50" y2="21" stroke="#C8A97A" stroke-width="1.2"/>
+          <circle cx="50" cy="72" r="1.8" fill="#C8A97A"/>
+          <circle cx="50" cy="79" r="1.8" fill="#C8A97A"/>
+          <circle cx="50" cy="86" r="1.8" fill="#C8A97A"/>
+        </svg>
+      </div>
+      <div class="t-eyebrow v-rise" style="margin-bottom:var(--space-5);">Career trajectory intelligence</div>
+      <div class="v-rule" style="margin:0 auto var(--space-6);"></div>
+      <h1 class="t-hero v-rise" style="margin-bottom:var(--space-7);">
+        College is one decision.<br>
+        <em>Life is hundreds.</em>
+      </h1>
+      <p class="hero-subtext v-rise">
+        VECTOR maps the full trajectory — the eight variables that determine not whether you succeed, but how long it takes and what it costs along the way.
+      </p>
+      <div class="hero-cta-row v-rise">
+        <a href="VECTOR.html" class="btn">Begin your assessment</a>
+        <a href="#how" class="btn-ghost">See how it works</a>
+      </div>
+      <p class="hero-note v-rise" style="margin-top:var(--space-5);">
+        Free to begin. Three complete scenarios included.
+      </p>
     </div>
   </div>
+</section>
+
+<!-- STATEMENT BAND -->
+<section class="statement-band">
+  <div class="container">
+    <div class="statement-grid">
+      <div class="v-rise">
+        <div class="statement-num" id="counterNum">0</div>
+      </div>
+      <div class="v-rise">
+        <div class="t-eyebrow" style="margin-bottom:var(--space-5);">The inconvenient truth</div>
+        <p class="statement-text">
+          "The middle class family in Tulsa is making a $180,000 decision with less information than they use to buy a car."
+        </p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══════════════════════════════════════════════════
+     PIECE 2 — BRANCHING TIMELINE VISUAL
+     Five characters. One starting point. Convergence arcs.
+═══════════════════════════════════════════════════ -->
+<section class="timeline-section" id="timeline">
+  <div class="container">
+
+    <!-- Intro copy -->
+    <div class="timeline-intro v-rise">
+      <div class="t-eyebrow" style="margin-bottom:var(--space-6);">Five decisions. One life.</div>
+      <h2 class="timeline-headline">
+        Same age. Same ambition.
+      </h2>
+      <h2 class="timeline-headline" style="margin-top:var(--space-5);margin-bottom:var(--space-7);">
+        <em>Completely different trajectories.</em>
+      </h2>
+      <p class="timeline-sub" style="margin-top:0;">
+        Five people. One starting point. Watch what five decisions do to a single life — and how each one recovers.
+      </p>
+    </div>
+
+    <!-- SVG Canvas -->
+    <div class="timeline-canvas-wrap">
+      <svg id="timelineSvg" viewBox="0 0 900 320" xmlns="http://www.w3.org/2000/svg"
+           preserveAspectRatio="xMidYMid meet">
+
+        <!-- Age axis labels -->
+        <text class="age-marker" x="80"  y="310" text-anchor="middle">Age 16</text>
+        <text class="age-marker" x="230" y="310" text-anchor="middle">Age 20</text>
+        <text class="age-marker" x="390" y="310" text-anchor="middle">Age 26</text>
+        <text class="age-marker" x="560" y="310" text-anchor="middle">Age 32</text>
+        <text class="age-marker" x="730" y="310" text-anchor="middle">Age 38</text>
+        <text class="age-marker" x="860" y="310" text-anchor="middle">Age 44</text>
+
+        <!-- Tick marks on axis -->
+        <line x1="80"  y1="295" x2="80"  y2="300" stroke="rgba(44,44,44,0.12)" stroke-width="1"/>
+        <line x1="230" y1="295" x2="230" y2="300" stroke="rgba(44,44,44,0.12)" stroke-width="1"/>
+        <line x1="390" y1="295" x2="390" y2="300" stroke="rgba(44,44,44,0.12)" stroke-width="1"/>
+        <line x1="560" y1="295" x2="560" y2="300" stroke="rgba(44,44,44,0.12)" stroke-width="1"/>
+        <line x1="730" y1="295" x2="730" y2="300" stroke="rgba(44,44,44,0.12)" stroke-width="1"/>
+        <line x1="860" y1="295" x2="860" y2="300" stroke="rgba(44,44,44,0.12)" stroke-width="1"/>
+
+        <!-- Horizontal baseline (faint) -->
+        <line x1="40" y1="298" x2="880" y2="298" stroke="rgba(44,44,44,0.06)" stroke-width="0.5"/>
+
+        <!-- ── TRUNK LINE ──
+             The shared starting path. All five begin here.
+             Draws left to right over 1.2s on scroll trigger. -->
+        <path id="tl-trunk"
+          d="M 40 200 C 80 200 90 200 140 200"
+          stroke="#2C2C2C" stroke-width="2.5" fill="none"
+          stroke-linecap="round"
+          stroke-dasharray="110" stroke-dashoffset="110"/>
+
+        <!-- ── BRANCH 1: The Harvard Graduate ──
+             Institution: right school, wrong city, no patron
+             Rises slightly early, then plateaus at 32, slow late recovery -->
+        <path id="tl-b1"
+          d="M 140 200 C 200 195 230 175 290 160 C 350 148 390 145 450 148 C 510 152 540 160 590 165 C 650 170 700 168 760 160 C 810 154 840 148 870 142"
+          stroke="#C8A97A" stroke-width="1.8" fill="none"
+          stroke-linecap="round" opacity="0.5"
+          stroke-dasharray="800" stroke-dashoffset="800"/>
+
+        <!-- ── BRANCH 2: The State School Kid ──
+             Geography: wrong school, right city at 22, right room at 26
+             Flat start, then sharp climb from 390, arrives early -->
+        <path id="tl-b2"
+          d="M 140 200 C 190 202 220 205 270 208 C 320 210 355 210 390 208 C 430 205 460 185 510 162 C 560 142 610 128 670 118 C 720 110 780 108 870 106"
+          stroke="#C8A97A" stroke-width="1.8" fill="none"
+          stroke-linecap="round" opacity="0.5"
+          stroke-dasharray="820" stroke-dashoffset="820"/>
+
+        <!-- ── BRANCH 3: The Early Bloomer ──
+             Network: strong start, stayed home, network stalled
+             Rises well early, levels around 28, modest late climb -->
+        <path id="tl-b3"
+          d="M 140 200 C 185 192 220 178 270 165 C 320 154 355 150 400 150 C 445 150 480 152 530 155 C 580 158 620 158 680 155 C 730 152 790 148 870 144"
+          stroke="#C8A97A" stroke-width="1.8" fill="none"
+          stroke-linecap="round" opacity="0.5"
+          stroke-dasharray="790" stroke-dashoffset="790"/>
+
+        <!-- ── BRANCH 4: The Late Starter ──
+             Patron: dips early (no patron, no direction), finds one at 32
+             Real dip to 230px, then sharp recovery, climbs past plateau -->
+        <path id="tl-b4"
+          d="M 140 200 C 185 205 215 215 260 225 C 305 235 340 238 390 235 C 430 232 460 228 500 220 C 540 210 570 185 610 160 C 650 136 700 118 760 108 C 810 100 840 98 870 96"
+          stroke="#C8A97A" stroke-width="1.8" fill="none"
+          stroke-linecap="round" opacity="0.5"
+          stroke-dasharray="830" stroke-dashoffset="830"/>
+
+        <!-- ── BRANCH 5: The JD Vance ──
+             Skill + one patron at 24: oscillates early then one relationship
+             changes everything — steepest climb, arrives earliest -->
+        <path id="tl-b5"
+          d="M 140 200 C 180 200 210 202 250 205 C 285 208 310 210 340 208 C 365 205 378 195 390 178 C 410 155 440 132 490 112 C 540 94 600 84 670 78 C 730 74 790 72 870 70"
+          stroke="#C8A97A" stroke-width="2" fill="none"
+          stroke-linecap="round" opacity="0.5"
+          stroke-dasharray="850" stroke-dashoffset="850"/>
+
+        <!-- ── PATRON DOT on Branch 5 ──
+             The single moment everything changed -->
+        <circle id="tl-patron-dot" cx="390" cy="178" r="4.5"
+          fill="#C8A97A" opacity="0"
+          data-tooltip="patron"/>
+
+        <!-- ── CONVERGENCE GLOW DOTS ──
+             Appear when branches converge toward success -->
+        <circle id="tl-conv1" cx="870" cy="142" r="3" fill="#C8A97A" opacity="0"/>
+        <circle id="tl-conv2" cx="870" cy="106" r="3" fill="#C8A97A" opacity="0"/>
+        <circle id="tl-conv3" cx="870" cy="144" r="3" fill="#C8A97A" opacity="0"/>
+        <circle id="tl-conv4" cx="870" cy="96"  r="3" fill="#C8A97A" opacity="0"/>
+        <circle id="tl-conv5" cx="870" cy="70"  r="3" fill="#C8A97A" opacity="0"/>
+
+        <!-- Hover hit areas (invisible, wider than paths for easy targeting) -->
+        <path id="hit-b1" d="M 140 200 C 200 195 230 175 290 160 C 350 148 390 145 450 148 C 510 152 540 160 590 165 C 650 170 700 168 760 160 C 810 154 840 148 870 142"
+          stroke="transparent" stroke-width="20" fill="none" style="cursor:pointer;"
+          data-char="The Harvard Graduate" data-var="Institutional Proximity"
+          data-desc="Right school. Wrong city. No patron found until 36. Arrived at 42 — technically successful, privately frustrated."
+          onmouseenter="showTooltip(event,this)" onmouseleave="hideTooltip()"/>
+        <path id="hit-b2" d="M 140 200 C 190 202 220 205 270 208 C 320 210 355 210 390 208 C 430 205 460 185 510 162 C 560 142 610 128 670 118 C 720 110 780 108 870 106"
+          stroke="transparent" stroke-width="20" fill="none" style="cursor:pointer;"
+          data-char="The State School Kid" data-var="Geographic Proximity"
+          data-desc="Mediocre institution. Moved to New York at 22. Right rooms by 26. One mentor changed everything. Arrived at 31."
+          onmouseenter="showTooltip(event,this)" onmouseleave="hideTooltip()"/>
+        <path id="hit-b3" d="M 140 200 C 185 192 220 178 270 165 C 320 154 355 150 400 150 C 445 150 480 152 530 155 C 580 158 620 158 680 155 C 730 152 790 148 870 144"
+          stroke="transparent" stroke-width="20" fill="none" style="cursor:pointer;"
+          data-char="The Early Bloomer" data-var="Network Inheritance"
+          data-desc="Strong grades. Strong school. Stayed close to home. Network never expanded. Still arriving. Technically fine."
+          onmouseenter="showTooltip(event,this)" onmouseleave="hideTooltip()"/>
+        <path id="hit-b4" d="M 140 200 C 185 205 215 215 260 225 C 305 235 340 238 390 235 C 430 232 460 228 500 220 C 540 210 570 185 610 160 C 650 136 700 118 760 108 C 810 100 840 98 870 96"
+          stroke="transparent" stroke-width="20" fill="none" style="cursor:pointer;"
+          data-char="The Late Starter" data-var="Patron Access"
+          data-desc="No direction for a decade. Found one patron at 32. Trajectory reversed completely. Arrived at 38. Now irreplaceable."
+          onmouseenter="showTooltip(event,this)" onmouseleave="hideTooltip()"/>
+        <path id="hit-b5" d="M 140 200 C 180 200 210 202 250 205 C 285 208 310 210 340 208 C 365 205 378 195 390 178 C 410 155 440 132 490 112 C 540 94 600 84 670 78 C 730 74 790 72 870 70"
+          stroke="transparent" stroke-width="20" fill="none" style="cursor:pointer;"
+          data-char="The JD Vance" data-var="Skill Depth + One Relationship"
+          data-desc="No inherited network. Wrong geography to start. One patron at 24 — the dot on the line. Arrived at 32. Now the person others name."
+          onmouseenter="showTooltip(event,this)" onmouseleave="hideTooltip()"/>
+
+      </svg>
+
+    </div><!-- /canvas-wrap -->
+
+    <!-- ── INTERACTIVE LEGEND CARDS ──
+         Click any card to highlight that branch, dim others.
+         Story line expands on selection. Deselects on second tap. -->
+    <div class="timeline-legend" id="timelineLegend">
+
+      <div class="legend-card" id="lc1" onclick="selectBranch(1)">
+        <div class="lc-var">Institution</div>
+        <div class="lc-name">The Harvard Graduate</div>
+        <div class="lc-story">Right school. Wrong city. No patron until 36. Arrived at 42 — credentialed, not positioned.</div>
+      </div>
+
+      <div class="legend-card" id="lc2" onclick="selectBranch(2)">
+        <div class="lc-var">Geography</div>
+        <div class="lc-name">The State School Kid</div>
+        <div class="lc-story">Mediocre institution. Moved at 22. Right rooms by 26. One mentor changed everything. Arrived at 31.</div>
+      </div>
+
+      <div class="legend-card" id="lc3" onclick="selectBranch(3)">
+        <div class="lc-var">Network</div>
+        <div class="lc-name">The Early Bloomer</div>
+        <div class="lc-story">Strong start. Stayed home. Network never expanded beyond what they were born into. Still arriving.</div>
+      </div>
+
+      <div class="legend-card" id="lc4" onclick="selectBranch(4)">
+        <div class="lc-var">Patron Access</div>
+        <div class="lc-name">The Late Starter</div>
+        <div class="lc-story">No direction for a decade. Found one patron at 32. Trajectory reversed completely. Arrived at 38.</div>
+      </div>
+
+      <div class="legend-card" id="lc5" onclick="selectBranch(5)">
+        <div class="lc-var">Skill + One Relationship</div>
+        <div class="lc-name">The JD Vance</div>
+        <div class="lc-story">No inherited network. One patron at 24 — the dot on the line. Arrived at 32. Now the person others name.</div>
+      </div>
+
+    </div>
+
+    <!-- The question that makes it personal -->
+    <div class="timeline-question" id="tlQuestion">
+      <p class="timeline-q-text">"Which line is your child on?"</p>
+      <a href="VECTOR.html" class="timeline-q-cta">
+        Find out — begin the assessment
+        <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+      </a>
+    </div>
+
+  </div>
+</section>
+
+<!-- Tooltip (shared, positioned by JS) -->
+<div class="tl-tooltip" id="tlTooltip">
+  <div class="tl-tt-name" id="ttName"></div>
+  <div class="tl-tt-var" id="ttVar"></div>
+  <div class="tl-tt-desc" id="ttDesc"></div>
 </div>
 
+<!-- TRUTH -->
+<section class="section" id="how">
+  <div class="container">
+    <div class="truth-grid">
+      <div class="v-rise">
+        <div class="t-eyebrow" style="margin-bottom:var(--space-4);">What the industry misses</div>
+        <div class="v-rule"></div>
+        <h2 class="t-headline" style="margin-bottom:var(--space-6);">
+          For forty years, a woman in every affluent suburb has charged $400 an hour to tell families where to send their children to college.
+        </h2>
+        <div class="truth-body">
+          <p>She is not selling information. The internet destroyed information scarcity years ago. She is selling <strong>anxiety reduction.</strong> Identity preservation. The feeling of control in a process that feels uncontrollable.</p>
+          <p>VECTOR is not a college counselor. VECTOR is what comes after the counselor becomes irrelevant — a platform that maps the full trajectory and puts that intelligence in the hands of every family.</p>
+        </div>
+      </div>
+      <div class="truth-facts v-rise">
+        <div class="truth-fact">
+          <div class="truth-idx">01</div>
+          <div class="truth-item">College is one variable. <em>Trajectory is the product of eight.</em></div>
+        </div>
+        <div class="truth-fact">
+          <div class="truth-idx">02</div>
+          <div class="truth-item">Most students have no idea what industries exist within twenty miles of their house.</div>
+        </div>
+        <div class="truth-fact">
+          <div class="truth-idx">03</div>
+          <div class="truth-item">The counselor optimizes for admissions. <em>VECTOR optimizes for life.</em></div>
+        </div>
+        <div class="truth-fact">
+          <div class="truth-idx">04</div>
+          <div class="truth-item">No single university degree should dictate someone's ability to reach their ideal career.</div>
+        </div>
+        <div class="truth-fact">
+          <div class="truth-idx">05</div>
+          <div class="truth-item">The real algorithm of success has always existed. <em>Nobody made it visible. Until now.</em></div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══════════════════════════════════════════════════
+     PIECE 3 — THE CASE FILE
+     No name. Total specificity. The reframe completes here.
+═══════════════════════════════════════════════════ -->
+<section class="casefile-section" id="casefile">
+  <div class="casefile-wrap">
+
+    <!-- Eyebrow -->
+    <div class="casefile-eyebrow" id="cfe0">
+      The algorithm in a real life
+    </div>
+
+    <!-- Opening — the person, the year, the score -->
+    <p class="cf-para" id="cfe1">
+      He graduated from Louisiana State in 2003.
+    </p>
+
+    <!-- The score — large and prominent -->
+    <div class="cf-score" id="cfe2">
+      <span class="cf-score-num">31</span>
+      The algorithm would have scored him a 31.
+    </div>
+
+    <!-- The eight variables at that moment -->
+    <div class="cf-vars" id="cfe3">
+      <div class="cf-var-item">
+        <div class="cf-var-name">Institution</div>
+        <div class="cf-var-score low">3</div>
+      </div>
+      <div class="cf-var-item">
+        <div class="cf-var-name">Geography</div>
+        <div class="cf-var-score low">2</div>
+      </div>
+      <div class="cf-var-item">
+        <div class="cf-var-name">Network</div>
+        <div class="cf-var-score">4</div>
+      </div>
+      <div class="cf-var-item">
+        <div class="cf-var-name">Patron</div>
+        <div class="cf-var-score low">1</div>
+      </div>
+      <div class="cf-var-item">
+        <div class="cf-var-name">Capital</div>
+        <div class="cf-var-score">3</div>
+      </div>
+      <div class="cf-var-item">
+        <div class="cf-var-name">Skill</div>
+        <div class="cf-var-score">6</div>
+      </div>
+      <div class="cf-var-item">
+        <div class="cf-var-name">Visibility</div>
+        <div class="cf-var-score low">2</div>
+      </div>
+      <div class="cf-var-item">
+        <div class="cf-var-name">Luck Surface</div>
+        <div class="cf-var-score low">2</div>
+      </div>
+    </div>
+
+    <!-- What happened next — each move, each variable shift -->
+    <p class="cf-para" id="cfe4">
+      By every conventional measure, the trajectory was unremarkable.
+      Wrong school. Wrong city. No connections.
+      The kind of start that college counselors don't know how to advise around.
+    </p>
+
+    <!-- The first move -->
+    <div class="cf-pivot" id="cfe5">
+      He moved to Washington at twenty-two.
+      Geographic proximity became an eight.
+    </div>
+
+    <!-- The second move — the patron dot -->
+    <div class="cf-pivot" id="cfe6">
+      He found one person — a former deputy national security advisor —
+      at a dinner he almost didn't attend.
+      Patron access became a nine.
+    </div>
+
+    <!-- The arrival -->
+    <p class="cf-para" id="cfe7">
+      He arrived at his target role at thirty-one.
+    </p>
+
+    <!-- The comparison — the gut punch -->
+    <p class="cf-para" id="cfe8">
+      The Harvard graduate who sat beside him in that role arrived at thirty-four.
+    </p>
+
+    <!-- Bronze rule -->
+    <div class="cf-rule" id="cfe9"></div>
+
+    <!-- The closing verdict -->
+    <p class="cf-close" id="cfe10">
+      The algorithm does not care where you started.
+      It only asks what you did next.
+    </p>
+
+    <!-- CTA -->
+    <div class="cf-cta-wrap" id="cfe11">
+      <a href="VECTOR.html" class="btn">
+        Run the algorithm on your trajectory
+        <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+      </a>
+      <p class="t-caption" style="margin-top:var(--space-4);color:var(--ink-ghost);">
+        Free to begin. Three complete scenarios included.
+      </p>
+    </div>
+
+  </div>
+</section>
+
+<!-- DARK BAND — THE PROBLEM -->
+<section class="dark-band">
+  <div class="container">
+    <div class="t-eyebrow" style="margin-bottom:var(--space-6);">What the industry gets wrong</div>
+    <h2 class="t-headline v-rise" style="margin-bottom:var(--space-8);max-width:680px;">
+      Admissions strategy without <em>career visibility</em> is an incomplete answer.
+    </h2>
+    <div class="problem-grid v-rise">
+      <div class="problem-card">
+        <div class="problem-card-idx">01 — The wrong question</div>
+        <div class="problem-card-title">Will my child get into an elite school?</div>
+        <div class="problem-card-body">The question every counselor is paid to answer. The question that captures one moment in a forty-year trajectory and treats it as the whole story.</div>
+      </div>
+      <div class="problem-card">
+        <div class="problem-card-idx">02 — The right question</div>
+        <div class="problem-card-title">Will my child build a resilient, meaningful, high-opportunity life?</div>
+        <div class="problem-card-body">The question VECTOR is built to answer. Nonlinear. Geographic. Relationship-driven. Skill-compound. The full picture, not the acceptance letter.</div>
+      </div>
+      <div class="problem-card">
+        <div class="problem-card-idx">03 — The real gap</div>
+        <div class="problem-card-title">Nobody is helping students imagine adult life.</div>
+        <div class="problem-card-body">They are helping students optimize applications. That is a profoundly different job. VECTOR shows the student what adult life actually looks like and the clearest route to get there.</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- VARIABLES -->
+<section class="section">
+  <div class="container-wide">
+    <div class="var-intro-grid">
+      <h2 class="t-headline v-rise">The eight variables that determine <em>everything.</em></h2>
+      <p class="t-body v-rise" style="padding-top:var(--space-3);">These are not opinions. These are patterns extracted from thousands of career trajectories. Score yourself on each. VECTOR tells you your trajectory, your gap, and exactly which levers to pull first.</p>
+    </div>
+    <div class="var-grid v-rise">
+      <div class="var-item">
+        <div class="var-letter">I</div>
+        <div class="var-name">Institutional Proximity</div>
+        <div class="var-desc">Is your school a pipeline to your target?</div>
+      </div>
+      <div class="var-item">
+        <div class="var-letter">G</div>
+        <div class="var-name">Geographic Proximity</div>
+        <div class="var-desc">Are you physically near the opportunity?</div>
+      </div>
+      <div class="var-item">
+        <div class="var-letter">N</div>
+        <div class="var-name">Network Inheritance</div>
+        <div class="var-desc">What did you begin with?</div>
+      </div>
+      <div class="var-item">
+        <div class="var-letter">P</div>
+        <div class="var-name">Patron Access</div>
+        <div class="var-desc">Do you have one high-leverage champion?</div>
+      </div>
+      <div class="var-item">
+        <div class="var-letter">C</div>
+        <div class="var-name">Capital Runway</div>
+        <div class="var-desc">Can you afford to wait and take risks?</div>
+      </div>
+      <div class="var-item">
+        <div class="var-letter">S</div>
+        <div class="var-name">Skill Depth</div>
+        <div class="var-desc">How far along is your ten thousand hours?</div>
+      </div>
+      <div class="var-item">
+        <div class="var-letter">V</div>
+        <div class="var-name">Visibility</div>
+        <div class="var-desc">Who knows your name and why?</div>
+      </div>
+      <div class="var-item">
+        <div class="var-letter">L</div>
+        <div class="var-name">Luck Surface Area</div>
+        <div class="var-desc">How many high-value rooms are you in?</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- STORY -->
+<section class="section section-alt">
+  <div class="container">
+    <div class="story-grid">
+      <div class="v-rise">
+        <div class="t-eyebrow" style="margin-bottom:var(--space-4);">The algorithm in practice</div>
+        <div class="v-rule"></div>
+        <h2 class="t-subhead" style="margin-bottom:var(--space-6);">"I can't get to Washington, DC. So now what?"</h2>
+        <div class="t-body">
+          <p style="margin-bottom:var(--space-5);">You are seventeen. You are in Baton Rouge. You want to work in intelligence. You cannot afford Georgetown. You cannot relocate. Every resource you read tells you that the path runs through schools in cities that aren't yours.</p>
+          <p style="margin-bottom:var(--space-5);">Here is what the algorithm says.</p>
+          <p style="margin-bottom:var(--space-5);">You intern for your state representative — three miles from your house. Two summers. You publish two articles on national security policy that three people read.</p>
+          <p>At twenty-two you apply to Georgetown's graduate program. Your application includes a letter from a sitting congressman and a published research record. You are admitted. You arrive five years later than the undergraduate. You arrive better prepared than almost all of them.</p>
+        </div>
+      </div>
+      <div class="v-rise">
+        <div class="story-pull">
+          <p class="t-quote" style="font-size:var(--text-xl);">"The algorithm doesn't care where you started. It only asks what you're willing to do next."</p>
+        </div>
+        <p class="story-pull-attr">The Algorithm of Success</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- WHO -->
+<section class="section">
+  <div class="container">
+    <h2 class="t-headline v-rise" style="margin-bottom:var(--space-8);">Who runs <em>the algorithm.</em></h2>
+    <div class="who-grid v-rise">
+      <div class="who-card">
+        <div class="who-who">The ambitious parent</div>
+        <div class="who-what">"I'm about to spend $180,000 on a college education. I needed to know it was pointed in the right direction."</div>
+      </div>
+      <div class="who-card">
+        <div class="who-who">The sixteen-year-old striver</div>
+        <div class="who-what">"Nobody told me that where you go to school matters far less than what you do while you're there."</div>
+      </div>
+      <div class="who-card">
+        <div class="who-who">The forty-five-year-old who's ready</div>
+        <div class="who-what">"Twenty years of pattern recognition, and I finally understand which direction to point it."</div>
+      </div>
+      <div class="who-card">
+        <div class="who-who">The first-generation student</div>
+        <div class="who-what">"My parents have no connections. VECTOR showed me exactly how to build in four years what others inherit."</div>
+      </div>
+      <div class="who-card">
+        <div class="who-who">The pre-med at fourteen</div>
+        <div class="who-what">"I found out the path to neurosurgery is sixteen years — and that I'm already three years ahead."</div>
+      </div>
+      <div class="who-card">
+        <div class="who-who">The school counselor</div>
+        <div class="who-what">"I've given career guidance for twenty years. This is the first tool that makes the invisible rules visible."</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- MODES -->
+<section class="section section-alt" id="modes">
+  <div class="container">
+    <div class="t-eyebrow v-rise" style="margin-bottom:var(--space-4);">Three trajectories. One algorithm.</div>
+    <div class="v-rule"></div>
+    <h2 class="t-headline v-rise" style="margin-bottom:var(--space-8);max-width:600px;">
+      VECTOR reads you automatically. <em>The platform adapts.</em>
+    </h2>
+    <div class="modes-grid v-rise">
+      <div class="mode-card youth">
+        <div class="mode-age">Under 25 — Youth</div>
+        <div class="mode-name">The Builder</div>
+        <div class="mode-tagline">"Your trajectory starts now."</div>
+        <div class="mode-body">Institutional and geographic proximity weighted highest. The decisions made in the next two years compound for the next twenty.</div>
+      </div>
+      <div class="mode-card prime">
+        <div class="mode-age">25–40 — Prime</div>
+        <div class="mode-name">The Accelerator</div>
+        <div class="mode-tagline">"Your next move defines the decade."</div>
+        <div class="mode-body">The full algorithm balanced. You have credentials and experience. Now the question is sequencing. VECTOR maps the highest-leverage move available to you right now.</div>
+      </div>
+      <div class="mode-card pivot">
+        <div class="mode-age">40+ — Pivot</div>
+        <div class="mode-name">The Activator</div>
+        <div class="mode-tagline">"Twenty years of pattern recognition. Here's where to point it."</div>
+        <div class="mode-body">Patron access and visibility weighted highest. At this stage, who knows you and who champions you determines everything.</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- FEATURES -->
+<section class="section">
+  <div class="container">
+    <div class="t-eyebrow v-rise" style="margin-bottom:var(--space-4);">What the algorithm unlocks</div>
+    <div class="v-rule"></div>
+    <h2 class="t-headline v-rise" style="margin-bottom:var(--space-8);max-width:500px;">Everything included in your assessment.</h2>
+    <div class="v-rise">
+      <div class="feature-row">
+        <div class="feature-idx">01</div>
+        <div>
+          <div class="feature-badge badge-free">Included free</div>
+          <div class="feature-name">Vector Score + Gap Map</div>
+        </div>
+        <div class="feature-desc">Your score out of 100. A radar chart across all eight variables. Your timeline to target role. The single most critical variable holding you back — visible the moment the assessment ends.</div>
+      </div>
+      <div class="feature-row">
+        <div class="feature-idx">02</div>
+        <div>
+          <div class="feature-badge badge-free">Included free</div>
+          <div class="feature-name">Score Recalculator</div>
+        </div>
+        <div class="feature-desc">Log a real-world move — secured a mentor, relocated, published something — and watch your score update in real time. The radar chart redraws. Years recovered appear in your timeline. The algorithm never stops running.</div>
+      </div>
+      <div class="feature-row">
+        <div class="feature-idx">03</div>
+        <div>
+          <div class="feature-badge badge-paid">Full access</div>
+          <div class="feature-name">The VECTOR Report</div>
+        </div>
+        <div class="feature-desc">An eight-section personal trajectory brief. Variable analysis, critical gap interventions, geographic intelligence, three-year action plan, field intelligence, the algorithm's verdict. Delivered to your email. Downloadable as PDF.</div>
+      </div>
+      <div class="feature-row">
+        <div class="feature-idx">04</div>
+        <div>
+          <div class="feature-badge badge-paid">Full access</div>
+          <div class="feature-name">The Counterfactual Engine</div>
+        </div>
+        <div class="feature-desc">What if you had taken that role at twenty-four? What if you relocate now? Run any past or future decision through the algorithm. See the trajectory delta — years gained or lost — and what changes next.</div>
+      </div>
+      <div class="feature-row">
+        <div class="feature-idx">05</div>
+        <div>
+          <div class="feature-badge badge-paid">Full access</div>
+          <div class="feature-name">Unlimited Scenarios</div>
+        </div>
+        <div class="feature-desc">Every career. Every age. Every what-if. Run the algorithm as many times as you need. Your entire household, covered. Three free scenarios included for every new user.</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- CENTRE LINE -->
+<section class="centre-line section-alt" id="centreStatement">
+  <div class="container">
+    <div class="t-eyebrow v-rise" style="margin-bottom:var(--space-6);">The algorithm's perspective</div>
+    <div class="v-rule" style="margin:0 auto var(--space-8);"></div>
+    <h2 class="t-headline" style="margin:0 auto var(--space-9);line-height:1.5;">
+      <span class="cl-line cl-line-1" id="cl1">It takes ten years to become known.</span>
+      <span class="cl-line cl-line-2" id="cl2" style="margin-top:var(--space-5);display:block;">Twenty-five to become an overnight success.</span>
+      <span class="cl-line cl-line-3" id="cl3" style="margin-top:var(--space-5);display:block;">VECTOR shows you which years to choose.</span>
+    </h2>
+    <p class="t-body v-rise" id="cl4body" style="margin:0 auto var(--space-8);opacity:0;transform:translateY(10px);transition:opacity 800ms ease,transform 800ms ease;">
+      The path is long. The algorithm makes it shorter.<br>The only question is when you decide to start running it.
+    </p>
+    <div class="v-rise" id="cl4cta" style="opacity:0;transform:translateY(8px);transition:opacity 700ms ease,transform 700ms ease;">
+      <a href="VECTOR.html" class="btn">Begin your assessment</a>
+      <p class="t-caption" style="margin-top:var(--space-4);">Free. Three scenarios. Takes twelve minutes.</p>
+    </div>
+  </div>
+</section>
+
+<!-- PRICING -->
+<section class="section" id="access">
+  <div class="container">
+    <div class="t-eyebrow v-rise" style="margin-bottom:var(--space-4);">Access</div>
+    <div class="v-rule"></div>
+    <h2 class="t-headline v-rise" style="margin-bottom:var(--space-8);">The most considered <em>$400</em> you will spend this year.</h2>
+    <div class="pricing-grid v-rise">
+      <div class="price-card">
+        <div class="price-tier">Free — Always</div>
+        <div class="price-amount">$0</div>
+        <div class="price-period">No credit card. No commitment.</div>
+        <div class="price-divider"></div>
+        <ul class="price-list">
+          <li>Three complete scenario assessments</li>
+          <li>All fifty-plus career paths</li>
+          <li>Vector Score and Drive Multiplier</li>
+          <li>Radar chart Gap Map</li>
+          <li>Score Recalculator — log moves, update score</li>
+          <li class="dim">Full VECTOR Report (first three sections)</li>
+          <li class="dim">Counterfactual Engine</li>
+          <li class="dim">Unlimited scenarios</li>
+        </ul>
+        <a href="VECTOR.html" class="price-cta">Begin free</a>
+      </div>
+      <div class="price-card featured">
+        <div class="price-tier">Full Access</div>
+        <div class="price-amount">$400</div>
+        <div class="price-period">Per year — your entire household</div>
+        <div class="price-divider"></div>
+        <ul class="price-list">
+          <li>Everything in Free</li>
+          <li>Unlimited scenarios — every career</li>
+          <li>Full eight-section VECTOR Report</li>
+          <li>PDF download and shareable link</li>
+          <li>Counterfactual Engine — past and future</li>
+          <li>Full intervention library with ninety-day plans</li>
+          <li>Next highest-leverage move after every log</li>
+          <li>Every household member covered</li>
+        </ul>
+        <a href="#" class="price-cta featured-cta" onclick="handlePaywall(event)">Unlock VECTOR — $400 per year</a>
+      </div>
+    </div>
+    <p class="pricing-note v-rise">
+      You are about to spend $180,000 on a college education.<br>
+      VECTOR costs $400 and tells you if it's pointed in the right direction.<br>
+      That's not $400 per hour. That's $400 per year.
+    </p>
+  </div>
+</section>
+
+<!-- EMAIL -->
+<section class="email-section">
+  <div class="container">
+    <h2 class="t-headline v-rise">Stay ahead of the algorithm.</h2>
+    <p class="t-body v-rise">Career intelligence and trajectory research — delivered to the people who take this seriously.</p>
+    <div class="v-rise">
+      <div class="email-row" id="emailForm">
+        <input class="email-inp" type="email" id="emailInp" placeholder="Your email address">
+        <button class="email-btn" onclick="submitEmail()">Join the list</button>
+      </div>
+      <div id="emailSuccess">You're in. The algorithm will find you.</div>
+      <p class="email-note">No noise. One email when something is worth your time.</p>
+    </div>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <div class="footer-inner">
+    <div>
+      <div class="footer-mark">VECTOR</div>
+      <div class="footer-sub">Career trajectory intelligence</div>
+    </div>
+    <div class="footer-links">
+      <a href="VECTOR.html" class="footer-link">Assessment</a>
+      <a href="#modes" class="footer-link">Who it's for</a>
+      <a href="#access" class="footer-link">Access</a>
+    </div>
+    <div class="footer-copy">© 2025 VECTOR — Based on The Algorithm of Success</div>
+  </div>
+</footer>
+
 <script>
-// ═══════════════════════════════
-// SWIPE STATE MACHINE
-// State 0: seal only (on load)
-// State 1: diamond + hairlines revealed (first swipe right)
-// State 2: byline fades in/holds/out (second swipe right)
-// State 3: enquire + brackets (final)
-// ═══════════════════════════════
-
-let state = 0;
-let touchStartX = 0;
-let touchStartY = 0;
-let sealSettled = false;
-
-// Seal settles at ~5.5s — enable swipe after
-setTimeout(() => {
-  sealSettled = true;
-  // Show edge hint
-  document.getElementById('edgeHint').style.opacity = '0.7';
-}, 5500);
-
-document.addEventListener('touchstart', e => {
-  touchStartX = e.changedTouches[0].clientX;
-  touchStartY = e.changedTouches[0].clientY;
-}, { passive: true });
-
-document.addEventListener('touchend', e => {
-  if (!sealSettled) return;
-  if (document.getElementById('drawer').classList.contains('open')) return;
-
-  const dx = e.changedTouches[0].clientX - touchStartX;
-  const dy = e.changedTouches[0].clientY - touchStartY;
-
-  // Must be horizontal and rightward, min 40px
-  if (Math.abs(dx) < 40 || Math.abs(dx) < Math.abs(dy)) return;
-  if (dx < 0) return; // only right swipes
-
-  advanceState();
-}, { passive: true });
-
-function advanceState() {
-  if (state === 0) {
-    // First swipe — diamond slides in
-    state = 1;
-    document.getElementById('edgeHint').classList.add('hidden');
-    document.getElementById('diamondRow').classList.add('revealed');
-
-    // After diamond settles (~2s), re-show edge hint for second swipe
-    setTimeout(() => {
-      if (state === 1) {
-        document.getElementById('edgeHint').classList.remove('hidden');
-      }
-    }, 2200);
-
-  } else if (state === 1) {
-    // Second swipe — byline fades in, holds, fades out
-    state = 2;
-    document.getElementById('edgeHint').classList.add('hidden');
-    const byline = document.getElementById('byline');
-    byline.classList.add('fading');
-
-    // After 9s animation completes, show enquire + brackets
-    setTimeout(() => {
-      state = 3;
-      document.getElementById('enquireBtn').classList.add('visible');
-      document.getElementById('brackets').classList.add('visible');
-    }, 9000);
-  }
-}
-
-// ═══════════════════════════════
-// DRAWER
-// ═══════════════════════════════
-let history = [];
-let greeted = false;
-
-function openDrawer() {
-  document.getElementById('stage').classList.add('blurred');
-  const btn = document.getElementById('enquireBtn');
-  btn.style.opacity = '0';
-  btn.style.pointerEvents = 'none';
-  document.getElementById('drawer').classList.add('open');
-  setTimeout(() => document.getElementById('chatInput').focus(), 650);
-  if (!greeted) { greet(); greeted = true; }
-}
-
-function closeDrawer() {
-  document.getElementById('stage').classList.remove('blurred');
-  const btn = document.getElementById('enquireBtn');
-  btn.style.opacity = '';
-  btn.style.pointerEvents = '';
-  document.getElementById('drawer').classList.remove('open');
-}
-
-// ═══════════════════════════════
-// AGENT
-// ═══════════════════════════════
-const SYSTEM = `You are the voice of Aesthetic Leaders Dinner.
-
-You are not a chatbot. You are not an assistant. You are the composed, unhurried presence at the door of something private — a Lady or Gentleman serving Ladies and Gentlemen. Like a senior member of staff at the Ritz-Carlton: you know everything, you share very little, you make every person feel considered without revealing what they have not earned.
-
-BRAND DOCTRINE
-"We do not invite. We select."
-"We are not an event. We are a controlled environment for high-value people."
-"Nothing loud. Nothing crowded. Nothing transactional."
-
-WHO ALD IS
-Aesthetic Leaders Dinner. Private dinners for practice owners and senior operators in aesthetic medicine. 15 attendees. One sponsor. No panels. No pitches. No product demos. The sponsor contributes to the evening and has one brief moment. The dinner is the event. Attendance is by selection only. ALD reaches out to those it wants in the room. Visitors do not apply — they are considered.
-
-VOICE RULES
-Short sentences. One idea at a time. Prose only — never lists or bullet points. Never more than 3 sentences per response. Quiet confidence. Warmth without familiarity. Precision without coldness. End every response on a soft open, never a call to action. Say less than you know. Never over-explain.
-
-ALLOWED VOCABULARY
-select, curated, private, dinner, room, considered, operators, practice owners, senior, the list, by selection, specific, direct, the right people, controlled, unhurried, earned, presence, serious, reach out
-
-FORBIDDEN — NEVER USE
-join, sign up, register, ticket, event (used generically), exclusive (stated loudly), amazing, incredible, exciting, opportunity, networking, conference, attend, apply, open to everyone, welcome, get involved, be part of, limited time, spots are filling, don't miss out — and never any exclamation point under any circumstance.
-
-HOW TO RESPOND
-
-What is ALD: "Aesthetic Leaders Dinner. Small, private dinners for practice owners and senior operators in aesthetic medicine. 15 people. No panels, no pitches — just the right people in a room."
-How to attend: "Attendance is by selection. We reach out to those we want in the room. If you are the right fit, you will hear from us."
-Cost or pricing: "The dinner is hosted. There is no ticket price. We are selective about who is in the room because the value comes from the people."
-Is it a sales event: "No panels, no pitches, no product demos. One sponsor is present — they contribute to the evening and have one brief moment. The dinner is the event."
-Who else is attending: "The guest list stays private until the evening. That is part of what makes the room work."
-Where or when: "We operate across select markets. Timing and location are shared privately with those we reach out to."
-Someone expresses interest: Acknowledge with quiet warmth. Do not send a link or form. Say something like: "Noted. The right people find their way to the right room." Leave the door open — not wide open.
-Not the right time: "Completely understood. Context and timing change — and your name stays with us."
-Who attends: "Practice owners. Founders. Senior operators in aesthetic medicine. People building something serious."
-About sponsors: "One sponsor per dinner. Vetted, relevant to the room, present for one brief moment. The evening belongs to the attendees."
-If pushed for more: Stay composed. "We share what we share, and keep what we keep. That is what makes the room worth being in."
-Cannot answer: "That is not something we speak to publicly." Nothing more. No apology.
-
-WHAT YOU NEVER DO
-Never reveal guest names, sponsor names, specific cities, or specific dates. Never send links, forms, or URLs. Never use marketing language. Never apologize for what you will not share. Never explain the brand at length. Never more than 3 sentences. Never an exclamation point. Never sound like a chatbot.
-
-You are the room before the room. Conduct yourself accordingly.`;
-
-async function greet() {
-  await callAPI([{ role: 'user', content: 'A visitor has just opened the enquiry window on the ALD website. One sentence only. The composed, unhurried acknowledgment of someone already present — not a greeting, not a welcome. Simply: presence. As a senior Ritz-Carlton staff member would acknowledge a guest who has just entered a private room. Nothing more.' }], true);
-}
-
-async function sendMessage() {
-  const input = document.getElementById('chatInput');
-  const text = input.value.trim();
-  if (!text) return;
-  input.value = '';
-  appendMsg('user', text);
-  history.push({ role: 'user', content: text });
-  await callAPI(history, false);
-}
-
-async function callAPI(messages, isGreet) {
-  const log = document.getElementById('chatLog');
-  const typingEl = document.createElement('div');
-  typingEl.className = 'msg agent';
-  typingEl.innerHTML = '<div class="msg-dot"></div><div class="typing"><span></span><span></span><span></span></div>';
-  log.appendChild(typingEl);
-  log.scrollTop = log.scrollHeight;
-
-  try {
-    const res = await fetch('https://api.aestheticleadersdinner.com/api/chat', {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({ messages: messages, system: SYSTEM })
+// ── DISMISS INTRO (global — called by click and by sequence end) ──
+function dismissIntro(){
+  var el = document.getElementById('intro');
+  if(!el) return;
+  el.style.transition = 'opacity 600ms ease';
+  el.style.opacity = '0';
+  el.style.pointerEvents = 'none';
+  setTimeout(function(){
+    el.style.display = 'none';
+    el.classList.remove('active');
+    try{ sessionStorage.setItem('v_intro_seen','1'); }catch(e){}
+    document.documentElement.classList.add('intro-seen');
+    document.querySelectorAll('.v-rise').forEach(function(r){
+      r.classList.add('visible');
     });
-    const data = await res.json();
-    const reply = data.content?.[0]?.text || 'One moment.';
-    typingEl.remove();
-    appendMsg('agent', reply);
-    if (!isGreet) history.push({ role: 'assistant', content: reply });
-  } catch (e) {
-    typingEl.remove();
-    appendMsg('agent', 'One moment, please.');
+  }, 600);
+}
+
+// ── STRIPE PLACEHOLDER ──
+const STRIPE_URL = null; // replace with live Stripe link
+
+// ── SCROLL REVEAL ──
+const obs = new IntersectionObserver((entries) => {
+  entries.forEach(e => {
+    if(e.isIntersecting){ e.target.classList.add('visible'); obs.unobserve(e.target); }
+  });
+}, { threshold: 0.08, rootMargin: '0px 0px -32px 0px' });
+document.querySelectorAll('.v-rise').forEach(el => obs.observe(el));
+
+// ── COUNTER ──
+function animateCounter(el, target, ms) {
+  let n = 0;
+  const step = target / ((ms / 1000) * 60);
+  const t = setInterval(() => {
+    n += step;
+    if(n >= target){ n = target; clearInterval(t); }
+    el.textContent = Math.floor(n) + '%';
+  }, 1000/60);
+}
+const cObs = new IntersectionObserver((entries) => {
+  entries.forEach(e => {
+    if(e.isIntersecting){
+      animateCounter(document.getElementById('counterNum'), 97, 1800);
+      cObs.unobserve(e.target);
+    }
+  });
+}, { threshold: 0.3 });
+const sb = document.querySelector('.statement-band');
+if(sb) cObs.observe(sb);
+
+// ── DEMO CARD REMOVED ──
+
+// ── EMAIL ──
+function submitEmail(){
+  const val = document.getElementById('emailInp').value.trim();
+  if(!val || !val.includes('@')){
+    document.getElementById('emailInp').style.borderColor = 'rgba(139,58,58,0.4)';
+    return;
+  }
+  localStorage.setItem('v_email', val);
+  document.getElementById('emailForm').style.display = 'none';
+  document.getElementById('emailSuccess').style.display = 'block';
+}
+document.getElementById('emailInp').addEventListener('keydown', e => {
+  if(e.key === 'Enter') submitEmail();
+});
+
+// ── PAYWALL CTA ──
+function handlePaywall(e){
+  e.preventDefault();
+  if(STRIPE_URL){ window.location.href = STRIPE_URL; return; }
+  const email = prompt('Enter your email to join the early access list for VECTOR Full Access — $400 per year:');
+  if(email && email.includes('@')){
+    localStorage.setItem('v_email', email);
+    localStorage.setItem('v_early_access', 'true');
+    alert("You're on the list. We'll reach out when full access opens.");
   }
 }
 
-function appendMsg(role, text) {
-  const log = document.getElementById('chatLog');
-  const el = document.createElement('div');
-  el.className = 'msg ' + (role === 'agent' ? 'agent' : 'user');
-  el.innerHTML = '<div class="msg-dot"></div><div class="msg-bubble">' + text + '</div>';
-  log.appendChild(el);
-  log.scrollTop = log.scrollHeight;
+// ═══════════════════════════════════════════════════════
+// INTRO SEQUENCE ORCHESTRATOR — REVISED TIMING
+// Act 1: 0–4.2s   Compass draws, wordmark, breath, dissolves up
+// Act 2: 4.2–29s  Four sentences, bronze rule, darkness, page opens
+//
+// Timing philosophy:
+//   Each sentence stays until the reader has had time
+//   not just to read it but to respond to it internally.
+//   Sentence 2 is an instruction — it requires retrieval time.
+//   The darkness after sentence 4 is not dead time.
+//   It is the reader sitting with what just happened.
+// ═══════════════════════════════════════════════════════
+(function(){
+  var intro = document.getElementById('intro');
+  var act1  = document.getElementById('introAct1');
+  var act2  = document.getElementById('introAct2');
+  var rule  = document.getElementById('introRule');
+  var p1    = document.getElementById('prov1');
+  var p2    = document.getElementById('prov2');
+  var p3    = document.getElementById('prov3');
+  var p4    = document.getElementById('prov4');
+
+  // If intro already seen or not active, fire hero animations and exit
+  var introAlreadySeen = false;
+  try{ introAlreadySeen = !!sessionStorage.getItem('v_intro_seen'); }catch(e){}
+  if(introAlreadySeen || !intro || !intro.classList.contains('active')){
+    document.querySelectorAll('.v-rise').forEach(function(el){ el.classList.add('visible'); });
+    return;
+  }
+
+  // ── Absolute failsafe ──
+  // If sequence fails for any reason, force-dismiss after 32 seconds
+  var failsafe = setTimeout(function(){
+    if(intro && intro.style.display !== 'none'){
+      intro.style.transition = 'opacity 600ms ease';
+      intro.style.opacity = '0';
+      setTimeout(function(){
+        dismissIntro();
+      }, 600);
+    }
+  }, 32000);
+
+  // ── Utility: show element ──
+  function show(el){ if(el){ el.classList.add('visible'); el.classList.remove('fade'); } }
+
+  // ── Utility: fade element ──
+  function fade(el){ if(el){ el.classList.remove('visible'); el.classList.add('fade'); } }
+
+  // ── ACT 1: Compass sequence ──
+  // CSS drives all drawing animations from 0.4s–2.6s
+  // At 3.4s: mark breathes
+  // At 4.2s: act1 dissolves upward, act2 activates
+
+  setTimeout(function(){
+    var mark = act1.querySelector('.intro-mark');
+    if(mark) mark.style.animation = 'markBreathe 700ms ease-in-out forwards';
+  }, 3400);
+
+  setTimeout(function(){
+    act1.classList.add('dissolve');
+    act2.classList.add('active');
+
+    // ── ACT 2: Provocation sequence ──
+    // All times below are relative to this point (4200ms from load)
+
+    // ── SENTENCE 1 ──
+    // "You have been optimizing for the wrong thing."
+    // Provocation. Directed personally. Needs discomfort time.
+    // Appear after 400ms clean slate pause.
+    setTimeout(function(){ show(p1); }, 400);
+    // Hold 3500ms — long enough to read three times and feel it
+    setTimeout(function(){ fade(p1); }, 3900);
+
+    // ── SENTENCE 2 ──
+    // "Think of the most successful person you know personally."
+    // An instruction. Reader must retrieve a real person from memory.
+    // Appear 800ms after sentence 1 fades (fade=800ms, gap=0ms)
+    setTimeout(function(){ show(p2); }, 4700);
+    // Hold 4500ms — minimum for genuine mental retrieval
+    setTimeout(function(){ fade(p2); }, 9200);
+
+    // ── BRONZE RULE MOMENT ──
+    // Appears in the gap between sentences 2 and 3
+    // Signals: a new thought is coming. Gives the eye somewhere to rest.
+    // Appears 400ms after sentence 2 fades, holds 800ms, then fades
+    setTimeout(function(){ show(rule); }, 9600);
+    setTimeout(function(){ fade(rule); }, 10400);
+
+    // ── SENTENCE 3 ──
+    // "Where did they go to school?"
+    // Short. Lands differently now that they have a person in mind.
+    // The recognition happens here — give it room.
+    setTimeout(function(){ show(p3); }, 10600);
+    // Hold 3800ms
+    setTimeout(function(){ fade(p3); }, 14400);
+
+    // ── DARKNESS TRANSITION ──
+    // Background shifts to dark before sentence 4.
+    // Signals a definitive shift in register.
+    // Slow transition — 1200ms.
+    setTimeout(function(){
+      intro.classList.add('going-dark');
+      p4.classList.add('on-dark');
+    }, 15000);
+
+    // ── SENTENCE 4 ──
+    // "The algorithm already knows the answer."
+    // The resolution. Arrives in darkness. Let it sit.
+    setTimeout(function(){ show(p4); }, 15400);
+    // Hold 3500ms
+    setTimeout(function(){ fade(p4); }, 18900);
+
+    // ── POST-SENTENCE DARKNESS ──
+    // 800ms of pure darkness after sentence 4 fades.
+    // The most important moment — the reader sitting with what happened.
+    // Nothing appears. Nothing moves. This silence is intentional.
+
+    // ── PAGE OPENS ──
+    // Overlay fades out over 1000ms — more graceful than before.
+    setTimeout(function(){
+      intro.classList.add('fade-out');
+      setTimeout(function(){
+        clearTimeout(failsafe);
+        dismissIntro();
+      }, 1000);
+    }, 19700);
+
+  }, 4200); // act1 dissolve trigger
+
+})();
+
+
+// ═══════════════════════════════════════════════════════
+// PIECE 2 — TIMELINE ANIMATION ENGINE
+// ═══════════════════════════════════════════════════════
+(function(){
+
+  var tlAnimated = false;
+
+  // ── Animate a single SVG path (stroke-dashoffset draw) ──
+  function drawPath(id, duration, delay, finalOpacity){
+    finalOpacity = finalOpacity || 1;
+    setTimeout(function(){
+      var el = document.getElementById(id);
+      if(!el) return;
+      var len = el.getTotalLength ? el.getTotalLength() :
+                parseFloat(el.getAttribute('stroke-dasharray')) || 800;
+      el.style.strokeDasharray  = len;
+      el.style.strokeDashoffset = len;
+      el.style.transition =
+        'stroke-dashoffset ' + duration + 'ms cubic-bezier(0.4,0,0.2,1),' +
+        'opacity 400ms ease';
+      requestAnimationFrame(function(){
+        requestAnimationFrame(function(){
+          el.style.strokeDashoffset = '0';
+          el.style.opacity = finalOpacity;
+        });
+      });
+    }, delay);
+  }
+
+  // ── Fade in an element ──
+  function fadeIn(id, delay, duration){
+    duration = duration || 500;
+    setTimeout(function(){
+      var el = document.getElementById(id);
+      if(!el) return;
+      el.style.transition = 'opacity ' + duration + 'ms ease';
+      el.style.opacity = '1';
+    }, delay);
+  }
+
+  // ── Full animation sequence ──
+  function runTimeline(){
+    if(tlAnimated) return;
+    tlAnimated = true;
+
+    // 1. Trunk draws (0ms)
+    drawPath('tl-trunk', 600, 0, 1);
+
+    // 2. Branches draw sequentially — each with increasing opacity
+    //    They peel off the trunk with staggered delays
+    drawPath('tl-b1', 2200, 400,  0.45);
+    drawPath('tl-b2', 2400, 600,  0.55);
+    drawPath('tl-b3', 2100, 500,  0.45);
+    drawPath('tl-b4', 2600, 700,  0.60);
+    drawPath('tl-b5', 2800, 800,  0.70);
+
+    // 3. Patron dot appears on Branch 5 at the inflection point
+    fadeIn('tl-patron-dot', 2200, 400);
+
+    // 4. Convergence dots light up at endpoints
+    fadeIn('tl-conv1', 3200, 600);
+    fadeIn('tl-conv2', 3400, 600);
+    fadeIn('tl-conv3', 3300, 600);
+    fadeIn('tl-conv4', 3600, 600);
+    fadeIn('tl-conv5', 3800, 600);
+
+    // 5. Legend cards appear — staggered
+    setTimeout(function(){
+      ['lc1','lc2','lc3','lc4','lc5'].forEach(function(id, i){
+        setTimeout(function(){
+          var el = document.getElementById(id);
+          if(el) el.classList.add('visible');
+        }, i * 120);
+      });
+    }, 3400);
+
+    // 6. Branch brightens on convergence (opacity transition)
+    setTimeout(function(){
+      ['tl-b2','tl-b4','tl-b5'].forEach(function(id){
+        var el = document.getElementById(id);
+        if(el){
+          el.style.transition += ', opacity 1200ms ease';
+          el.style.opacity = '0.9';
+        }
+      });
+    }, 4000);
+
+    // 7. Closing question fades in
+    setTimeout(function(){
+      var q = document.getElementById('tlQuestion');
+      if(q) q.classList.add('visible');
+    }, 4600);
+  }
+
+  // ── Scroll trigger ──
+  var section = document.getElementById('timeline');
+  if(section && 'IntersectionObserver' in window){
+    var obs = new IntersectionObserver(function(entries){
+      entries.forEach(function(e){
+        if(e.isIntersecting){
+          runTimeline();
+          obs.unobserve(section);
+        }
+      });
+    }, { threshold: 0.15 });
+    obs.observe(section);
+  }
+
+})();
+
+// ── SELECT BRANCH — legend card interaction ──
+var _activeBranch = null;
+
+function selectBranch(n){
+  var branches = [1,2,3,4,5];
+
+  if(_activeBranch === n){
+    // Deselect — restore all to default
+    _activeBranch = null;
+    branches.forEach(function(b){
+      var path = document.getElementById('tl-b'+b);
+      var card = document.getElementById('lc'+b);
+      if(path){ path.style.opacity='0.5'; path.style.strokeWidth='1.8'; }
+      if(card){ card.classList.remove('active','dimmed'); }
+    });
+    // Patron dot back to normal
+    var dot = document.getElementById('tl-patron-dot');
+    if(dot) dot.style.animation='';
+    return;
+  }
+
+  _activeBranch = n;
+
+  branches.forEach(function(b){
+    var path = document.getElementById('tl-b'+b);
+    var card = document.getElementById('lc'+b);
+    if(b === n){
+      // Highlight selected
+      if(path){ path.style.opacity='1'; path.style.strokeWidth = b===5?'2.8':'2.4'; }
+      if(card){ card.classList.add('active'); card.classList.remove('dimmed'); }
+    } else {
+      // Dim others
+      if(path){ path.style.opacity='0.1'; path.style.strokeWidth='1.8'; }
+      if(card){ card.classList.add('dimmed'); card.classList.remove('active'); }
+    }
+  });
+
+  // Patron dot pulses when Branch 5 (JD Vance) is selected
+  var dot = document.getElementById('tl-patron-dot');
+  if(dot){
+    if(n === 5){
+      dot.style.opacity = '1';
+      dot.style.animation = 'patronPulse 1.2s ease-in-out infinite';
+    } else {
+      dot.style.animation = '';
+      // Restore dot to its natural state
+      setTimeout(function(){ dot.style.opacity = _activeBranch ? '0' : ''; }, 300);
+    }
+  }
 }
+
+
+// ── TOOLTIP FUNCTIONS — global scope for inline SVG handlers ──
+function showTooltip(e, el){
+  var tooltip = document.getElementById('tlTooltip');
+  if(!tooltip) return;
+  var char = el.getAttribute('data-char');
+  var vari = el.getAttribute('data-var');
+  var desc = el.getAttribute('data-desc');
+  var ttName = document.getElementById('ttName');
+  var ttVar  = document.getElementById('ttVar');
+  var ttDesc = document.getElementById('ttDesc');
+  if(ttName) ttName.textContent = char;
+  if(ttVar)  ttVar.textContent  = vari;
+  if(ttDesc) ttDesc.textContent = desc;
+  tooltip.classList.add('visible');
+  tooltip.style.left = e.clientX + 'px';
+  tooltip.style.top  = (e.clientY - 12) + 'px';
+}
+function hideTooltip(){
+  var tooltip = document.getElementById('tlTooltip');
+  if(tooltip) tooltip.classList.remove('visible');
+}
+document.addEventListener('mousemove', function(e){
+  var tooltip = document.getElementById('tlTooltip');
+  if(tooltip && tooltip.classList.contains('visible')){
+    tooltip.style.left = e.clientX + 'px';
+    tooltip.style.top  = (e.clientY - 12) + 'px';
+  }
+});
+// ═══════════════════════════════════════════════════════
+// PIECE 3 — CASE FILE SCROLL REVEALS
+// Each element staggers in as reader scrolls through
+// ═══════════════════════════════════════════════════════
+(function(){
+  var caseEls = [
+    {id:'cfe0',  delay:0},
+    {id:'cfe1',  delay:80},
+    {id:'cfe2',  delay:160},
+    {id:'cfe3',  delay:280},
+    {id:'cfe4',  delay:100},
+    {id:'cfe5',  delay:180},
+    {id:'cfe6',  delay:280},
+    {id:'cfe7',  delay:100},
+    {id:'cfe8',  delay:200},
+    {id:'cfe9',  delay:300},
+    {id:'cfe10', delay:500},
+    {id:'cfe11', delay:700},
+  ];
+  if(!('IntersectionObserver' in window)){
+    caseEls.forEach(function(item){
+      var el=document.getElementById(item.id);
+      if(el) el.classList.add('visible');
+    });
+    return;
+  }
+  caseEls.forEach(function(item){
+    var el=document.getElementById(item.id);
+    if(!el) return;
+    var obs=new IntersectionObserver(function(entries){
+      entries.forEach(function(e){
+        if(e.isIntersecting){
+          setTimeout(function(){ el.classList.add('visible'); }, item.delay);
+          obs.unobserve(el);
+        }
+      });
+    },{threshold:0.2});
+    obs.observe(el);
+  });
+})();
+
+
+// ═══════════════════════════════════════════════════════
+// CENTRE STATEMENT — SEQUENTIAL LINE REVEAL
+// Line 1 triggers on scroll entry
+// Lines 2 and 3 follow with deliberate delays
+// Line 2 (the gut punch) gets extra hold before line 3
+// ═══════════════════════════════════════════════════════
+(function(){
+  var section = document.getElementById('centreStatement');
+  if(!section || !('IntersectionObserver' in window)) return;
+
+  var triggered = false;
+
+  var obs = new IntersectionObserver(function(entries){
+    entries.forEach(function(e){
+      if(e.isIntersecting && !triggered){
+        triggered = true;
+        obs.unobserve(section);
+
+        // Line 1: "It takes ten years to become known."
+        setTimeout(function(){
+          var el = document.getElementById('cl1');
+          if(el) el.classList.add('visible');
+        }, 200);
+
+        // Line 2: "Twenty-five to become an overnight success."
+        // 1400ms after line 1 — reader needs to sit with line 1 first
+        setTimeout(function(){
+          var el = document.getElementById('cl2');
+          if(el) el.classList.add('visible');
+        }, 1600);
+
+        // Line 3: "VECTOR shows you which years to choose."
+        // 1600ms after line 2 — the longest gap
+        // Line 2 contains the gut punch (16 + 25 = 41)
+        // The reader needs to do that math before the resolution arrives
+        setTimeout(function(){
+          var el = document.getElementById('cl3');
+          if(el) el.classList.add('visible');
+        }, 3200);
+
+        // Body paragraph — arrives after all three lines
+        setTimeout(function(){
+          var el = document.getElementById('cl4body');
+          if(el){ el.style.opacity='1'; el.style.transform='translateY(0)'; }
+        }, 4400);
+
+        // CTA — last
+        setTimeout(function(){
+          var el = document.getElementById('cl4cta');
+          if(el){ el.style.opacity='1'; el.style.transform='translateY(0)'; }
+        }, 5000);
+      }
+    });
+  }, { threshold: 0.3 });
+
+  obs.observe(section);
+})();
+
 </script>
 </body>
 </html>
