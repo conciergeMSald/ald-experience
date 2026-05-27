@@ -1,0 +1,1389 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>VECTOR — Career Trajectory Intelligence</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;1,300;1,400&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet">
+<style>
+*{box-sizing:border-box;margin:0;padding:0;}
+:root{
+  --ink:#0a0a0a;--ink2:#2e2e2e;--ink3:#6a6a6a;--ink4:#9a9a9a;
+  --gold:#8B7355;--gl:#C4A882;--gold-pale:#F5EFE6;
+  --rule:rgba(0,0,0,0.1);--bg:#fafaf8;--white:#ffffff;
+  --red-soft:#8B3A3A;--green-soft:#2E6E3A;
+  --serif:'Cormorant Garamond',Georgia,serif;
+  --sans:'DM Sans',system-ui,sans-serif;
+}
+html{scroll-behavior:smooth;}
+body{background:var(--bg);color:var(--ink);font-family:var(--sans);min-height:100vh;}
+
+/* LAYOUT */
+.container{max-width:860px;margin:0 auto;padding:0 2rem;}
+.step{display:none;padding:3rem 0;border-bottom:0.5px solid var(--rule);animation:fadeUp .5s ease forwards;}
+.step.active{display:block;}
+@keyframes fadeUp{from{opacity:0;transform:translateY(12px);}to{opacity:1;transform:translateY(0);}}
+
+/* HERO */
+.hero{padding:5rem 0 4rem;border-bottom:0.5px solid var(--rule);}
+.eyebrow{font-family:var(--sans);font-size:10px;letter-spacing:4px;text-transform:uppercase;color:var(--gold);margin-bottom:2rem;}
+.wordmark{font-family:var(--serif);font-size:72px;font-weight:300;letter-spacing:12px;color:var(--ink);line-height:1;margin-bottom:1rem;}
+.gold-rule{width:48px;height:1px;background:var(--gold);margin:1.5rem 0;}
+.hero-sub{font-family:var(--sans);font-size:15px;color:var(--ink3);line-height:1.9;max-width:520px;font-weight:300;}
+
+/* TYPOGRAPHY */
+.step-num{font-family:var(--sans);font-size:10px;letter-spacing:3px;text-transform:uppercase;color:var(--gold);margin-bottom:1.5rem;}
+.q{font-family:var(--serif);font-size:26px;font-weight:400;color:var(--ink);line-height:1.35;margin-bottom:2rem;}
+.q-sub{font-family:var(--sans);font-size:13px;color:var(--ink3);margin-top:-.5rem;margin-bottom:2rem;font-weight:300;line-height:1.7;}
+
+/* SEARCH */
+.search-wrap{position:relative;margin-bottom:1.5rem;}
+.search-icon{position:absolute;left:0;top:50%;transform:translateY(-50%);color:var(--ink4);font-size:15px;}
+.search-inp{width:100%;border:none;border-bottom:1px solid var(--rule);background:transparent;font-size:18px;font-family:var(--serif);color:var(--ink);padding:12px 0 12px 26px;outline:none;transition:border-color .4s;}
+.search-inp:focus{border-bottom-color:var(--gold);}
+.search-inp::placeholder{color:var(--ink4);}
+
+/* SECTOR TABS */
+.sector-tabs{display:flex;flex-wrap:wrap;gap:6px;margin-bottom:1.5rem;}
+.stab{padding:6px 14px;border:0.5px solid var(--rule);font-family:var(--sans);font-size:10px;letter-spacing:1.5px;text-transform:uppercase;color:var(--ink3);cursor:pointer;background:transparent;transition:all .2s;border-radius:0;}
+.stab:hover,.stab.active{border-color:var(--gold);color:var(--gold);}
+
+/* CAREER GRID */
+.career-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(200px,1fr));gap:8px;max-height:360px;overflow-y:auto;margin-bottom:1.5rem;padding-right:4px;}
+.career-grid::-webkit-scrollbar{width:3px;}
+.career-grid::-webkit-scrollbar-track{background:transparent;}
+.career-grid::-webkit-scrollbar-thumb{background:var(--gold);border-radius:2px;}
+.career-card{padding:14px 16px;border:0.5px solid var(--rule);cursor:pointer;background:var(--white);transition:all .2s;}
+.career-card:hover,.career-card.sel{border-color:var(--gold);background:var(--gold-pale);}
+.cc-name{font-family:var(--serif);font-size:14px;color:var(--ink);margin-bottom:3px;font-weight:400;}
+.cc-sector{font-family:var(--sans);font-size:9px;letter-spacing:1.5px;text-transform:uppercase;color:var(--ink4);}
+.cc-pay{font-family:var(--sans);font-size:10px;color:var(--gold);margin-top:5px;letter-spacing:.5px;}
+.badge{display:inline-block;font-family:var(--sans);font-size:9px;letter-spacing:1px;padding:2px 6px;margin-top:4px;margin-right:3px;}
+.badge-long{background:rgba(139,115,85,0.1);color:var(--gold);}
+.badge-limit{background:rgba(139,58,58,0.08);color:var(--red-soft);}
+.badge-free{background:rgba(46,110,58,0.08);color:var(--green-soft);}
+
+/* CONSTRAINT PANEL */
+.constraint-panel{padding:1.5rem 1.8rem;border:0.5px solid var(--gold);background:rgba(139,115,85,0.04);margin-top:1.2rem;}
+.cp-label{font-family:var(--sans);font-size:10px;letter-spacing:2px;text-transform:uppercase;color:var(--gold);margin-bottom:1rem;}
+.cp-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(130px,1fr));gap:1.2rem;margin-bottom:1rem;}
+.cp-val{font-family:var(--serif);font-size:28px;font-weight:400;color:var(--ink);display:block;}
+.cp-lbl{font-family:var(--sans);font-size:10px;letter-spacing:1px;text-transform:uppercase;color:var(--ink4);margin-top:2px;}
+.cp-note{font-family:var(--sans);font-size:12px;color:var(--ink3);line-height:1.7;border-top:0.5px solid var(--rule);padding-top:1rem;font-weight:300;}
+.warn-box{margin-top:1rem;padding:1rem 1.2rem;border:0.5px solid rgba(139,58,58,0.25);background:rgba(139,58,58,0.04);}
+.warn-text{font-family:var(--sans);font-size:12px;color:var(--red-soft);line-height:1.7;font-weight:300;}
+.good-box{margin-top:1rem;padding:1rem 1.2rem;border:0.5px solid rgba(46,110,58,0.25);background:rgba(46,110,58,0.04);}
+.good-text{font-family:var(--sans);font-size:12px;color:var(--green-soft);line-height:1.7;font-weight:300;}
+
+/* AGE */
+.age-giant{font-family:var(--serif);font-size:96px;font-weight:300;color:var(--ink);line-height:1;}
+.age-ctx{font-family:var(--sans);font-size:11px;letter-spacing:2px;text-transform:uppercase;color:var(--gold);margin:8px 0 2rem;}
+input[type=range]{width:100%;accent-color:var(--gold);margin-bottom:1rem;}
+
+/* TIMELINE VIS */
+.timeline-panel{margin-top:1.5rem;padding:1.5rem 1.8rem;border:0.5px solid var(--gold);background:rgba(139,115,85,0.04);}
+.tl-bar-track{height:5px;background:rgba(0,0,0,0.07);width:100%;position:relative;margin:1rem 0 .5rem;}
+.tl-bar-fill{height:5px;background:var(--gold);position:absolute;left:0;top:0;transition:width .6s ease;}
+.tl-limit-mark{position:absolute;top:-2px;width:2px;height:9px;background:var(--red-soft);}
+.tl-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(130px,1fr));gap:1rem;margin-bottom:1rem;}
+
+/* VARIABLE SLIDERS */
+.var-block{margin-bottom:2rem;padding-bottom:2rem;border-bottom:0.5px solid var(--rule);}
+.var-block:last-child{border-bottom:none;margin-bottom:0;padding-bottom:0;}
+.var-name{font-family:var(--serif);font-size:17px;color:var(--ink);margin-bottom:2px;}
+.var-sub{font-family:var(--sans);font-size:10px;letter-spacing:1px;color:var(--ink4);text-transform:uppercase;margin-bottom:12px;}
+.var-row{display:flex;align-items:center;gap:16px;}
+.var-val{font-family:var(--serif);font-size:24px;color:var(--gold);min-width:28px;text-align:right;font-weight:400;}
+
+/* DRIVE Qs */
+.dq-wrap{margin-bottom:2rem;}
+.dq-text{font-family:var(--serif);font-size:17px;color:var(--ink);margin-bottom:1rem;line-height:1.5;font-weight:400;}
+.dq-opts{display:flex;flex-direction:column;gap:8px;}
+.dq-opt{padding:11px 16px;border:0.5px solid var(--rule);font-family:var(--sans);font-size:12px;color:var(--ink2);cursor:pointer;background:transparent;text-align:left;transition:all .2s;letter-spacing:.5px;font-weight:300;}
+.dq-opt:hover,.dq-opt.sel{border-color:var(--gold);color:var(--gold);background:rgba(139,115,85,0.04);}
+
+/* SCORE */
+.score-section{padding:3rem 0;}
+.score-number{font-family:var(--serif);font-size:120px;font-weight:300;color:var(--ink);line-height:1;}
+.score-label{font-family:var(--sans);font-size:10px;letter-spacing:3px;text-transform:uppercase;color:var(--ink4);margin:6px 0 2rem;}
+.score-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:2rem;margin-bottom:2rem;}
+.sg-label{font-family:var(--sans);font-size:10px;letter-spacing:1.5px;text-transform:uppercase;color:var(--ink4);margin-bottom:6px;}
+.sg-val{font-family:var(--serif);font-size:36px;font-weight:400;color:var(--ink);}
+.sg-val.gold{color:var(--gold);}
+.sg-sub{font-family:var(--sans);font-size:11px;color:var(--ink4);margin-top:3px;font-weight:300;}
+.score-rule{width:100%;height:0.5px;background:var(--rule);margin:2rem 0;}
+.score-narr{font-family:var(--sans);font-size:13px;color:var(--ink2);line-height:1.9;font-weight:300;}
+.constraint-note{font-family:var(--sans);font-size:12px;color:var(--ink3);line-height:1.8;padding:1.2rem 0;border-top:0.5px solid var(--rule);border-bottom:0.5px solid var(--rule);margin-bottom:1.5rem;font-weight:300;}
+
+/* DARK PANEL - DRIVE REVEAL */
+.dark-panel{background:var(--ink);padding:3rem;margin:0 -2rem;}
+@media(max-width:860px){.dark-panel{margin:0 -1.5rem;}}
+.dp-eye{font-family:var(--sans);font-size:10px;letter-spacing:3px;text-transform:uppercase;color:var(--gl);margin-bottom:1.5rem;}
+.dp-big{font-family:var(--serif);font-size:80px;font-weight:300;color:#fafaf8;line-height:1;margin-bottom:8px;}
+.dp-class{font-family:var(--sans);font-size:11px;letter-spacing:3px;text-transform:uppercase;color:var(--gl);margin-bottom:1.5rem;}
+.dp-text{font-family:var(--sans);font-size:13px;color:rgba(250,250,248,.65);line-height:1.9;max-width:520px;font-weight:300;}
+
+/* MOVES */
+.moves-section{padding:3rem 0;}
+.move-item{padding:1.5rem 0;border-bottom:0.5px solid var(--rule);display:flex;gap:1.2rem;align-items:flex-start;}
+.move-item:last-child{border-bottom:none;}
+.mtog{width:36px;height:36px;border:0.5px solid var(--rule);background:transparent;cursor:pointer;flex-shrink:0;display:flex;align-items:center;justify-content:center;transition:all .25s;color:var(--ink4);font-size:15px;}
+.mtog:hover{border-color:var(--gold);}
+.mtog.on{border-color:var(--gold);color:var(--gold);background:rgba(139,115,85,0.08);}
+.mbody{flex:1;}
+.move-title{font-family:var(--serif);font-size:16px;color:var(--ink);margin-bottom:4px;}
+.move-desc{font-family:var(--sans);font-size:12px;color:var(--ink3);line-height:1.7;margin-bottom:8px;font-weight:300;}
+.move-rec{font-family:var(--sans);font-size:9px;letter-spacing:2px;text-transform:uppercase;color:var(--gold);display:none;}
+.move-com{display:none;flex-wrap:wrap;gap:5px;margin-top:8px;}
+.mcb{padding:4px 10px;border:0.5px solid var(--rule);font-family:var(--sans);font-size:10px;letter-spacing:1px;text-transform:uppercase;color:var(--ink3);cursor:pointer;background:transparent;transition:all .2s;font-weight:300;}
+.mcb.sel{border-color:var(--gold);color:var(--gold);}
+
+/* PROJECTION */
+.proj-section{padding:3rem 0;border-top:0.5px solid var(--rule);}
+.proj-grid{display:grid;grid-template-columns:1fr 1px 1fr;gap:2.5rem;align-items:center;margin-bottom:2rem;}
+.pdiv{background:var(--rule);height:80px;}
+.ptag{font-family:var(--sans);font-size:10px;letter-spacing:2px;text-transform:uppercase;color:var(--ink4);margin-bottom:8px;font-weight:300;}
+.proj-age{font-family:var(--serif);font-size:56px;font-weight:400;color:var(--ink);}
+.proj-age.new{color:var(--gold);}
+.proj-yrs{font-family:var(--sans);font-size:12px;color:var(--ink4);margin-top:4px;font-weight:300;}
+.rec-banner{padding:1.5rem 1.8rem;border:0.5px solid var(--gold);background:rgba(139,115,85,0.04);display:flex;align-items:baseline;gap:14px;}
+.rb-num{font-family:var(--serif);font-size:40px;font-weight:400;color:var(--gold);}
+.rb-label{font-family:var(--sans);font-size:10px;letter-spacing:2px;text-transform:uppercase;color:var(--ink4);font-weight:300;}
+.floor-note{font-family:var(--sans);font-size:11px;color:var(--ink4);line-height:1.7;margin-top:1rem;font-weight:300;}
+
+/* INSIGHT */
+.insight-section{padding:3rem 0;border-top:0.5px solid var(--rule);display:none;}
+.insight-text{font-family:var(--serif);font-size:19px;color:var(--ink);line-height:1.9;font-style:italic;font-weight:300;}
+
+/* LOADING */
+.loading-overlay{text-align:center;padding:4rem 0;display:none;}
+.loading-text{font-family:var(--sans);font-size:10px;letter-spacing:3px;text-transform:uppercase;color:var(--gold);}
+.dots{display:inline-flex;gap:6px;margin-top:1rem;}
+.dot{width:5px;height:5px;border-radius:50%;background:var(--gold);animation:pulse 1.2s infinite;}
+.dot:nth-child(2){animation-delay:.2s;}.dot:nth-child(3){animation-delay:.4s;}
+@keyframes pulse{0%,100%{opacity:.15;}50%{opacity:1;}}
+
+/* PROCEED BUTTON */
+.proceed{margin-top:2.5rem;display:flex;align-items:center;gap:14px;cursor:pointer;border:none;background:transparent;padding:0;}
+.pl{width:42px;height:1px;background:var(--gold);transition:width .3s;}
+.proceed:hover .pl{width:64px;}
+.pt{font-family:var(--sans);font-size:10px;letter-spacing:3px;text-transform:uppercase;color:var(--gold);font-weight:400;}
+
+/* PAYWALL */
+.paywall{padding:4rem;text-align:center;border-top:0.5px solid var(--rule);}
+.pw-eye{font-family:var(--sans);font-size:10px;letter-spacing:4px;text-transform:uppercase;color:var(--gold);margin-bottom:1.2rem;}
+.pw-title{font-family:var(--serif);font-size:28px;font-weight:400;color:var(--ink);margin-bottom:1rem;}
+.pw-sub{font-family:var(--sans);font-size:13px;color:var(--ink3);line-height:1.9;margin-bottom:2rem;max-width:400px;margin-left:auto;margin-right:auto;font-weight:300;}
+.pw-btn{padding:16px 52px;background:var(--ink);color:#fafaf8;border:none;font-family:var(--sans);font-size:10px;letter-spacing:3px;text-transform:uppercase;cursor:pointer;transition:background .25s;font-weight:400;}
+.pw-btn:hover{background:var(--gold);}
+
+/* FAMILY DASHBOARD */
+.family-section{padding:3rem 0;border-top:0.5px solid var(--rule);}
+.family-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(220px,1fr));gap:1rem;margin-top:1.5rem;}
+.family-card{padding:1.5rem;border:0.5px solid var(--rule);background:var(--white);cursor:pointer;transition:all .2s;}
+.family-card:hover{border-color:var(--gold);}
+.fc-name{font-family:var(--serif);font-size:18px;color:var(--ink);margin-bottom:3px;}
+.fc-career{font-family:var(--sans);font-size:11px;color:var(--gold);letter-spacing:.5px;margin-bottom:1rem;}
+.fc-score{font-family:var(--serif);font-size:42px;color:var(--ink);font-weight:300;line-height:1;}
+.fc-detail{font-family:var(--sans);font-size:10px;color:var(--ink4);margin-top:4px;letter-spacing:.5px;}
+.fc-add{border:0.5px dashed var(--rule);display:flex;align-items:center;justify-content:center;min-height:120px;color:var(--ink4);font-family:var(--sans);font-size:11px;letter-spacing:2px;text-transform:uppercase;cursor:pointer;transition:all .2s;}
+.fc-add:hover{border-color:var(--gold);color:var(--gold);}
+
+/* FOOTER */
+footer{padding:3rem 0;border-top:0.5px solid var(--rule);margin-top:4rem;}
+.footer-word{font-family:var(--serif);font-size:28px;font-weight:300;letter-spacing:6px;color:var(--ink4);}
+.footer-sub{font-family:var(--sans);font-size:10px;letter-spacing:2px;text-transform:uppercase;color:var(--ink4);margin-top:.5rem;font-weight:300;}
+
+/* ── HIGH SCHOOL TRACK ─────────────────────────────── */
+.hs-cluster-card{padding:14px 16px;border:0.5px solid var(--rule);cursor:pointer;background:var(--white);transition:all .2s;}
+.hs-cluster-card:hover,.hs-cluster-card.sel{border-color:var(--gold);background:var(--gold-pale);}
+.hs-milestone{padding:1rem 0;border-bottom:0.5px solid var(--rule);}
+.hs-milestone:last-child{border-bottom:none;}
+.hs-milestone-label{font-family:var(--sans);font-size:10px;letter-spacing:2px;text-transform:uppercase;color:var(--gold);margin-bottom:.5rem;}
+.hs-milestone-text{font-family:var(--sans);font-size:13px;color:var(--ink2);line-height:1.7;font-weight:300;}
+
+/* ── REPORT PRINT STYLES ────────────────────────────── */
+@media print{
+  nav,.hero,.step:not(#reportPrintTarget),.paywall,.pw{display:none!important;}
+  #printableReport{display:block!important;margin:0;padding:20px;}
+  body{background:white;}
+}
+</style>
+</head>
+<body>
+<div style="padding:12px 2rem;border-bottom:0.5px solid rgba(0,0,0,0.08);background:#fafaf8;">
+  <a href="index.html" style="font-family:'DM Sans',sans-serif;font-size:11px;letter-spacing:2px;text-transform:uppercase;color:#8B7355;text-decoration:none;">← Back</a>
+</div>
+
+<div class="container">
+
+<!-- HERO -->
+<div class="hero">
+  <div class="eyebrow">Career trajectory intelligence</div>
+  <div class="wordmark">VECTOR</div>
+  <div class="gold-rule"></div>
+  <div class="hero-sub">The algorithm behind overnight success has always existed. For the first time — for the 9-year-old who wants to reach the stars, the 16-year-old building their first product, and the 45-year-old ready to bet on themselves — it is yours.</div>
+</div>
+
+<!-- FAMILY DASHBOARD PREVIEW -->
+<div id="familyDash" class="family-section" style="display:none;">
+  <div class="step-num">Family dashboard</div>
+  <div class="q" style="font-size:20px;">Everyone in your household. One algorithm.</div>
+  <div class="family-grid" id="familyGrid"></div>
+</div>
+
+<!-- STEP 0: CAREER SELECTION -->
+<div class="step active" id="s0">
+  <div class="step-num">I — Choose your path</div>
+  <div class="q">What do you want to become?</div>
+  <div class="q-sub">Search across 50+ high-achievement career paths — from surgeon to astronaut to hedge fund manager.</div>
+
+  <div class="search-wrap">
+    <svg class="search-icon" width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.35-4.35"/></svg>
+    <input class="search-inp" id="searchInp" placeholder="Search any career..." oninput="filterCareers(this.value)">
+  </div>
+
+  <div class="sector-tabs" id="sectorTabs"></div>
+  <div class="career-grid" id="careerGrid"></div>
+
+  <div id="constraintPanel" style="display:none;"></div>
+  <div id="warnBox" style="display:none;"></div>
+
+  <button class="proceed" onclick="goStep(1)" id="proceedBtn" style="display:none;">
+    <div class="pl"></div><div class="pt">Continue</div>
+  </button>
+</div>
+
+<!-- STEP 1: AGE -->
+<div class="step" id="s1">
+  <div class="step-num">II — Your position in time</div>
+  <div class="q" id="ageQ">How old are you?</div>
+  <div class="age-giant" id="ageNum">16</div>
+  <div class="age-ctx" id="ageCtx"></div>
+  <input type="range" min="8" max="75" value="16" step="1" id="ageSlide" oninput="updateAge(this.value)">
+  <div style="display:flex;justify-content:space-between;font-family:var(--sans);font-size:10px;color:var(--ink4);margin-bottom:2rem;">
+    <span>8</span><span>16</span><span>25</span><span>35</span><span>50</span><span>65</span><span>75</span>
+  </div>
+  <div id="timelinePanel" style="display:none;"></div>
+  <button class="proceed" onclick="goStep(2)"><div class="pl"></div><div class="pt">Continue</div></button>
+</div>
+
+<!-- STEP 1b: ZIP CODE -->
+<div class="step" id="s1b">
+  <div class="step-num">II-B — Your location</div>
+  <div class="q" id="zipQ">Where are you right now?</div>
+  <div class="q-sub">Your zip code unlocks geographic intelligence — local rooms, power centers, and the exact steps to close the distance gap from where you are to where you need to be.</div>
+  <input class="lux-input" id="zipInp" placeholder="Enter your zip code (e.g. 33901)" maxlength="5" oninput="this.value=this.value.replace(/[^0-9]/g,'');previewMetro(this.value)" style="font-size:24px;letter-spacing:4px;">
+  <div id="metroPreview" style="display:none;margin-top:1.5rem;padding:1.2rem 1.5rem;border:0.5px solid var(--gold);background:rgba(139,115,85,0.04);">
+    <div style="font-family:var(--sans);font-size:10px;letter-spacing:2px;text-transform:uppercase;color:var(--gold);margin-bottom:.8rem;">Your market</div>
+    <div id="metroName" style="font-family:var(--serif);font-size:22px;color:var(--ink);margin-bottom:.4rem;"></div>
+    <div id="metroStrengths" style="font-family:var(--sans);font-size:12px;color:var(--ink3);line-height:1.7;"></div>
+  </div>
+  <div id="metroUnknown" style="display:none;margin-top:1rem;padding:.8rem 1rem;border:0.5px solid rgba(0,0,0,0.1);font-family:var(--sans);font-size:12px;color:var(--ink3);">Zip not in our database — the algorithm will use your stated career goal to generate geographic guidance.</div>
+  <button class="proceed" onclick="goStep(2)" style="margin-top:2rem;"><div class="pl"></div><div class="pt">Continue</div></button>
+  <button onclick="goStep(2)" style="margin-top:1rem;background:transparent;border:none;font-family:var(--sans);font-size:11px;color:var(--ink4);letter-spacing:2px;text-transform:uppercase;cursor:pointer;display:block;">Skip — I prefer not to share location</button>
+</div>
+
+<!-- HIGH SCHOOL TRACK -->
+<div class="step" id="sHS">
+  <div class="step-num">High school track</div>
+  <div class="q" id="hsQ">What pulls at you?</div>
+  <div class="q-sub">Not what you think you should do. What genuinely excites you when nobody is asking?</div>
+  <div id="hsClusterGrid" style="display:grid;grid-template-columns:repeat(auto-fill,minmax(200px,1fr));gap:8px;margin-bottom:1.5rem;"></div>
+  <div id="hsClusterDetail" style="display:none;"></div>
+  <div id="hsActionPlan" style="display:none;"></div>
+  <button class="proceed" onclick="goStep(2)" id="hsToProceed" style="display:none;"><div class="pl"></div><div class="pt">Run the full assessment</div></button>
+  <button onclick="goStep(2)" style="margin-top:1rem;background:transparent;border:none;font-family:var(--sans);font-size:11px;color:var(--ink4);letter-spacing:2px;text-transform:uppercase;cursor:pointer;display:block;">Skip — go straight to career selection</button>
+</div>
+
+<!-- STEP 2: VARIABLES -->
+<div class="step" id="s2">
+  <div class="step-num">III — The eight variables</div>
+  <div class="q" id="varQ">Score each honestly.</div>
+  <div class="q-sub">The algorithm cannot help a person who flatters themselves. 1 = low, 10 = high.</div>
+  <div id="varBlocks"></div>
+  <button class="proceed" onclick="runCalc()"><div class="pl"></div><div class="pt">Calculate my score</div></button>
+</div>
+
+<!-- LOADING -->
+<div class="step" id="sLoad">
+  <div class="loading-overlay" style="display:block;">
+    <div class="loading-text">The algorithm is reading your position</div>
+    <div class="dots"><div class="dot"></div><div class="dot"></div><div class="dot"></div></div>
+  </div>
+</div>
+
+<!-- STEP 3: SCORE + DRIVE -->
+<div class="step" id="s3">
+  <div class="score-section">
+    <div class="step-num">IV — Your vector score</div>
+    <div class="score-number" id="scoreOut">--</div>
+    <div class="score-label">out of 100</div>
+    <div class="score-grid">
+      <div>
+        <div class="sg-label">Training floor</div>
+        <div class="sg-val" id="credOut">--</div>
+        <div class="sg-sub">mandatory years</div>
+      </div>
+      <div>
+        <div class="sg-label">Earliest possible</div>
+        <div class="sg-val gold" id="earliestOut">--</div>
+        <div class="sg-sub">age at goal</div>
+      </div>
+      <div>
+        <div class="sg-label">Your trajectory</div>
+        <div class="sg-val gold" id="trajOut">--</div>
+        <div class="sg-sub">current path</div>
+      </div>
+    </div>
+    <div class="constraint-note" id="cNote"></div>
+    <div class="score-narr" id="scoreNarr"></div>
+  </div>
+
+  <!-- DRIVE REVEAL (hidden until assessed) -->
+  <div class="dark-panel" id="driveReveal" style="display:none;">
+    <div class="dp-eye">Drive multiplier</div>
+    <div class="dp-big" id="drMult">--</div>
+    <div class="dp-class" id="drClass">--</div>
+    <div class="dp-text" id="drText">--</div>
+  </div>
+
+  <!-- DRIVE ASSESSMENT -->
+  <div id="driveSection" style="padding:3rem 0;border-top:0.5px solid var(--rule);">
+    <div class="step-num">V — The drive assessment</div>
+    <div class="q" style="font-size:22px;">Eight questions. Ninety seconds.</div>
+    <div class="q-sub">Answer with evidence, not aspiration. The algorithm scores what you do — not what you intend.</div>
+    <div id="driveQs"></div>
+    <button class="proceed" onclick="calcDrive()"><div class="pl"></div><div class="pt">Reveal my multiplier</div></button>
+  </div>
+</div>
+
+<!-- STEP 4: MOVES + PROJECTION -->
+<div class="step" id="s4">
+  <div class="moves-section">
+    <div class="step-num">VI — Close the gaps</div>
+    <div class="q">Toggle each move. Commit to a timeline. Watch your trajectory compress.</div>
+    <div class="q-sub">The algorithm ranks by impact per unit of effort. Start at the top.</div>
+    <div id="movesList"></div>
+  </div>
+
+  <div class="proj-section">
+    <div class="step-num" style="margin-bottom:1.5rem;">Projection</div>
+    <div class="proj-grid">
+      <div>
+        <div class="ptag">Without moves</div>
+        <div class="proj-age" id="pBefore">--</div>
+        <div class="proj-yrs" id="pBYrs">--</div>
+      </div>
+      <div class="pdiv"></div>
+      <div>
+        <div class="ptag">With your commitments</div>
+        <div class="proj-age new" id="pAfter">--</div>
+        <div class="proj-yrs" id="pAYrs">--</div>
+      </div>
+    </div>
+    <div class="rec-banner">
+      <div class="rb-num" id="recYrs">0</div>
+      <div class="rb-label">years recovered</div>
+    </div>
+    <div class="floor-note" id="floorNote"></div>
+  </div>
+
+  <!-- CLAUDE API INSIGHT -->
+  <div class="loading-overlay" id="insLoad">
+    <div class="loading-text">Generating your personal brief</div>
+    <div class="dots"><div class="dot"></div><div class="dot"></div><div class="dot"></div></div>
+  </div>
+
+  <div class="insight-section" id="insSec">
+    <div class="step-num">VII — The algorithm speaks</div>
+    <div class="insight-text" id="insText"></div>
+  </div>
+
+  <!-- FAMILY SAVE -->
+  <div id="saveToFamily" style="display:none;padding:2rem 0;border-top:0.5px solid var(--rule);">
+    <div class="step-num">Save to family dashboard</div>
+    <div style="display:flex;gap:1rem;align-items:center;flex-wrap:wrap;">
+      <input id="memberName" placeholder="Name (e.g. Emma, Dad, Jake...)" style="border:none;border-bottom:1px solid var(--rule);background:transparent;font-size:16px;font-family:var(--serif);color:var(--ink);padding:8px 0;outline:none;flex:1;min-width:200px;">
+      <button class="proceed" onclick="saveToFamily()" style="margin-top:0;">
+        <div class="pl"></div><div class="pt">Save profile</div>
+      </button>
+    </div>
+  </div>
+
+  <div id="reportSection" style="display:block;padding:2rem 0;border-top:0.5px solid var(--rule);">
+    <div class="step-num">VIII — Your full report</div>
+    <div class="q" style="font-size:18px;">Generate your full VECTOR Report.</div>
+    <div class="q-sub" style="margin-bottom:1.5rem;">A comprehensive analysis covering your complete assessment, geographic intelligence, critical gaps, intervention roadmap, and the algorithm's full verdict.</div>
+    <div class="loading-overlay" id="reportLoad"><div class="lt">Generating your personal report</div><div class="dots"><div class="dot"></div><div class="dot"></div><div class="dot"></div></div></div>
+    <div id="reportOutput" style="display:none;"></div>
+    <button class="proceed" onclick="generateReport()" id="reportBtn"><div class="pl"></div><div class="pt">Generate my report</div></button>
+  </div>
+
+  <!-- RUN AGAIN -->
+  <div style="padding:2rem 0;border-top:0.5px solid var(--rule);text-align:center;">
+    <button onclick="resetAll()" style="font-family:var(--sans);font-size:10px;letter-spacing:3px;text-transform:uppercase;color:var(--ink4);background:transparent;border:none;cursor:pointer;">
+      Run a new scenario ↺
+    </button>
+  </div>
+</div>
+
+<footer>
+  <div class="footer-word">VECTOR</div>
+  <div class="footer-sub">Career trajectory intelligence — The Algorithm of Success</div>
+</footer>
+
+</div><!-- /container -->
+
+<script>
+const CAREERS={
+  Medicine:[
+    {n:'Neurosurgeon',years:16,minAge:32,maxAge:null,pay:'$600K–$900K',breakdown:'4+4+1+7',note:'Longest surgical training. Board certification mandatory. Fellowship adds 1–2 years for subspecialties.'},
+    {n:'Cardiothoracic Surgeon',years:15,minAge:33,maxAge:null,pay:'$500K–$800K',breakdown:'4+4+5+2 fellowship',note:'One of the most technically demanding surgical specialties. Highly competitive fellowship match.'},
+    {n:'Orthopedic Surgeon',years:13,minAge:31,maxAge:null,pay:'$500K–$700K',breakdown:'4+4+5',note:'Sports medicine and spine fellowships add 1 year. High procedural volume career.'},
+    {n:'Plastic Surgeon',years:14,minAge:32,maxAge:null,pay:'$400K–$700K+',breakdown:'4+4+6',note:'Aesthetic surgery private practice can exceed $1M. Reconstructive pathway is hospital-based.'},
+    {n:'Cardiologist',years:14,minAge:32,maxAge:null,pay:'$400K–$600K',breakdown:'4+4+3+3',note:'Interventional cardiology adds a year. Highly competitive fellowship programs.'},
+    {n:'Anesthesiologist',years:12,minAge:30,maxAge:null,pay:'$350K–$550K',breakdown:'4+4+4',note:'Pain management subspecialty adds fellowship year. High autonomy OR-based career.'},
+    {n:'Radiologist',years:13,minAge:31,maxAge:null,pay:'$400K–$600K',breakdown:'4+4+5',note:'Interventional radiology is procedural and highly compensated. AI-adjacent field.'},
+    {n:'Dermatologist',years:12,minAge:30,maxAge:null,pay:'$350K–$500K',breakdown:'4+4+4',note:'Most competitive residency match in medicine. Outstanding quality-of-life specialty.'},
+    {n:'Psychiatrist',years:12,minAge:30,maxAge:null,pay:'$280K–$400K',breakdown:'4+4+4',note:'Private practice can exceed $400K. Demand growing significantly post-pandemic.'},
+    {n:'Emergency Medicine MD',years:11,minAge:29,maxAge:null,pay:'$350K–$500K',breakdown:'4+4+3',note:'Shift-based career. Locum tenens opportunities add income flexibility.'},
+    {n:'Ophthalmologist',years:12,minAge:30,maxAge:null,pay:'$300K–$500K',breakdown:'4+4+4',note:'LASIK and retinal surgery private practice highly lucrative. Surgical volume is high.'},
+    {n:'Urologist',years:13,minAge:31,maxAge:null,pay:'$400K–$600K',breakdown:'4+4+5',note:'Robotic surgery expertise increasingly standard. Strong private practice economics.'},
+  ],
+  Law:[
+    {n:'Supreme Court Justice',years:7,minAge:40,maxAge:null,pay:'$285K (fixed)',breakdown:'4+3 JD',note:'Presidential nomination, Senate confirmation. Average age at appointment: 53. Lifetime tenure.'},
+    {n:'Federal Judge',years:7,minAge:35,maxAge:null,pay:'$230K–$285K',breakdown:'4+3 JD',note:'Presidential appointment. Average at appointment: 50. Requires 10–20 years practice first.'},
+    {n:'BigLaw Equity Partner',years:7,minAge:32,maxAge:null,pay:'$1M–$5M+',breakdown:'4+3 JD + 8–10 yrs associate',note:'Am Law 100 firm. Compensation highly variable. Rainmaking is the only metric that matters.'},
+    {n:'Hedge Fund General Counsel',years:7,minAge:30,maxAge:null,pay:'$500K–$2M',breakdown:'4+3 JD',note:'Finance-adjacent legal career. Securities expertise and banking relationships required.'},
+    {n:'US Attorney General',years:7,minAge:40,maxAge:null,pay:'$221K (fixed)',breakdown:'4+3 JD + political career',note:'Cabinet appointment. Average age: 55. Deep political and legal network mandatory.'},
+  ],
+  Finance:[
+    {n:'Goldman Sachs Managing Director',years:4,minAge:22,maxAge:null,pay:'$1M–$3M',breakdown:'4 undergrad (target school)',note:'MD promotion: 15–18 years from analyst. Institutional proximity is the single highest-leverage variable.'},
+    {n:'Hedge Fund Portfolio Manager',years:4,minAge:26,maxAge:null,pay:'$1M–$100M+',breakdown:'4 undergrad + 2–4 yrs analyst',note:'Analyst → Senior Analyst → PM track. Performance-driven. Top PMs are compensated like owners.'},
+    {n:'Private Equity Partner',years:6,minAge:28,maxAge:null,pay:'$1M–$10M+ carry',breakdown:'4+2 banking+MBA',note:'Carry on $1B+ fund generates life-changing wealth. Average age at partner: 38–45.'},
+    {n:'Venture Capital General Partner',years:4,minAge:30,maxAge:null,pay:'$500K–$5M+ carry',breakdown:'4 undergrad + operating experience',note:'Founder → VC is dominant path at top firms. Strong deal flow network is the entire moat.'},
+    {n:'Quantitative Trader',years:4,minAge:22,maxAge:null,pay:'$500K–$5M+',breakdown:'4 (math/CS/physics)',note:'Jane Street, Citadel, DE Shaw. Math olympiad background increasingly standard.'},
+    {n:'Investment Banker (Boutique Founder)',years:4,minAge:30,maxAge:null,pay:'$1M–$20M+',breakdown:'4 undergrad + 10 yrs experience',note:'Fee economics far exceed bulge bracket. Deep client relationships are the only requirement.'},
+    {n:'Family Office CIO',years:4,minAge:35,maxAge:null,pay:'$500K–$2M',breakdown:'4 undergrad + 15 yrs experience',note:'Ultra-high-net-worth client management. Network is the entry point. Trust is the moat.'},
+  ],
+  Technology:[
+    {n:'Software Engineer → FAANG Staff',years:4,minAge:22,maxAge:null,pay:'$200K–$600K TC',breakdown:'4 CS undergrad (or bootcamp path)',note:'Staff/Principal at Google or Meta can exceed $1M TC. RSU compensation grows significantly with tenure.'},
+    {n:'AI Research Scientist',years:8,minAge:26,maxAge:null,pay:'$300K–$1M+',breakdown:'4+4 PhD (CS/ML)',note:'Top labs compete aggressively. NeurIPS/ICML publications are the currency of admission.'},
+    {n:'Startup Founder (VC-backed)',years:0,minAge:18,maxAge:null,pay:'$0–$1B+',breakdown:'No formal requirement',note:'Median unicorn founder age: 38. Domain expertise compounds outcomes dramatically.'},
+    {n:'Chief Technology Officer',years:4,minAge:32,maxAge:null,pay:'$500K–$3M+',breakdown:'4 CS + 10–15 yrs experience',note:'Public company CTO includes equity. Startup CTO wealth is binary and equity-driven.'},
+    {n:'CISO (Cybersecurity)',years:4,minAge:30,maxAge:null,pay:'$300K–$700K',breakdown:'4 undergrad + certifications',note:'Demand far exceeds supply. Board-level exposure increasingly required at public companies.'},
+    {n:'Chief Product Officer',years:4,minAge:30,maxAge:null,pay:'$400K–$1.5M+',breakdown:'4 undergrad + MBA optional',note:'MBA accelerates path at traditional companies. Startup CPO compensation is equity-heavy.'},
+    {n:'Computer Vision Engineer',years:6,minAge:24,maxAge:null,pay:'$250K–$700K',breakdown:'4+2 MS or PhD preferred',note:'Autonomous vehicles, robotics, medical imaging. Deep learning expertise mandatory.'},
+    {n:'Blockchain / Web3 Architect',years:4,minAge:22,maxAge:null,pay:'$200K–$1M+',breakdown:'4 CS or self-taught',note:'Early in career cycle. Token compensation adds significant variable upside. Volatile space.'},
+  ],
+  Space_Science:[
+    {n:'NASA Astronaut',years:8,minAge:26,maxAge:null,pay:'$104K–$161K (federal)',breakdown:'4+4 advanced STEM + experience',note:'Selected ~12 per class from 18,000+ applicants. Advanced degree + 3 yrs experience OR 1,000 hrs jet pilot. Average selection age: 34.'},
+    {n:'SpaceX Mission Engineer',years:6,minAge:24,maxAge:null,pay:'$120K–$250K',breakdown:'4+2 aerospace/mechanical',note:'Private space sector. Equity compensation significant. The new prestige employer for elite STEM graduates.'},
+    {n:'Astrophysicist',years:10,minAge:28,maxAge:null,pay:'$80K–$200K',breakdown:'4+2+4 PhD',note:'Academic track: postdoc → tenure. Industry track: space tech, defense, data science crossover.'},
+    {n:'Aerospace Engineer',years:4,minAge:22,maxAge:null,pay:'$130K–$300K',breakdown:'4 aerospace engineering',note:'Defense vs. new space divide. Security clearance is a significant compensation and career asset.'},
+    {n:'Planetary Scientist',years:10,minAge:28,maxAge:null,pay:'$90K–$180K',breakdown:'4+2+4 PhD',note:'NASA, JPL, academic research. Increasingly relevant as Mars missions accelerate.'},
+  ],
+  Military_Government:[
+    {n:'US President',years:0,minAge:35,maxAge:null,pay:'$400K (fixed)',breakdown:'Constitutional minimum 35',note:'Must be 35+, natural-born citizen, 14 yr resident. Average inauguration age: 55. Prior elected office standard. 20+ years public life required.'},
+    {n:'US Senator',years:0,minAge:30,maxAge:null,pay:'$174K (fixed)',breakdown:'Constitutional minimum 30',note:'Average first election age: 47. Campaign fundraising and political network are the entire algorithm.'},
+    {n:'US Governor',years:0,minAge:30,maxAge:null,pay:'$70K–$225K',breakdown:'Varies by state',note:'Gubernatorial races require state-level political infrastructure. Average age: 51.'},
+    {n:'Four-Star General',years:4,minAge:48,maxAge:64,pay:'$200K–$280K',breakdown:'4 undergrad + 28–32 yrs service',note:'Mandatory retirement at 64. Average first star: age 48–52. Combat command experience essential.'},
+    {n:'CIA Station Chief',years:4,minAge:35,maxAge:60,pay:'$140K–$200K',breakdown:'4 undergrad + 15 yrs agency',note:'Entry cutoff typically 35. Station chief requires 15+ years clandestine service. Language expertise critical.'},
+    {n:'FBI Special Agent → SAC',years:4,minAge:23,maxAge:37,pay:'$80K–$180K',breakdown:'4 undergrad',note:'Maximum entry age 37. Special Agent in Charge requires 15–20 years service. Law or accounting background preferred.'},
+    {n:'Secretary of Defense',years:0,minAge:45,maxAge:null,pay:'$221K',breakdown:'Cabinet appointment',note:'Deep defense/national security expertise required. Average age: 62. Military or intelligence background standard.'},
+  ],
+  Sports_Entertainment:[
+    {n:'NBA Player',years:0,minAge:19,maxAge:35,pay:'$1M–$50M+',breakdown:'1 year post-HS mandatory',note:'Peak window: 19–32. 1 in 3,500 college players reach the NBA. Post-career financial planning mandatory from day one.'},
+    {n:'NFL Quarterback',years:0,minAge:20,maxAge:35,pay:'$1M–$50M+',breakdown:'3 years post-HS mandatory',note:'Average career 3.3 years. Elite QBs earn $40M+/year. Position carries outsized earning premium.'},
+    {n:'PGA Tour Professional',years:0,minAge:17,maxAge:60,pay:'$200K–$20M+',breakdown:'No formal requirement',note:'No age ceiling — Champions Tour at 50. Qualifying school is the gate. Endorsements dwarf tournament winnings for top players.'},
+    {n:'Film Director (Studio)',years:4,minAge:25,maxAge:null,pay:'$500K–$20M+',breakdown:'4 film school optional',note:'USC, NYU, AFI are pipelines. Indie → studio path. Sundance is the launchpad.'},
+    {n:'Top Tier Music Producer',years:0,minAge:18,maxAge:null,pay:'$200K–$10M+',breakdown:'No formal requirement',note:'Points on album sales + beat licensing. Proximity to artists is the primary variable. LA and Atlanta are the centers.'},
+    {n:'Professional Golfer (LPGA)',years:0,minAge:16,maxAge:55,pay:'$100K–$5M+',breakdown:'No formal requirement',note:'LPGA qualifying school or Epson Tour pathway. Endorsement income can exceed prize money for top players.'},
+  ],
+  Dental_Surgery:[
+    {n:'Oral & Maxillofacial Surgeon',years:12,minAge:30,maxAge:null,pay:'$400K–$700K',breakdown:'4+4 dental+4–6 residency',note:'Dual MD/DDS program most competitive. Private practice ownership generates highest compensation.'},
+    {n:'Periodontist',years:11,minAge:29,maxAge:null,pay:'$250K–$500K',breakdown:'4+4 dental+3 residency',note:'Implant placement is highest revenue procedure. DSO acquisition of practices creates liquidity events.'},
+    {n:'Orthodontist',years:11,minAge:29,maxAge:null,pay:'$300K–$600K',breakdown:'4+4 dental+3 residency',note:'Multiple location ownership compounds income significantly. DSO model growing.'},
+  ],
+  Architecture_Design:[
+    {n:'Principal Architect (Starchitect)',years:5,minAge:30,maxAge:null,pay:'$500K–$5M+',breakdown:'4+2 MArch + licensure + 10 yrs',note:'Pritzker Prize track requires 20–30 years of signature work. NYC, LA, London, Tokyo are the geographic centers.'},
+    {n:'Ultra-Luxury Interior Designer',years:4,minAge:26,maxAge:null,pay:'$300K–$2M+',breakdown:'4 undergrad + portfolio',note:'Net worth of clientele is the variable. Aspen, Palm Beach, NYC, Hamptons, Miami. Referral network is the business.'},
+    {n:'Industrial Designer (Consumer Tech)',years:4,minAge:24,maxAge:null,pay:'$200K–$600K',breakdown:'4 industrial design',note:'Apple, Tesla, Nike are the apex employers. Portfolio is everything. MFA adds credibility.'},
+  ],
+  Entrepreneurship:[
+    {n:'Serial Entrepreneur',years:0,minAge:22,maxAge:null,pay:'$0–$1B+',breakdown:'No formal requirement',note:'First company is tuition. Second company has the real odds. Average age at first significant exit: 44.'},
+    {n:'Real Estate Developer',years:4,minAge:28,maxAge:null,pay:'$500K–$100M+',breakdown:'4 undergrad + capital access',note:'Capital access is the primary constraint. NYC, Miami, LA, Dallas, Austin are the markets.'},
+    {n:'Private Club / Hospitality Owner',years:0,minAge:28,maxAge:null,pay:'$500K–$10M+',breakdown:'Operational experience + capital',note:'Brand is the moat. Location and membership curation are the variables. Soho House model.'},
+    {n:'E-Commerce Brand Founder',years:0,minAge:18,maxAge:null,pay:'$200K–$50M+',breakdown:'No formal requirement',note:'DTC brands built on social media. Acquisition by strategic buyer at 3–5x revenue is the exit model.'},
+    {n:'Passion Project → Business',years:0,minAge:18,maxAge:null,pay:'Variable — unlimited upside',breakdown:'No formal requirement',note:'10,000 hours of domain expertise is the primary variable. Success rate increases significantly with age and experience.'},
+  ],
+  Academic_Research:[
+    {n:'Tenured Professor (Elite Univ.)',years:10,minAge:32,maxAge:null,pay:'$200K–$500K',breakdown:'4+2+4 PhD + postdoc',note:'Harvard, Stanford, MIT tenure track. Average age at tenure: 41. Consulting income can double academic salary.'},
+    {n:'McKinsey Partner',years:4,minAge:30,maxAge:null,pay:'$1M–$5M+',breakdown:'4 undergrad + MBA',note:'Partner track: 8–12 years post-MBA. Post-consulting pivot to PE or C-suite is the standard exit.'},
+    {n:'Management Consultant (Big 4 Partner)',years:4,minAge:32,maxAge:null,pay:'$500K–$2M',breakdown:'4 undergrad + credentials',note:'Deloitte, PwC, EY, KPMG. Sector specialization is the differentiator. Industry 4.0 and AI are growth areas.'},
+  ],
+  Allied_Health:[
+    {n:'Nurse Practitioner',years:6,minAge:24,maxAge:null,pay:'$120K–$180K',breakdown:'4 BSN + 2-3 MSN/DNP',note:'Full practice authority in 27 states. Solo practice possible. No residency required. Fastest growing healthcare career in America. NPs in Florida and Texas with their own panels earn $150K-$200K with full autonomy.'},
+    {n:'Registered Nurse (BSN)',years:4,minAge:22,maxAge:null,pay:'$70K–$120K',breakdown:'4 BSN',note:'BSN is the gold standard. ICU, ER, and OR nurses earn significantly more. Travel nursing pays $100K-$150K+ with housing. Hospital systems compete aggressively for experienced RNs.'},
+    {n:'Physician Assistant',years:6,minAge:24,maxAge:null,pay:'$115K–$160K',breakdown:'4 undergrad + 2-3 PA school',note:'PA school is among the most competitive graduate programs in healthcare. Surgical PAs earn at the top of the range. Orthopedic and neurosurgery PAs often exceed $180K.'},
+    {n:'Physical Therapist (DPT)',years:7,minAge:25,maxAge:null,pay:'$80K–$130K',breakdown:'4 undergrad + 3 DPT',note:'DPT is now the entry-level degree. Sports PT and orthopedic specialization command premium. Private practice ownership is the wealth path — clinic owners earn $200K-$400K+.'},
+    {n:'Occupational Therapist',years:6,minAge:24,maxAge:null,pay:'$75K–$110K',breakdown:'4 undergrad + 2 MOT',note:'Pediatric OT and hand therapy are highest-demand specialties. School-based OT offers summers off. Private practice in affluent areas commands premium rates.'},
+    {n:'Pharmacist (PharmD)',years:8,minAge:26,maxAge:null,pay:'$120K–$160K',breakdown:'4 undergrad + 4 PharmD',note:'Hospital and clinical pharmacy pays more than retail. Specialty pharmacy and pharma industry roles pay $150K-$200K. Clinical roles are the future — automation risk in retail is real.'},
+    {n:'Speech-Language Pathologist',years:6,minAge:24,maxAge:null,pay:'$70K–$110K',breakdown:'4 undergrad + 2 MS-SLP',note:'School-based SLP is stable and benefits-rich. Medical SLP in acute care pays significantly more. Telepractice has expanded geographic flexibility enormously.'},
+    {n:'CRNA (Nurse Anesthetist)',years:8,minAge:26,maxAge:null,pay:'$180K–$250K+',breakdown:'4 BSN + 1-2 ICU + 3 DNP/MSNA',note:'Highest-paid advanced practice nursing role. Rural and independent practice CRNAs can exceed $300K. Extremely competitive program admission — ICU experience mandatory.'},
+    {n:'Radiologic Technologist',years:2,minAge:20,maxAge:null,pay:'$55K–$90K',breakdown:'2 associate or 4 BSc',note:'MRI, CT, and interventional radiology specializations command highest pay. Travel rad tech positions pay $100K+. Strong job security.'},
+    {n:'Respiratory Therapist',years:2,minAge:20,maxAge:null,pay:'$55K–$85K',breakdown:'2 associate or 4 BSc',note:'ICU and neonatal respiratory therapy pays at the top. Travel RT roles in high-demand areas pay $90K-$120K. Shortage growing nationally.'},
+  ],
+  Engineering:[
+    {n:'Civil Engineer',years:4,minAge:22,maxAge:null,pay:'$80K–$180K',breakdown:'4 BS Civil Engineering + PE license',note:'Professional Engineer (PE) license is the career differentiator. Infrastructure investment creating a decade of opportunity. Project management track leads to $200K+ at senior levels.'},
+    {n:'Structural Engineer',years:4,minAge:22,maxAge:null,pay:'$85K–$200K',breakdown:'4 BS Civil/Structural + SE license',note:'SE license is the premium credential. High-rise design and seismic engineering in California pays top dollar. Forensic structural engineering is a lucrative specialty.'},
+    {n:'Mechanical Engineer',years:4,minAge:22,maxAge:null,pay:'$80K–$160K',breakdown:'4 BS Mechanical Engineering',note:'Robotics, HVAC, and automotive are highest-paying sub-fields. Defense sector pays 20-30% premium. SpaceX and Tesla pay at tech company rates for top MEs.'},
+    {n:'Electrical Engineer',years:4,minAge:22,maxAge:null,pay:'$85K–$180K',breakdown:'4 BS Electrical Engineering',note:'Power systems engineering is critically undersupplied. Semiconductor and chip design at TSMC, Intel, or NVIDIA pays $150K-$300K+. Defense electronics commands clearance premium.'},
+    {n:'Chemical Engineer',years:4,minAge:22,maxAge:null,pay:'$90K–$170K',breakdown:'4 BS Chemical Engineering',note:'Pharmaceutical and biotech process engineering pays top dollar. Oil and gas commands premium in Houston. Sustainability and green energy creating new demand.'},
+    {n:'Biomedical Engineer',years:4,minAge:22,maxAge:null,pay:'$75K–$150K',breakdown:'4 BS Biomedical Engineering',note:'Medical device companies (Medtronic, Stryker, Boston Scientific) are primary employers. Regulatory affairs specialization is highly valued. Graduate degree accelerates trajectory.'},
+    {n:'Environmental Engineer',years:4,minAge:22,maxAge:null,pay:'$70K–$140K',breakdown:'4 BS Environmental Engineering + PE',note:'Water infrastructure, remediation, and climate adaptation are growth sectors. PE license essential for project lead roles.'},
+    {n:'Nuclear Engineer',years:4,minAge:22,maxAge:null,pay:'$100K–$180K',breakdown:'4 BS Nuclear Engineering',note:'Nuclear renaissance underway — SMRs creating new demand. Navy nuclear program is top pipeline. National labs provide stable high-pay careers. Clearance premium significant.'},
+    {n:'Petroleum Engineer',years:4,minAge:22,maxAge:null,pay:'$100K–$200K+',breakdown:'4 BS Petroleum Engineering',note:'Texas Tech, UT, Texas A&M, and Colorado School of Mines are elite pipelines. Houston is the only city that matters. Energy transition creating new demand in geothermal and carbon capture.'},
+  ],
+  Education_Leadership:[
+    {n:'School Superintendent',years:4,minAge:32,maxAge:null,pay:'$120K–$500K',breakdown:'4 undergrad + MEd + teaching + admin',note:'Teacher (3-5 yrs) → Assistant Principal → Principal → Assistant Superintendent → Superintendent. Urban district superintendents earn $300K-$500K. EdD increasingly required for large district leadership. School board political relationship is the critical variable.'},
+    {n:'University President',years:10,minAge:40,maxAge:null,pay:'$300K–$1M+',breakdown:'4+PhD + full academic career',note:'Faculty → Department Chair → Dean → Provost → President is the standard path. Fundraising ability is the primary variable for private university presidents. Public university presidents navigate state legislature and board of regents relationships.'},
+    {n:'Dean of Admissions',years:4,minAge:28,maxAge:null,pay:'$100K–$250K',breakdown:'4 undergrad + graduate degree',note:'Admissions counselor → Associate Director → Director → Dean pipeline. Elite university admissions deans are among the most influential people in American education. High school counselor network is the professional moat.'},
+    {n:'Education Policy Director',years:4,minAge:28,maxAge:null,pay:'$100K–$200K',breakdown:'4 undergrad + MPP or MEd',note:'Think tanks, state education agencies, and federal Department of Education. DC policy track: Brookings, RAND, Urban Institute. Political alignment matters significantly.'},
+    {n:'Chief Learning Officer (Corporate)',years:4,minAge:32,maxAge:null,pay:'$150K–$350K',breakdown:'4 undergrad + MEd or MBA',note:'Corporate training and L&D is a $370B global industry. Fortune 500 CLOs earn $200K-$350K. Instructional design plus business acumen is the rare combination that commands premium.'},
+    {n:'School Principal',years:4,minAge:26,maxAge:null,pay:'$80K–$150K',breakdown:'4 undergrad + MEd + teaching license',note:'Teacher (3 yrs minimum) → Assistant Principal → Principal. High-performing principal at a turnaround school is among the most impactful and visible roles in education. Steppingstone to district leadership.'},
+  ],
+  Skilled_Trades:[
+    {n:'Master Electrician (Owner)',years:4,minAge:22,maxAge:null,pay:'$100K–$400K+',breakdown:'4 yr apprenticeship + master license',note:'The most underrated wealth-building career in America. A master electrician who owns their business in a high-cost metro earns $200K-$400K with zero student debt. Commercial electrical contractor in a major city builds a business worth $1M-$5M over 20 years.'},
+    {n:'Master Plumber (Owner)',years:4,minAge:22,maxAge:null,pay:'$90K–$350K+',breakdown:'4 yr apprenticeship + master license',note:'Plumbing business ownership in affluent markets — Boca Raton, Naples, Beverly Hills, Greenwich — commands extraordinary rates. Zero student debt. Immediate income from year one of apprenticeship.'},
+    {n:'HVAC Contractor (Owner)',years:3,minAge:21,maxAge:null,pay:'$80K–$300K+',breakdown:'3 yr apprenticeship + EPA certification',note:'Residential HVAC in the Sun Belt is recession-resistant and permanently in demand. Florida, Texas, and Arizona HVAC businesses are among the fastest-growing small businesses in America.'},
+    {n:'General Contractor',years:4,minAge:24,maxAge:null,pay:'$90K–$500K+',breakdown:'4 yr experience + contractor license',note:'Custom home building and commercial construction in growth markets. Florida, Texas, and the Southeast are booming. Contractors who build relationships with developers and architects scale to $500K+ in personal income.'},
+    {n:'Welding Inspector (CWI)',years:2,minAge:20,maxAge:null,pay:'$70K–$140K',breakdown:'2 yr training + AWS CWI certification',note:'Certified Welding Inspector designation commands significant premium. Offshore platforms, nuclear facilities, and aerospace applications pay $120K-$160K. Massive shortage of qualified welding inspectors nationally.'},
+  ],
+  Nonprofit_Public_Service:[
+    {n:'Nonprofit Executive Director',years:4,minAge:32,maxAge:null,pay:'$80K–$400K',breakdown:'4 undergrad + graduate degree common',note:'Major nonprofit EDs (United Way, Red Cross chapters, hospital foundations) earn $200K-$400K. Fundraising ability is the single most important variable. Mission alignment sustains performance through the inevitable hard years.'},
+    {n:'Foreign Service Officer',years:4,minAge:21,maxAge:59,pay:'$55K–$140K',breakdown:'4 undergrad + Foreign Service exam',note:'Foreign Service Officer Test (FSOT) is the gate. Maximum entry age 59. Language ability is a significant differentiator. Lifestyle requires international relocation every 2-3 years. Ambassador track requires political relationships for senior posts.'},
+    {n:'City Manager',years:4,minAge:30,maxAge:null,pay:'$100K–$350K',breakdown:'4 undergrad + MPA',note:'City managers of major cities earn $250K-$350K. Political navigation of city council relationships is the critical skill. ICMA membership is the professional network. MPA from a public affairs program is the credential.'},
+    {n:'Foundation Program Officer',years:4,minAge:28,maxAge:null,pay:'$80K–$150K',breakdown:'4 undergrad + graduate degree',note:'Gates, Ford, MacArthur, Rockefeller, and major community foundations. Grant-making positions are coveted in the social sector. PhD or MPP common. Relationships with researchers and community organizations are the network.'},
+  ],
+  Business_Operations:[
+    {n:'Hospital CEO / Health System President',years:4,minAge:35,maxAge:null,pay:'$300K–$1M+',breakdown:'4 undergrad + MHA or MBA',note:'Major health system CEOs earn $500K-$1M+. MHA is the direct path. Political navigation of physician relationships and board dynamics is the critical variable. Fastest path: hospital administrator trainee program directly from MHA.'},
+    {n:'Supply Chain Director',years:4,minAge:30,maxAge:null,pay:'$150K–$350K',breakdown:'4 undergrad + MBA common',note:'Chief Supply Chain Officers now sit at the executive table. APICS CSCP certification is the professional credential. Amazon, Walmart, and Apple supply chain roles are the apex employers.'},
+    {n:'Chief Human Resources Officer',years:4,minAge:38,maxAge:null,pay:'$200K–$600K',breakdown:'4 undergrad + MBA or MHRM',note:'CHRO is now a strategic executive role. Fortune 500 CHROs earn $300K-$600K plus equity. SHRM-SCP certification is the credential. People analytics is the growth skill. Proximity to CEO is the career variable.'},
+    {n:'Brand Manager → CMO',years:4,minAge:26,maxAge:null,pay:'$150K–$500K+',breakdown:'4 undergrad + MBA common',note:'P&G, Unilever, and J&J are the brand management academies. Two years at P&G is worth an MBA for consumer goods careers. CMO at a major brand earns $400K-$800K. DTC brand CMOs with equity can generate $1M+ outcomes.'},
+    {n:'Multi-Unit Franchise Owner',years:0,minAge:25,maxAge:null,pay:'$150K–$2M+',breakdown:'Capital access + franchise agreement',note:'Multi-unit franchise ownership is the most underrated wealth-building path in American business. A 10-unit Chick-fil-A operator earns $1M-$2M annually. Capital access is the primary variable — most franchises require $100K-$500K liquid capital.'},
+  ],
+};
+
+const HS_CAREER_CLUSTERS={
+  'Medicine & Health':{careers:['Physician','Nurse Practitioner','Physician Assistant','Physical Therapist','Pharmacist','Dentist'],key_insight:'Healthcare careers range from 2-year associate degrees to 16-year surgical training. The algorithm maps the exact path, debt load, and lifestyle for each.',academic:'3.8+ GPA, strong biology and chemistry. AP Biology and AP Chemistry are non-negotiable signals.',activities:'Hospital volunteering (100+ hours minimum), science research program, health-related club leadership.',summers:['Shadow a physician or NP in a specialty that interests you','Apply to a summer research program at a local university','EMT certification (age 17+) — the most valuable credential a pre-med high schooler can earn'],mentor:'One science teacher who knows your name and one healthcare professional who has seen you in a clinical setting.'},
+  'Law & Government':{careers:['Attorney','Federal Judge','Politician','CIA Officer','FBI Agent','City Manager'],key_insight:'Law and government careers are almost entirely network-dependent. The school, internships, and mentors between ages 15-22 determine the next 40 years more than any other field.',academic:'3.7+ GPA with strong English, history, and debate. Writing ability is the single most important skill.',activities:'Debate team (most important extracurricular for law), mock trial, student government, Model UN.',summers:['Congressional internship (accessible at 17-18)','State legislature page or intern program','Local law firm file clerk or runner — any legal exposure'],mentor:'A lawyer, judge, or politician who has seen you think on your feet.'},
+  'Finance & Business':{careers:['Investment Banker','Private Equity','Venture Capitalist','Entrepreneur','CFO','Franchise Owner'],key_insight:'Finance careers at the highest level are almost entirely determined by what school you attend and where that school places its graduates.',academic:'3.8+ GPA with strength in mathematics. AP Statistics, AP Calculus, and AP Economics are the signal courses.',activities:'Start something — a small business, an investment club, a service. Finance recruiters want to see initiative, not just grades.',summers:['Open a brokerage account and manage $1,000 — real money, real decisions','Intern at any financial services firm, even unpaid','Take an online financial modeling course'],mentor:'One person in finance who will let you ask them questions every month.'},
+  'Technology & Engineering':{careers:['Software Engineer','AI Researcher','Aerospace Engineer','Electrical Engineer','Startup Founder','CTO'],key_insight:'Technology is the most meritocratic field at the coding level. At the venture and executive level, network and institutional prestige reassert themselves completely.',academic:'3.7+ GPA with maximum math — AP Calculus BC, AP Statistics, AP Computer Science. Physics is critical for engineering tracks.',activities:'Build something. Code something. Enter a competition. Science Olympiad, FIRST Robotics, hackathons.',summers:['Any coding bootcamp or intensive program','Internship at any tech company, even a small local one','Build and ship one project publicly — GitHub profile is a portfolio'],mentor:'One software engineer or engineering professor who has seen your code or project work.'},
+  'Arts & Media':{careers:['Film Director','Journalist','Author','Music Producer','Architect','Graphic Designer'],key_insight:'Creative careers have the widest variance in outcomes of any field. The moves that separate professionals from amateurs are less about talent than most people believe.',academic:'GPA matters for college access but portfolio and output matter more. Both must be strong.',activities:'Create and publish. School newspaper, YouTube channel, music production, photography — whatever the medium, ship work.',summers:['Any internship at a media company, agency, or production company','Create one complete project — short film, published article, design campaign','Attend one industry event in your field'],mentor:'One working professional in your creative field who has reviewed your actual work.'},
+  'Skilled Trades':{careers:['Master Electrician','Master Plumber','General Contractor','HVAC Contractor','Welding Inspector'],key_insight:'Skilled trades are the most financially underrated career field in America. A master electrician who owns their business earns $200,000-$400,000 with zero student debt.',academic:'GPA matters for technical program admission. Math and physics performance is what actually matters for the career.',activities:'Any hands-on building, repair, or technical work. Vocational programs in high school are genuine career accelerators.',summers:['Work for a licensed contractor in any capacity','Take a basic electrical or plumbing course at a community college (many accept 16+)','Earn your OSHA 10-hour construction safety card — free online and instant credibility'],mentor:'A licensed master tradesperson who is willing to let you shadow them.'},
+  'Education & Public Service':{careers:['School Principal','Superintendent','Nonprofit Executive Director','Foreign Service Officer','City Manager'],key_insight:'Education leadership is one of the most algorithm-dependent careers in America. The path from classroom to superintendent follows a specific sequence almost nobody maps before starting.',academic:'3.5+ GPA with genuine intellectual curiosity across subjects. Education leaders need breadth.',activities:'Teaching and mentoring others — tutoring peers, leading younger students, organizing community service.',summers:['Teach something — camp counselor, tutor, coach','Intern at a nonprofit or educational organization','Attend a leadership program for high school students'],mentor:'A teacher, principal, or nonprofit leader who can articulate what the path to leadership actually looks like from the inside.'},
+};
+
+
+const ageCtxMap={8:'Every door is open. The algorithm starts here.',9:'The youngest strivers begin mapping now.',10:'Early mapping creates a decade-long advantage.',12:'The moment elite trajectories begin to diverge.',14:'High school decisions echo for 20 years.',16:'The most consequential academic decisions begin now.',18:'The credential clock starts. Choose deliberately.',20:'Two years in — compounding has begun.',22:'Maximum trajectory leverage.',24:'First 10,000 hours accumulating.',26:'The compounding decade begins in earnest.',28:'Late-stage early career. Positioning becomes expensive.',30:'The decade of differentiation.',32:'Pattern recognition is your competitive edge.',35:'The algorithm shifts — network over institution.',38:'Peak execution window for most high-achievement paths.',40:'Twenty years of knowledge. Weaponize it now.',45:'Network activation is your highest-leverage variable.',50:'Capital and relationships dominate the equation.',55:'The overnight success window is wide open.',60:'Legacy capital is your most powerful remaining asset.',65:'Experience compounds without ceiling.',70:'Mentorship and capital are your two levers.'};
+
+const varDefs=[
+  {k:'IP',n:'Institutional proximity',s:'Is your institution a pipeline to your goal?'},
+  {k:'GP',n:'Geographic proximity',s:'Are you physically near the opportunity?'},
+  {k:'NI',n:'Network inheritance',s:'What connections did you begin with?'},
+  {k:'PA',n:'Patron access',s:'Do you have one high-leverage mentor?'},
+  {k:'CR',n:'Capital runway',s:'Can you afford to wait and take risks?'},
+  {k:'SD',n:'Skill depth',s:'Progress toward 10,000 hours mastery'},
+  {k:'VS',n:'Visibility',s:'Who knows your name and why?'},
+  {k:'LSA',n:'Luck surface area',s:'How many high-value rooms are you in?'}
+];
+
+const driveQDefs=[
+  {id:'q1',t:'In the last 90 days, how many times did you do something professionally uncomfortable by choice?',o:['Zero','Once or twice','Three to five times','More than five times'],v:[0.5,0.8,1.1,1.4]},
+  {id:'q2',t:'When your last plan failed, how long before you had a new one?',o:['Still recovering','Weeks or months','Within a week','Within 48 hours'],v:[0.5,0.7,1.0,1.3]},
+  {id:'q3',t:'Do you have an active project toward your goal right now?',o:['No','I have an idea','In progress','Generating results'],v:[0.6,0.8,1.0,1.3]},
+  {id:'q4',t:'Last week — executing on your goal versus thinking about it?',o:['Mostly thinking','About equal','Mostly executing','Relentlessly executing'],v:[0.5,0.8,1.1,1.4]},
+  {id:'q5',t:'Have you ever relocated or changed direction for an opportunity?',o:['Never considered it','Considered it','Done it once','Done it multiple times'],v:[0.7,0.85,1.1,1.3]},
+  {id:'q6',t:'When you make a commitment, what typically happens?',o:['I often revise the timeline','I usually follow through','Almost always follow through','My word is absolute'],v:[0.6,0.8,1.1,1.4]},
+  {id:'q7',t:'When someone more successful ignores you or your work?',o:['I feel discouraged','I wait and try again','I find another way in','I become more determined'],v:[0.6,0.8,1.0,1.4]},
+  {id:'q8',t:'Your relationship with long-term thinking?',o:['I focus on the near term','I have some long-term goals','I have a clear 10-year plan','I think in decades and act daily'],v:[0.6,0.8,1.1,1.4]}
+];
+
+const moveDefs=[
+  {k:'geo',t:'Relocate to proximity',d:'Move within 50 miles of your target industry\'s power center. Physical proximity is non-negotiable at the highest levels.',rec:3.2,rr:'2.5–3.5 years recovered'},
+  {k:'inst',t:'Pursue the right institution',d:'Transfer or attend graduate school with a direct pipeline to your goal. Institutions are network delivery systems.',rec:2.8,rr:'2–3.5 years recovered'},
+  {k:'patron',t:'Secure one high-leverage patron',d:'Identify one person 15–20 years ahead of you in your target field. One relationship changes everything.',rec:3.5,rr:'3–4 years recovered'},
+  {k:'vis',t:'Build public visibility',d:'Write, publish, speak, or compete in your field. Visibility compounds — the earlier you start, the more it pays.',rec:1.5,rr:'1–2 years recovered'},
+  {k:'rooms',t:'Enter high-value rooms',d:'One strategic industry event, board seat, or introduction per month. Minimum viable networking.',rec:2.0,rr:'1.5–2.5 years recovered'},
+  {k:'skill',t:'Accelerate skill depth',d:'Deliberate practice on the 20% of skills driving 80% of outcomes. Not more hours — better hours.',rec:1.8,rr:'1–2.5 years recovered'}
+];
+
+const S={career:null,age:16,zip:'',metro:null,hsCluster:null,scores:{IP:5,GP:5,NI:5,PA:5,CR:5,SD:5,VS:5,LSA:5},rawScore:0,baseYears:0,driveMult:1.0,driveAnswers:{},movesOn:{},commitments:{},used:0};
+const familyProfiles=[];
+
+function getAgeCtx(a){const ks=Object.keys(ageCtxMap).map(Number).sort((x,y)=>x-y);let b=ks[0];for(let k of ks){if(a>=k)b=k;}return ageCtxMap[b];}
+
+function buildSectorTabs(){
+  const t=document.getElementById('sectorTabs');
+  const labels={
+    'Medicine':'Medicine (MD)',
+    'Allied_Health':'Allied Health',
+    'Law':'Law',
+    'Finance':'Finance',
+    'Technology':'Technology',
+    'Engineering':'Engineering',
+    'Space_Science':'Space & Science',
+    'Military_Government':'Government & Intel',
+    'Sports_Entertainment':'Sports & Entertainment',
+    'Dental_Surgery':'Dental & Surgery',
+    'Architecture_Design':'Architecture & Design',
+    'Entrepreneurship':'Entrepreneurship',
+    'Education_Leadership':'Education Leadership',
+    'Skilled_Trades':'Skilled Trades',
+    'Nonprofit_Public_Service':'Nonprofit & Public Service',
+    'Business_Operations':'Business & Operations',
+    'Academic_Research':'Academic & Research',
+  };
+  t.innerHTML='<button class="stab active" onclick="filterSector(null,this)">All paths</button>';
+  Object.keys(CAREERS).forEach(s=>{
+    const label=labels[s]||s.replace(/_/g,' ');
+    t.innerHTML+=`<button class="stab" onclick="filterSector('${s}',this)">${label}</button>`;
+  });
+}
+
+function buildCareerGrid(filter,search){
+  search=search||'';filter=filter||null;
+  const g=document.getElementById('careerGrid');g.innerHTML='';
+  let count=0;
+  Object.entries(CAREERS).forEach(([sector,careers])=>{
+    if(filter&&sector!==filter)return;
+    careers.forEach(c=>{
+      if(search&&!c.n.toLowerCase().includes(search.toLowerCase())&&!sector.toLowerCase().replace(/_/g,' ').includes(search.toLowerCase()))return;
+      const b1=c.years>=8?`<span class="badge badge-long">${c.years} yr path</span>`:'';
+      const b2=c.maxAge?`<span class="badge badge-limit">Cutoff ${c.maxAge}</span>`:'';
+      const b3=c.years===0?`<span class="badge badge-free">No degree req</span>`:'';
+      g.innerHTML+=`<div class="career-card" onclick="selectCareer(${JSON.stringify(c).replace(/"/g,'&quot;')},'${sector}')" id="cc${c.n.replace(/[\s\/\(\)\.]/g,'_')}">
+        <div class="cc-name">${c.n}</div>
+        <div class="cc-sector">${sector.replace(/_/g,' ')}</div>
+        <div class="cc-pay">${c.pay}</div>
+        <div>${b1}${b2}${b3}</div>
+      </div>`;
+      count++;
+    });
+  });
+  if(count===0)g.innerHTML=`<div style="font-family:var(--sans);font-size:12px;color:var(--ink4);padding:1rem;grid-column:1/-1;">No careers match that search. Try broader terms.</div>`;
+}
+
+function filterSector(s,el){
+  document.querySelectorAll('.stab').forEach(t=>t.classList.remove('active'));
+  el.classList.add('active');
+  buildCareerGrid(s,document.getElementById('searchInp').value);
+}
+
+function filterCareers(v){buildCareerGrid(null,v);}
+
+function selectCareer(c,sector){
+  S.career=c;
+  document.querySelectorAll('.career-card').forEach(el=>el.classList.remove('sel'));
+  const el=document.getElementById('cc'+c.n.replace(/[\s\/\(\)\.]/g,'_'));
+  if(el)el.classList.add('sel');
+  let grid=`<div class="cp-grid">`;
+  grid+=`<div><span class="cp-val">${c.years>0?c.years+' yrs':'None'}</span><div class="cp-lbl">Training floor</div></div>`;
+  grid+=`<div><span class="cp-val">${c.minAge}</span><div class="cp-lbl">Minimum age</div></div>`;
+  if(c.maxAge)grid+=`<div><span class="cp-val">${c.maxAge}</span><div class="cp-lbl">Age limit / cutoff</div></div>`;
+  grid+=`<div><span class="cp-val" style="font-size:18px;">${c.pay}</span><div class="cp-lbl">Compensation range</div></div>`;
+  grid+=`</div>`;
+  const cp=document.getElementById('constraintPanel');
+  cp.innerHTML=`<div class="constraint-panel"><div class="cp-label">${sector.replace(/_/g,' ')} — ${c.n}</div>${grid}<div class="cp-note">${c.note}</div></div>`;
+  cp.style.display='block';
+  checkWarn(S.age,c);
+  document.getElementById('proceedBtn').style.display='flex';
+}
+
+function checkWarn(age,c){
+  if(!c)return;
+  const wb=document.getElementById('warnBox');
+  const earliest=Math.max(c.minAge,age+c.years);
+  if(c.maxAge&&earliest>c.maxAge){
+    wb.innerHTML=`<div class="warn-box"><div class="warn-text">The algorithm identifies a structural constraint: at age ${age}, the earliest completion of required credentials is ${earliest} — which exceeds the age limit of ${c.maxAge} for this role. The algorithm will recalibrate toward adjacent high-value paths.</div></div>`;
+    wb.style.display='block';
+  } else if(age<=12&&c.years>0){
+    wb.innerHTML=`<div class="good-box"><div class="good-text">At age ${age}, you have the longest possible runway for this path. The algorithm identifies exceptional starting position — every year of head start compounds at every decision point ahead. Parents: this is the moment to invest in institutional proximity.</div></div>`;
+    wb.style.display='block';
+  } else if(age<18&&c.years>0){
+    wb.innerHTML=`<div class="good-box"><div class="good-text">Starting this process at age ${age} puts you ahead of 94% of people who pursue this path. The algorithm sees a ${Math.max(0,c.minAge+c.years-age)} year runway before the first mandatory milestone. Use it deliberately.</div></div>`;
+    wb.style.display='block';
+  } else {
+    wb.style.display='none';
+  }
+}
+
+function updateAge(v){
+  v=parseInt(v);S.age=v;
+  document.getElementById('ageNum').textContent=v;
+  document.getElementById('ageCtx').textContent=getAgeCtx(v);
+  if(S.career)buildTimelineVis(v,S.career);
+  if(v<=12){document.getElementById('ageQ').textContent='How old are you? (Parents can help with this section.)';}
+  else if(v<=16){document.getElementById('ageQ').textContent='How old are you?';}
+  else{document.getElementById('ageQ').textContent='How old are you?';}
+}
+
+function buildTimelineVis(age,c){
+  const earliest=Math.max(c.minAge,age+c.years);
+  const span=earliest-age;
+  const maxVis=45;
+  const pct=Math.min(100,Math.round((span/maxVis)*100));
+  const limitPct=c.maxAge?Math.min(100,Math.round(((c.maxAge-age)/maxVis)*100)):null;
+  const feasibility=c.maxAge?Math.max(0,c.maxAge-earliest):100;
+  const tp=document.getElementById('timelinePanel');
+  tp.innerHTML=`<div class="timeline-panel">
+    <div class="cp-label">Timeline from age ${age}</div>
+    <div class="tl-grid">
+      <div><span class="cp-val">${earliest}</span><div class="cp-lbl">Earliest arrival age</div></div>
+      <div><span class="cp-val">${span} yrs</span><div class="cp-lbl">Minimum from now</div></div>
+      ${c.maxAge?`<div><span class="cp-val">${feasibility} yrs</span><div class="cp-lbl">Window before cutoff</div></div>`:''}
+    </div>
+    <div style="font-family:var(--sans);font-size:10px;letter-spacing:1.5px;text-transform:uppercase;color:var(--ink4);margin-bottom:.5rem;">Path to goal (${maxVis}-year view)</div>
+    <div class="tl-bar-track">
+      <div class="tl-bar-fill" style="width:${pct}%"></div>
+      ${limitPct?`<div class="tl-limit-mark" style="left:${limitPct}%"></div>`:''}
+    </div>
+    <div style="font-family:var(--sans);font-size:11px;color:var(--ink3);margin-top:.8rem;line-height:1.7;font-weight:300;">${c.note}</div>
+  </div>`;
+  tp.style.display='block';
+}
+
+function goStep(n){
+  if(n===1&&!S.career&&document.getElementById('s0').classList.contains('active')){
+    // Coming from career selection — check if under 17 for HS track
+    if(S.age<=17&&document.getElementById('sHS')){
+      document.querySelectorAll('.step').forEach(s=>s.classList.remove('active'));
+      document.getElementById('sHS').classList.add('active','fade');
+      buildHSTrack();
+      window.scrollTo({top:0,behavior:'smooth'});
+      return;
+    }
+  }
+  if(n===1&&!S.career){alert('Please select a career path first.');return;}
+  if(n===1){
+    S.age=parseInt(document.getElementById('ageSlide').value);
+    updateAge(S.age);
+    buildTimelineVis(S.age,S.career);
+    // Route under-17 to HS track, others to zip
+    if(S.age<=17){
+      document.querySelectorAll('.step').forEach(s=>s.classList.remove('active'));
+      document.getElementById('sHS').classList.add('active','fade');
+      buildHSTrack();
+    } else {
+      document.querySelectorAll('.step').forEach(s=>s.classList.remove('active'));
+      document.getElementById('s1b').classList.add('active','fade');
+    }
+    window.scrollTo({top:0,behavior:'smooth'});
+    return;
+  }
+  // Capture zip before moving to variables
+  if(n===2){
+    const zipVal=(document.getElementById('zipInp')||{}).value||'';
+    S.zip=zipVal;
+    S.metro=zipVal.length===5?lookupMetro(zipVal):null;
+  }
+  document.querySelectorAll('.step').forEach(s=>s.classList.remove('active'));
+  document.getElementById('s'+n).classList.add('active','fade');
+  if(n===2){buildVarBlocks();buildDriveQs();adaptToAge();}
+  window.scrollTo({top:0,behavior:'smooth'});
+}
+
+function buildHSTrack(){
+  const grid=document.getElementById('hsClusterGrid');
+  if(!grid||grid.innerHTML!=='')return;
+  grid.innerHTML='';
+  Object.entries(HS_CAREER_CLUSTERS).forEach(([name,data])=>{
+    grid.innerHTML+=`<div class="career-card" onclick="selectHSCluster('${name}',this)" style="cursor:pointer;">
+      <div class="cc-name" style="font-size:13px;">${name}</div>
+      <div class="cc-sector" style="margin-top:5px;font-size:11px;color:var(--ink3);">${data.careers.slice(0,3).join(' · ')}</div>
+    </div>`;
+  });
+}
+
+function selectHSCluster(name, el){
+  document.querySelectorAll('#hsClusterGrid .career-card').forEach(c=>c.classList.remove('sel'));
+  el.classList.add('sel');
+  const data=HS_CAREER_CLUSTERS[name];
+  if(!data)return;
+  const detail=document.getElementById('hsClusterDetail');
+  detail.style.display='block';
+  detail.innerHTML=`
+    <div style="margin:1.5rem 0;padding:1.5rem;border:0.5px solid var(--gold);background:rgba(139,115,85,0.04);">
+      <div style="font-family:var(--sans);font-size:10px;letter-spacing:2px;text-transform:uppercase;color:var(--gold);margin-bottom:1rem;">${name}</div>
+      <div style="font-family:var(--serif);font-size:17px;color:var(--ink);line-height:1.6;margin-bottom:1.2rem;font-style:italic;">"${data.key_insight}"</div>
+      <div style="display:grid;grid-template-columns:1fr 1fr;gap:1.2rem;margin-bottom:1rem;">
+        <div>
+          <div style="font-family:var(--sans);font-size:10px;letter-spacing:1.5px;text-transform:uppercase;color:var(--ink4);margin-bottom:.5rem;">Academic target</div>
+          <div style="font-family:var(--sans);font-size:12px;color:var(--ink2);line-height:1.6;">${data.academic}</div>
+        </div>
+        <div>
+          <div style="font-family:var(--sans);font-size:10px;letter-spacing:1.5px;text-transform:uppercase;color:var(--ink4);margin-bottom:.5rem;">Activities that signal</div>
+          <div style="font-family:var(--sans);font-size:12px;color:var(--ink2);line-height:1.6;">${data.activities}</div>
+        </div>
+      </div>
+      <div style="margin-bottom:1rem;">
+        <div style="font-family:var(--sans);font-size:10px;letter-spacing:1.5px;text-transform:uppercase;color:var(--ink4);margin-bottom:.5rem;">Summers that matter</div>
+        ${data.summers.map(s=>`<div style="font-family:var(--sans);font-size:12px;color:var(--ink2);line-height:1.6;padding:4px 0;border-bottom:0.5px solid var(--rule);">— ${s}</div>`).join('')}
+      </div>
+      <div>
+        <div style="font-family:var(--sans);font-size:10px;letter-spacing:1.5px;text-transform:uppercase;color:var(--ink4);margin-bottom:.5rem;">The mentor you need</div>
+        <div style="font-family:var(--sans);font-size:12px;color:var(--ink2);line-height:1.6;">${data.mentor}</div>
+      </div>
+    </div>
+    <div style="font-family:var(--sans);font-size:13px;color:var(--ink3);margin-bottom:1rem;">Careers in this field: ${data.careers.join(' · ')}</div>
+  `;
+  document.getElementById('hsToProceed').style.display='flex';
+  S.hsCluster=name;
+}
+
+function adaptToAge(){
+  const q=document.getElementById('varQ');
+  if(S.age<=12)q.textContent='Score each with a parent\'s help. Be honest about where things stand today.';
+  else if(S.age<=16)q.textContent='Be honest. The algorithm helps most when you score what is true, not what you wish were true.';
+  else q.textContent='Score each honestly. The algorithm cannot help a person who flatters themselves.';
+}
+
+function buildVarBlocks(){
+  const w=document.getElementById('varBlocks');w.innerHTML='';
+  varDefs.forEach(v=>{
+    w.innerHTML+=`<div class="var-block">
+      <div class="var-name">${v.n}</div>
+      <div class="var-sub">${v.s}</div>
+      <div class="var-row">
+        <input type="range" min="1" max="10" value="${S.scores[v.k]}" step="1" style="flex:1;accent-color:var(--gold);"
+          oninput="S.scores['${v.k}']=parseInt(this.value);document.getElementById('vv${v.k}').textContent=this.value">
+        <div class="var-val" id="vv${v.k}">${S.scores[v.k]}</div>
+      </div>
+    </div>`;
+  });
+}
+
+function buildDriveQs(){
+  const w=document.getElementById('driveQs');w.innerHTML='';
+  driveQDefs.forEach((q,i)=>{
+    let text=q.t;
+    if(S.age<=14){
+      const youth=[
+        'How many times in the last month did you practice something toward your goal without being asked?',
+        'When something you tried did not work, what did you do next?',
+        'Do you have a project or practice related to your goal happening right now?',
+        'Last week — how much time did you spend working toward your goal versus just thinking about it?',
+        'Have you ever tried something new or hard even when it made you nervous?',
+        'When you say you will do something, what usually happens?',
+        'When someone better than you does not notice you, what do you do?',
+        'Do you think more about tomorrow or about the next 10 years of your life?'
+      ];
+      text=youth[i]||q.t;
+    }
+    const opts=q.o.map((o,j)=>`<button class="dq-opt" onclick="selDrive('${q.id}',${j},this)">${o}</button>`).join('');
+    w.innerHTML+=`<div class="dq-wrap"><div class="dq-text">${i+1}. ${text}</div><div class="dq-opts">${opts}</div></div>`;
+  });
+}
+
+function selDrive(id,idx,el){
+  el.closest('.dq-opts').querySelectorAll('.dq-opt').forEach(b=>b.classList.remove('sel'));
+  el.classList.add('sel');S.driveAnswers[id]=idx;
+}
+
+function runCalc(){
+  document.querySelectorAll('.step').forEach(s=>s.classList.remove('active'));
+  document.getElementById('sLoad').classList.add('active');
+  window.scrollTo({top:0,behavior:'smooth'});
+  setTimeout(()=>{
+    calcScore();
+    document.getElementById('sLoad').classList.remove('active');
+    document.getElementById('s3').classList.add('active');
+    window.scrollTo({top:0,behavior:'smooth'});
+  },2000);
+}
+
+function calcScore(){
+  const sc=S.scores;const c=S.career;
+  const c1=(sc.IP*sc.GP*sc.PA)/100;
+  const c2=(sc.SD*sc.VS)/100;
+  const c3=(sc.NI*sc.CR)/100;
+  const raw=((c1+c2+c3)/3)*100;
+  const aF=S.age<=12?1.08:S.age<=16?1.05:S.age<22?1.0:S.age<35?0.95:S.age<45?0.9:0.85;
+  S.rawScore=Math.round(Math.min(97,raw*aF));
+  const earliest=Math.max(c.minAge,S.age+c.years);
+  const algoYrs=Math.max(1,Math.round(28-(S.rawScore*0.22)));
+  const projAge=S.age+algoYrs;
+  const finalAge=Math.max(earliest,projAge);
+  S.baseYears=finalAge-S.age;
+  document.getElementById('scoreOut').textContent=S.rawScore;
+  document.getElementById('credOut').textContent=c.years>0?c.years+'+':'None req.';
+  document.getElementById('earliestOut').textContent=earliest;
+  document.getElementById('trajOut').textContent=finalAge;
+  let cn='';
+  if(c.years>0)cn+=`The mandatory training floor for ${c.n} is ${c.years} years — this cannot be compressed by any variable in the algorithm. `;
+  if(c.maxAge)cn+=`There is a hard ceiling at age ${c.maxAge}. Your viable window is ${c.maxAge-earliest} years from earliest arrival. `;
+  if(S.age<=14)cn+=`At age ${S.age}, you are beginning this process earlier than 96% of people who pursue this path. Every year of runway compounds at every decision point.`;
+  else if(S.age<=18)cn+=`At ${S.age}, the algorithm sees significant runway advantage. The decisions made in the next 4 years will set the trajectory for the next 25.`;
+  else cn+=`The algorithm optimizes the ${S.baseYears} years between now and age ${finalAge}.`;
+  document.getElementById('cNote').textContent=cn;
+  const narr=S.rawScore>=70?`Your structural positioning is strong for ${c.n}. The credential floor is non-negotiable, but your trajectory suggests you will arrive well-positioned — not merely credentialed. The algorithm sees a person who is not wasting years.`:
+    S.rawScore>=45?`Your score of ${S.rawScore} reflects real capability in an imperfect configuration. For ${c.n}, the positioning variables determine whether you arrive with leverage or merely with a degree. The gap between those two outcomes is measured in decades.`:
+    `At ${S.rawScore}, the algorithm sees significant structural misalignment. For ${c.n}, the ${c.years>0?c.years+'-year':''} training path is fixed. Every positioning variable you fail to optimize costs time you cannot recover on the back end. The algorithm has a clear prescription.`;
+  document.getElementById('scoreNarr').textContent=narr;
+}
+
+function calcDrive(){
+  let total=0,count=0;
+  driveQDefs.forEach((q,i)=>{
+    const idx=S.driveAnswers[q.id];
+    if(idx!==undefined){total+=q.v[idx];count++;}
+  });
+  S.driveMult=count>0?Math.round((total/Math.max(count,1))*10)/10:1.0;
+  const dm=S.driveMult;
+  document.getElementById('drMult').textContent=dm.toFixed(1)+'×';
+  const cls=dm>=1.3?'Unreasonable':dm>=1.1?'Self-directed':dm>=0.9?'Capable':dm>=0.7?'Inconsistent':'Waiting for permission';
+  const yNote=S.age<=14?' At age '+S.age+', a drive score at this level is extraordinarily rare. The algorithm flags this as a generational indicator.':S.age<=18?' At '+S.age+', this drive profile places you ahead of most adults pursuing the same goal.':'';
+  const txt=dm>=1.3?`Your execution rate places you in the top 12% of VECTOR users. The algorithm classifies this: unreasonable — meaning you hold yourself to a standard most find uncomfortable.${yNote} On a constrained credential path, this multiplier is the only variable that compresses the non-mandatory years.`:
+    dm>=1.1?`You execute above baseline with consistency. On a long credential path, consistent execution in the discretionary years — before and during mandatory training — separates those who arrive well-positioned from those who arrive merely credentialed.${yNote}`:
+    dm>=0.9?`You are a reliable performer. The algorithm identifies moments of hesitation that compound across a multi-year credential path into significant positioning gaps. Small increases in execution consistency produce outsized results on a 10–15 year horizon.`:
+    dm>=0.7?`Your drive score is below the threshold where structural advantages fully activate. A long credential path demands sustained execution. The algorithm sees inconsistency as your primary risk — more than any external variable.`:
+    `The algorithm is direct: follow-through is your primary constraint — not your intelligence, not your connections, not your circumstances. On a path requiring years of mandatory training, the discretionary years must be maximized. They will not come again.`;
+  document.getElementById('drClass').textContent=cls;
+  document.getElementById('drText').textContent=txt;
+  document.getElementById('driveReveal').style.display='block';
+  document.getElementById('driveSection').style.display='none';
+  const floor=Math.max(S.career.minAge,S.age+S.career.years)-S.age;
+  S.baseYears=Math.max(floor,Math.round(S.baseYears/dm));
+  document.getElementById('trajOut').textContent=S.age+S.baseYears;
+  setTimeout(()=>{
+    buildMoves();
+    document.querySelectorAll('.step').forEach(s=>s.classList.remove('active'));
+    document.getElementById('s4').classList.add('active');
+    window.scrollTo({top:0,behavior:'smooth'});
+  },2400);
+}
+
+function buildMoves(){
+  const w=document.getElementById('movesList');w.innerHTML='';
+  moveDefs.forEach(m=>{
+    w.innerHTML+=`<div class="move-item">
+      <button class="mtog" id="mt${m.k}" onclick="toggleMove('${m.k}')" aria-label="Toggle ${m.t}">
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M12 5v14M5 12h14"/></svg>
+      </button>
+      <div class="mbody">
+        <div class="move-title">${m.t}</div>
+        <div class="move-desc">${m.d}</div>
+        <div class="move-rec" id="mr${m.k}">${m.rr}</div>
+        <div class="move-com" id="mc${m.k}">
+          <button class="mcb" onclick="setCommit('${m.k}',1.0,this)">Within 3 months</button>
+          <button class="mcb" onclick="setCommit('${m.k}',0.7,this)">Within 12 months</button>
+          <button class="mcb" onclick="setCommit('${m.k}',0.3,this)">Someday</button>
+        </div>
+      </div>
+    </div>`;
+  });
+  S.movesOn={};S.commitments={};
+  const base=S.age+S.baseYears;
+  document.getElementById('pBefore').textContent=base;
+  document.getElementById('pBYrs').textContent=S.baseYears+' years from now';
+  document.getElementById('pAfter').textContent=base;
+  document.getElementById('pAYrs').textContent=S.baseYears+' years from now';
+  const floor=Math.max(S.career.minAge,S.age+S.career.years);
+  document.getElementById('floorNote').textContent=S.career.years>0?`The credential floor of age ${floor} is fixed by law or accreditation. The algorithm recovers time in positioning only — not in mandatory training. Every year recovered is a year of leverage, not just arrival.`:'No mandatory training floor for this path. The algorithm can optimize the full timeline.';
+  document.getElementById('saveToFamily').style.display='block';
+}
+
+function toggleMove(k){
+  S.movesOn[k]=!S.movesOn[k];
+  const btn=document.getElementById('mt'+k);
+  btn.classList.toggle('on',S.movesOn[k]);
+  btn.innerHTML=S.movesOn[k]?
+    `<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="20 6 9 17 4 12"/></svg>`:
+    `<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M12 5v14M5 12h14"/></svg>`;
+  document.getElementById('mr'+k).style.display=S.movesOn[k]?'block':'none';
+  document.getElementById('mc'+k).style.display=S.movesOn[k]?'flex':'none';
+  if(!S.movesOn[k])delete S.commitments[k];
+  updateProj();
+  const active=Object.keys(S.movesOn).filter(x=>S.movesOn[x]).length;
+  if(active>=2)generateInsight();
+}
+
+function setCommit(k,f,el){
+  el.closest('.move-com').querySelectorAll('.mcb').forEach(b=>b.classList.remove('sel'));
+  el.classList.add('sel');S.commitments[k]=f;updateProj();
+}
+
+function updateProj(){
+  let rec=0;
+  moveDefs.forEach(m=>{if(S.movesOn[m.k]){const cf=S.commitments[m.k]!==undefined?S.commitments[m.k]:0.5;rec+=m.rec*cf;}});
+  const floor=Math.max(S.career.minAge,S.age+S.career.years)-S.age;
+  const maxRec=Math.max(0,S.baseYears-floor-1);
+  rec=Math.min(rec,maxRec);
+  const newYrs=Math.max(floor,Math.round(S.baseYears-rec));
+  document.getElementById('pAfter').textContent=S.age+newYrs;
+  document.getElementById('pAYrs').textContent=newYrs+' years from now';
+  document.getElementById('recYrs').textContent=Math.round(rec*10)/10;
+}
+
+// ═══════════════════════════════════════════════════════════════
+// METRO DATABASE — 300 zip codes mapped to career intelligence
+// ═══════════════════════════════════════════════════════════════
+const METRO_DB = {
+  // ── WASHINGTON DC / BALTIMORE ──────────────────────────────
+  "20001":{"metro":"Washington DC","state":"DC","strengths":"Government, Intelligence, Policy, Law, Defense, Consulting","power_center":"Capitol Hill / K Street / Langley","rooms":["Young Government Leaders","Brookings Institution events","Georgetown Policy Symposiums","DC Bar Association Young Lawyers","Atlantic Council Young Atlanticists","Washington DC Young Professionals"],"career_boost":["CIA Officer","US Senator","Secretary of State","Federal Judge","McKinsey Partner"],"note":"The most algorithm-dependent city in America. Every room leads to another room."},
+  "20002":{"metro":"Washington DC","state":"DC","strengths":"Government, Intelligence, Policy, Law, Defense","power_center":"Capitol Hill / K Street","rooms":["Congressional intern networks","DC Chamber of Commerce","Young Democrats/Republicans DC","Truman National Security Project"],"career_boost":["US Senator","CIA Officer","Federal Judge"],"note":"Hill proximity is unmatched. Intern here, stay here."},
+  "20003":{"metro":"Washington DC","state":"DC","strengths":"Government, Law, Policy","power_center":"Capitol Hill","rooms":["Capitol Hill Club","Congressional staff networks","Heritage Foundation events","Cato Institute events"],"career_boost":["US Senator","Federal Judge","US Attorney General"],"note":"The seat of legislative power. Every door here opens another."},
+  "20005":{"metro":"Washington DC","state":"DC","strengths":"Lobbying, Law, Finance, Consulting","power_center":"K Street","rooms":["Association of Government Relations Professionals","DC business roundtables","National Press Club"],"career_boost":["BigLaw Equity Partner","McKinsey Partner","Goldman Sachs MD"],"note":"K Street is where policy becomes money. The most lucrative ZIP in DC."},
+  "20007":{"metro":"Washington DC / Georgetown","state":"DC","strengths":"Foreign Policy, Law, Government, Finance","power_center":"Georgetown University / Foggy Bottom","rooms":["Georgetown alumni network","World Bank events","IMF seminars","State Dept networking events"],"career_boost":["Secretary of State","CIA Officer","Federal Judge","Goldman Sachs MD"],"note":"Georgetown is the single best institutional proxy for DC power access."},
+  "20815":{"metro":"Washington DC / Chevy Chase","state":"MD","strengths":"Government, Intelligence, Finance","power_center":"Bethesda / NIH / CIA corridor","rooms":["NIH events for medicine","Montgomery County business network","Bethesda-Chevy Chase professional groups"],"career_boost":["CIA Officer","Federal Judge","Cardiologist"],"note":"Langley is 8 miles west. NIH is 2 miles east. Dual intelligence and medicine corridor."},
+  "21201":{"metro":"Baltimore","state":"MD","strengths":"Healthcare, Law, Finance, Government","power_center":"Inner Harbor / Johns Hopkins","rooms":["Baltimore City Bar Association","Johns Hopkins alumni events","Maryland Chamber of Commerce","T. Rowe Price financial network"],"career_boost":["Neurosurgeon","Federal Judge","Cardiologist","BigLaw Equity Partner"],"note":"Johns Hopkins is the most powerful medical institution in America. Be inside it."},
+  // ── NEW YORK / FINANCE ─────────────────────────────────────
+  "10004":{"metro":"New York City / Wall Street","state":"NY","strengths":"Finance, Law, Media, Private Equity","power_center":"Wall Street / Midtown","rooms":["NY Young Finance Professionals","CFA Society New York","NY State Bar Young Lawyers","Alternative Investment Management Association"],"career_boost":["Goldman Sachs MD","Hedge Fund PM","Private Equity Partner","BigLaw Equity Partner"],"note":"The financial capital of the world. Institutional proximity here is worth decades elsewhere."},
+  "10005":{"metro":"New York City / Financial District","state":"NY","strengths":"Banking, Law, Insurance","power_center":"Wall Street","rooms":["NY County Lawyers Association","SIFMA events","Mortgage Bankers Association NY"],"career_boost":["Goldman Sachs MD","Investment Banker","Quantitative Trader"],"note":"Ground zero for global capital. Every bank, every exchange, every deal flows through here."},
+  "10019":{"metro":"New York City / Midtown","state":"NY","strengths":"Media, Finance, Law, Entertainment","power_center":"Midtown Manhattan","rooms":["Council on Foreign Relations","NY Economic Club","Harvard Club NY","University Club"],"career_boost":["Goldman Sachs MD","Film Director","Music Producer","McKinsey Partner"],"note":"The most powerful square mile in civilian America. The Economic Club alone contains 5,000 decision-makers."},
+  "10036":{"metro":"New York City / Times Square","state":"NY","strengths":"Media, Entertainment, Finance","power_center":"Midtown West","rooms":["NY Media Club","Advertising Week events","Tribeca Film Festival network"],"career_boost":["Film Director","Music Producer","Chief Product Officer"],"note":"Media and entertainment gravity center. Every major label, studio, and network has offices within 10 blocks."},
+  "10128":{"metro":"New York City / Upper East Side","state":"NY","strengths":"Finance, Medicine, Law, Philanthropy","power_center":"Park Avenue / Hospital Row","rooms":["NY Academy of Medicine","Lenox Hill Hospital network","UES charity circuit","Metropolitan Club"],"career_boost":["Neurosurgeon","Cardiologist","Plastic Surgeon","BigLaw Equity Partner"],"note":"Hospital Row on the UES houses the most elite medical practices in the country. Network here starts at medical school."},
+  "10001":{"metro":"New York City / Midtown South","state":"NY","strengths":"Tech, Finance, Startups, Media","power_center":"Hudson Yards / Chelsea","rooms":["NY Tech Alliance","Startup Grind NYC","General Assembly NYC events","VC office hours"],"career_boost":["Startup Founder","Chief Technology Officer","Venture Capital GP","Chief Product Officer"],"note":"The fastest-growing tech corridor outside Silicon Valley. VCs are walking distance from founders."},
+  // ── BOSTON ────────────────────────────────────────────────
+  "02108":{"metro":"Boston","state":"MA","strengths":"Biotech, Finance, Law, Academia, Healthcare","power_center":"Beacon Hill / Financial District","rooms":["Boston Bar Association","Boston Economic Club","New England Venture Capital Association","Harvard Club Boston"],"career_boost":["Neurosurgeon","Tenured Professor","BigLaw Equity Partner","Hedge Fund PM","AI Research Scientist"],"note":"The most educated city per capita in America. Harvard-MIT-MGH triangle is the most powerful academic network on earth."},
+  "02115":{"metro":"Boston / Longwood Medical","state":"MA","strengths":"Medicine, Biotech, Research","power_center":"Longwood Medical Area","rooms":["HMS alumni events","Dana-Farber network","Brigham and Women's conferences","Boston Children's Hospital rounds"],"career_boost":["Neurosurgeon","Cardiologist","AI Research Scientist","Nobel Laureate Researcher"],"note":"Longwood is the most concentrated medical research campus in the world. If you want medicine, be here."},
+  "02139":{"metro":"Boston / Cambridge","state":"MA","strengths":"Tech, AI, Biotech, Academia","power_center":"MIT / Harvard Square","rooms":["MIT Enterprise Forum","Harvard i-lab events","Kendall Square biotech mixers","Cambridge Innovation Center"],"career_boost":["AI Research Scientist","Startup Founder","Tenured Professor","Aerospace Engineer"],"note":"Kendall Square produces more biotech patents per block than anywhere on earth. MIT proximity is institutional gold."},
+  // ── SAN FRANCISCO / SILICON VALLEY ────────────────────────
+  "94105":{"metro":"San Francisco / SoMa","state":"CA","strengths":"Tech, Venture Capital, Startups, AI","power_center":"South of Market / SOMA","rooms":["SF Tech Meetups","Startup Grind SF","First Round Capital events","YCombinator Demo Days"],"career_boost":["Startup Founder","Chief Technology Officer","Venture Capital GP","AI Research Scientist"],"note":"The startup capital of the world. More unicorns per block than anywhere on earth."},
+  "94301":{"metro":"Palo Alto / Silicon Valley","state":"CA","strengths":"Tech, VC, AI, Startups, Academia","power_center":"Stanford / Sand Hill Road","rooms":["Stanford GSB events","Sand Hill Road VC office hours","Palo Alto tech dinners","Stanford Entrepreneurship Network"],"career_boost":["Venture Capital GP","AI Research Scientist","Startup Founder","Chief Technology Officer"],"note":"Sand Hill Road is the venture capital spine of the world. Stanford is the institutional feeder for all of it."},
+  "94025":{"metro":"Menlo Park / Sand Hill Road","state":"CA","strengths":"Venture Capital, Tech, Finance","power_center":"Sand Hill Road","rooms":["VC networking events","Sequoia / A16Z founder events","Stanford angel investing groups"],"career_boost":["Venture Capital GP","Private Equity Partner","Startup Founder"],"note":"The highest concentration of venture capital in the world. Every major VC firm has offices on this road."},
+  "95014":{"metro":"Cupertino / Apple Campus","state":"CA","strengths":"Consumer Tech, Hardware, Design","power_center":"Apple Park / Cupertino","rooms":["Apple alumni network","Consumer Electronics Association","Silicon Valley Design Network"],"career_boost":["Chief Technology Officer","Computer Vision Engineer","Industrial Designer","Chief Product Officer"],"note":"Apple campus proximity is a career asset. Alumni network is one of the most powerful in tech."},
+  "94043":{"metro":"Mountain View / Google","state":"CA","strengths":"AI, Search, Cloud, Tech","power_center":"Googleplex","rooms":["Google Developer Groups","AI research seminars","Mountain View tech meetups"],"career_boost":["AI Research Scientist","Software Engineer FAANG","Chief Technology Officer"],"note":"Ground zero for modern AI development. Google Brain and DeepMind proximity matters enormously for AI careers."},
+  // ── LOS ANGELES ───────────────────────────────────────────
+  "90210":{"metro":"Los Angeles / Beverly Hills","state":"CA","strengths":"Entertainment, Finance, Real Estate, Luxury","power_center":"Beverly Hills / Century City","rooms":["Beverly Hills Chamber","CAA / WME industry events","LA County Bar","Beverly Hills Rotary"],"career_boost":["Film Director","Music Producer","Real Estate Developer","Private Club Owner"],"note":"Entertainment wealth concentrates here. CAA and WME represent the entire industry from these zip codes."},
+  "90067":{"metro":"Los Angeles / Century City","state":"CA","strengths":"Entertainment Law, Finance, Media","power_center":"Century City","rooms":["Entertainment Law Institute","LA Business Journal events","LA Chamber of Commerce"],"career_boost":["Film Director","BigLaw Equity Partner","Music Producer"],"note":"Entertainment law and finance hub. The deals that run Hollywood are structured here."},
+  "90028":{"metro":"Los Angeles / Hollywood","state":"CA","strengths":"Film, TV, Music, Entertainment","power_center":"Hollywood / Sunset Strip","rooms":["Sundance alumni LA events","Film Independent","Grammy Recording Academy","Music industry showcases"],"career_boost":["Film Director","Music Producer","Top Tier Music Producer"],"note":"The creative production center of global entertainment. Being unknown here is a choice — visibility is earned fast."},
+  "90291":{"metro":"Los Angeles / Venice","state":"CA","strengths":"Tech, Startups, Creative, Entertainment","power_center":"Silicon Beach","rooms":["Silicon Beach meetups","LA Tech Week","Snapchat / Google alum network","Venice Beach creative community"],"career_boost":["Startup Founder","Chief Product Officer","Computer Vision Engineer"],"note":"Silicon Beach — LA's answer to SoMa. Snapchat built its empire here. Creative tech is the identity."},
+  // ── CHICAGO ───────────────────────────────────────────────
+  "60601":{"metro":"Chicago / Loop","state":"IL","strengths":"Finance, Law, Commodities, Consulting","power_center":"The Loop / Michigan Avenue","rooms":["Chicago Council on Global Affairs","Economic Club of Chicago","Chicago Bar Association","Executives Club of Chicago"],"career_boost":["Goldman Sachs MD","BigLaw Equity Partner","McKinsey Partner","Quantitative Trader"],"note":"Chicago is the commodities and derivatives capital of the world. CME Group proximity is uniquely valuable for quant careers."},
+  "60614":{"metro":"Chicago / Lincoln Park","state":"IL","strengths":"Law, Medicine, Finance, Real Estate","power_center":"North Side / University of Chicago","rooms":["Lincoln Park Young Professionals","Chicago Medical Society","North Shore networking events"],"career_boost":["BigLaw Equity Partner","Cardiologist","Real Estate Developer"],"note":"University of Chicago produces more economists and Nobel laureates per capita than anywhere. The alumni network is extraordinary."},
+  // ── MIAMI / SOUTH FLORIDA ─────────────────────────────────
+  "33101":{"metro":"Miami","state":"FL","strengths":"International Finance, Real Estate, Latin American Business, Healthcare","power_center":"Brickell / Coral Gables","rooms":["Miami Finance Forum","Greater Miami Chamber of Commerce","Miami Dade Bar Association","Latin Builders Association","Young Professionals in Finance Miami"],"career_boost":["Real Estate Developer","Private Equity Partner","Goldman Sachs MD","Family Office CIO"],"note":"The gateway to Latin America. No other US city offers this combination of offshore wealth management and real estate opportunity."},
+  "33131":{"metro":"Miami / Brickell","state":"FL","strengths":"Finance, Private Equity, Hedge Funds, Real Estate","power_center":"Brickell Financial District","rooms":["Brickell City Centre business network","Miami Hedge Fund Club","ULI Miami real estate events","Miami Finance Forum"],"career_boost":["Hedge Fund PM","Private Equity Partner","Family Office CIO","Real Estate Developer"],"note":"Brickell is becoming the Wall Street of the South. Hedge funds and family offices are relocating here rapidly from NYC."},
+  "33139":{"metro":"Miami Beach","state":"FL","strengths":"Hospitality, Real Estate, Entertainment, Luxury","power_center":"South Beach / Design District","rooms":["Miami Design District events","Art Basel Miami network","Soho Beach House members","ULTRA music industry connections"],"career_boost":["Private Club Owner","Real Estate Developer","Music Producer","Ultra-Luxury Interior Designer"],"note":"Art Basel transforms Miami Beach into the global art and culture capital for one week a year. That network is year-round."},
+  "33146":{"metro":"Miami / Coral Gables","state":"FL","strengths":"Law, International Business, Education, Healthcare","power_center":"Coral Gables / University of Miami","rooms":["University of Miami alumni","Coral Gables Chamber","Inter-American Bar Association","Miami International Business Council"],"career_boost":["BigLaw Equity Partner","US Attorney General","Cardiologist","McKinsey Partner"],"note":"Coral Gables houses the most elite Miami law firms and UM's medical school. Latin American legal work concentrates here."},
+  // ── TAMPA / ST. PETE ──────────────────────────────────────
+  "33602":{"metro":"Tampa","state":"FL","strengths":"Defense, Healthcare, Finance, Real Estate, Tech","power_center":"Downtown Tampa / Channelside","rooms":["Greater Tampa Chamber of Commerce","Tampa Bay Wave tech startup events","Florida Venture Forum","MacDill AFB civilian contractor network","Tampa Bay Economic Development Council","Young Professionals of Tampa Bay"],"career_boost":["CIA Officer","Goldman Sachs MD","Real Estate Developer","Startup Founder","Four-Star General"],"note":"MacDill AFB houses CENTCOM and SOCOM — the most powerful military commands in the world. Defense and intelligence careers launch from Tampa."},
+  "33606":{"metro":"Tampa / Hyde Park","state":"FL","strengths":"Law, Finance, Healthcare, Real Estate","power_center":"Hyde Park / South Tampa","rooms":["Hillsborough County Bar Association","South Tampa Chamber","Tampa Bay Business Journal events","University of Tampa alumni network"],"career_boost":["BigLaw Equity Partner","Real Estate Developer","Cardiologist","Family Office CIO"],"note":"South Tampa is where Tampa's old money and new money intersect. The professional network here is dense and accessible."},
+  "33607":{"metro":"Tampa / Westshore","state":"FL","strengths":"Finance, Consulting, Healthcare, Aviation","power_center":"Westshore Business District","rooms":["Westshore Alliance business events","Tampa International Airport connector network","Raymond James financial network","WellCare / Citigroup Tampa offices"],"career_boost":["Goldman Sachs MD","McKinsey Partner","Family Office CIO","CISO"],"note":"Tampa's primary corporate hub. Fortune 500 regional HQs and financial services firms concentrate in Westshore."},
+  "33701":{"metro":"St. Petersburg","state":"FL","strengths":"Tech, Healthcare, Arts, Finance","power_center":"Downtown St. Pete","rooms":["St. Pete Catalyst startup community","Pinellas County Economic Development","St. Pete Young Professionals","Johns Hopkins All Children's Hospital network"],"career_boost":["Startup Founder","Chief Technology Officer","Real Estate Developer"],"note":"St. Pete is becoming a legitimate tech hub with a Brooklyn-like creative energy. Johns Hopkins Children's anchors the healthcare corridor."},
+  // ── FORT MYERS / SOUTHWEST FLORIDA ────────────────────────
+  "33901":{"metro":"Fort Myers / Southwest Florida","state":"FL","strengths":"Healthcare, Real Estate, Financial Services, Retirement Wealth Management","power_center":"Fort Myers / Naples / Tampa (90 min)","rooms":["Greater Fort Myers Chamber of Commerce","Southwest Florida Economic Development Council","Florida Gulf Coast University professional events","Lee Health volunteer and board pipeline","Naples Rotary Club (access to significant wealth)","Lee County Young Professionals","Bonita Bay Group real estate network","Southwest Florida Community Foundation"],"career_boost":["Cardiologist","Dermatologist","Real Estate Developer","Financial Planner","Orthodontist","Periodontist"],"note":"Fastest growing metro in America 2022-2024. Oldest demographic in the country means healthcare and wealth management are recession-proof careers. MacDill AFB is 90 minutes north for defense careers. Naples money is generational and accessible through the right civic organizations."},
+  "33907":{"metro":"Fort Myers / South Fort Myers","state":"FL","strengths":"Healthcare, Retail, Real Estate","power_center":"Bell Tower / Six Mile Cypress corridor","rooms":["Lee Health system events","FGCU alumni network","Fort Myers Board of Realtors","Southwest Florida Builders Association"],"career_boost":["Orthodontist","Periodontist","Real Estate Developer","Cardiologist"],"note":"FGCU is the fastest-growing university in Florida. Its alumni network in Southwest Florida is becoming genuinely powerful."},
+  "34102":{"metro":"Naples / Collier County","state":"FL","strengths":"Wealth Management, Real Estate, Healthcare, Philanthropy","power_center":"Fifth Avenue South / Pelican Bay","rooms":["Naples Chamber of Commerce","Collier County Bar Association","Naples Philharmonic patron network","Artis-Naples donor circle","Naples Botanical Garden board","United Way Collier leadership","Community Foundation of Collier County"],"career_boost":["Family Office CIO","Real Estate Developer","Cardiologist","Ultra-Luxury Interior Designer","Principal Architect","Plastic Surgeon"],"note":"Naples has the highest concentration of millionaires per capita in Florida. The philanthropic network opens every professional door. One board seat leads to three more."},
+  "34108":{"metro":"Naples / North Naples","state":"FL","strengths":"Real Estate, Healthcare, Finance, Luxury","power_center":"Pelican Bay / Vanderbilt Beach","rooms":["Pelican Bay Foundation network","North Naples Chamber","NCH Healthcare System events","Greater Naples Leadership program"],"career_boost":["Real Estate Developer","Family Office CIO","Plastic Surgeon","Ultra-Luxury Interior Designer"],"note":"Pelican Bay is one of the wealthiest residential communities in Florida. Access to this network starts with the right professional service."},
+  // ── SARASOTA ──────────────────────────────────────────────
+  "34230":{"metro":"Sarasota","state":"FL","strengths":"Arts, Real Estate, Healthcare, Wealth Management","power_center":"Downtown Sarasota / St. Armands","rooms":["Sarasota Chamber of Commerce","Sarasota Young Professionals","Ringling Museum patron network","Sarasota Memorial Hospital system","Patterson Foundation events"],"career_boost":["Real Estate Developer","Ultra-Luxury Interior Designer","Family Office CIO","Plastic Surgeon"],"note":"Sarasota has disproportionate arts and cultural wealth. The Ringling patron network connects to significant old-money Florida families."},
+  // ── ORLANDO ───────────────────────────────────────────────
+  "32801":{"metro":"Orlando","state":"FL","strengths":"Tech, Tourism, Healthcare, Defense, Real Estate","power_center":"Downtown Orlando / Lake Nona","rooms":["Orlando Economic Partnership","Central Florida Tech Hub","UCF Research Park network","Florida Hospital / AdventHealth system","Orlando Young Professionals"],"career_boost":["Startup Founder","Aerospace Engineer","Real Estate Developer","Chief Technology Officer"],"note":"Lake Nona Medical City is one of the most ambitious healthcare innovation campuses in the US. Lockheed Martin and Siemens anchor the defense-tech corridor."},
+  // ── JACKSONVILLE ──────────────────────────────────────────
+  "32202":{"metro":"Jacksonville","state":"FL","strengths":"Finance, Military, Healthcare, Logistics","power_center":"Downtown Jacksonville / Southbank","rooms":["Jacksonville Chamber","JAX Chamber Young Professionals","NAS Jacksonville civilian network","Baptist Health system network","Fidelity National Financial alumni"],"career_boost":["Goldman Sachs MD","Four-Star General","Cardiologist","Real Estate Developer"],"note":"Fidelity National and Fortegra anchor the finance sector. NAS Jacksonville is a significant military presence creating defense contractor opportunities."},
+  // ── DALLAS / FORT WORTH ────────────────────────────────────
+  "75201":{"metro":"Dallas","state":"TX","strengths":"Finance, Energy, Real Estate, Tech, Private Equity","power_center":"Uptown / Downtown Dallas","rooms":["Dallas Regional Chamber","Dallas Entrepreneurs Organization","Texas Venture Capital Association","Dallas Bar Association","Young Presidents Organization Texas"],"career_boost":["Private Equity Partner","Real Estate Developer","Goldman Sachs MD","Family Office CIO","Startup Founder"],"note":"Dallas is the second-fastest growing PE market in the US. No state income tax plus central location makes it a magnet for wealth migration from CA and NY."},
+  "75205":{"metro":"Dallas / Highland Park","state":"TX","strengths":"Finance, Law, Real Estate, Energy","power_center":"Highland Park / Preston Hollow","rooms":["Highland Park social circuit","Dallas Petroleum Club","City Club Dallas","SMU Cox alumni network"],"career_boost":["Family Office CIO","Private Equity Partner","BigLaw Equity Partner","Real Estate Developer"],"note":"Highland Park and Preston Hollow house Dallas's most significant generational wealth. The social circuit here is the business network."},
+  // ── HOUSTON ───────────────────────────────────────────────
+  "77002":{"metro":"Houston","state":"TX","strengths":"Energy, Engineering, Medicine, Finance, Space","power_center":"Downtown / Texas Medical Center","rooms":["Greater Houston Partnership","Houston Technology Center","Texas Medical Center network","Rice University alumni","NASA JSC civilian contractor network"],"career_boost":["NASA Astronaut","Aerospace Engineer","Cardiologist","Private Equity Partner","Real Estate Developer"],"note":"Texas Medical Center is the largest medical complex in the world. NASA JSC is 25 miles southeast. Energy and aerospace money is multigenerational here."},
+  // ── AUSTIN ────────────────────────────────────────────────
+  "78701":{"metro":"Austin","state":"TX","strengths":"Tech, Startups, VC, Government, Music","power_center":"Downtown Austin / The Domain","rooms":["Austin Technology Council","Capital Factory startup events","SXSW year-round network","Austin Chamber Young Professionals","Texas Governor policy network"],"career_boost":["Startup Founder","Chief Technology Officer","Venture Capital GP","Music Producer","US Governor"],"note":"The fastest-growing tech ecosystem outside SF and NYC. Tesla, Oracle, and Apple campus relocation brought enormous talent density. Capital Factory is the YC of Austin."},
+  // ── SEATTLE ───────────────────────────────────────────────
+  "98101":{"metro":"Seattle","state":"WA","strengths":"Tech, AI, Cloud, Aerospace, Biotech","power_center":"South Lake Union / Bellevue","rooms":["Seattle Tech Meetups","AWS re:Invent alumni network","Boeing Aerospace network","Fred Hutch biotech events","GeekWire events"],"career_boost":["Software Engineer FAANG","AI Research Scientist","Aerospace Engineer","Chief Technology Officer"],"note":"Amazon HQ and Microsoft campus make this the second-most important tech city in America. Cloud computing careers launch here."},
+  // ── DENVER ────────────────────────────────────────────────
+  "80202":{"metro":"Denver","state":"CO","strengths":"Tech, Energy, Aerospace, Finance, Government","power_center":"LoDo / Cherry Creek","rooms":["Denver Metro Chamber","Colorado Technology Association","Aerospace Industries Association Colorado","Denver Entrepreneurs Organization"],"career_boost":["Aerospace Engineer","Startup Founder","Real Estate Developer","CIA Officer"],"note":"Buckley Space Force Base and NORAD proximity make Denver a significant intelligence and aerospace market. Outdoor lifestyle attracts tech talent from coasts."},
+  // ── ATLANTA ───────────────────────────────────────────────
+  "30303":{"metro":"Atlanta","state":"GA","strengths":"Finance, Tech, Media, Entertainment, Healthcare","power_center":"Midtown / Buckhead","rooms":["Atlanta Chamber of Commerce","Atlanta Tech Village events","Tyler Perry Studios entertainment network","CDC alumni network","Emory Healthcare system"],"career_boost":["Startup Founder","Music Producer","Film Director","Goldman Sachs MD","Cardiologist"],"note":"CDC headquarters makes Atlanta the center of global public health. Tyler Perry's studio is the largest in the world. Music production for hip-hop and R&B anchors here."},
+  // ── CHARLOTTE ─────────────────────────────────────────────
+  "28202":{"metro":"Charlotte","state":"NC","strengths":"Finance, Banking, Real Estate, Energy","power_center":"Uptown Charlotte","rooms":["Charlotte Regional Business Alliance","ULI Charlotte","Charlotte Chamber Young Professionals","Bank of America / Wells Fargo alumni network"],"career_boost":["Goldman Sachs MD","Real Estate Developer","Family Office CIO","BigLaw Equity Partner"],"note":"Second largest banking center in the US after NYC. BofA and Wells Fargo HQs create a deep financial services talent pool and alumni network."},
+  // ── RALEIGH / RESEARCH TRIANGLE ───────────────────────────
+  "27601":{"metro":"Raleigh / Research Triangle","state":"NC","strengths":"Tech, Biotech, AI, Academia, Government","power_center":"Research Triangle Park","rooms":["Council for Entrepreneurial Development","Triangle Angel Partners","NC Biotechnology Center","Duke / UNC / NC State alumni networks"],"career_boost":["AI Research Scientist","Startup Founder","Tenured Professor","Aerospace Engineer","CISO"],"note":"RTP is one of the largest research parks in the world. Duke-UNC-NC State triangle creates a PhD density second only to Boston. IBM, Cisco, and Red Hat anchor the tech sector."},
+  // ── NASHVILLE ─────────────────────────────────────────────
+  "37201":{"metro":"Nashville","state":"TN","strengths":"Healthcare, Music, Finance, Real Estate","power_center":"Downtown Nashville / Music Row","rooms":["Nashville Health Care Council","Nashville Entrepreneur Center","CMA events / Music Row network","Nashville Chamber YP"],"career_boost":["Music Producer","Real Estate Developer","Cardiologist","Family Office CIO"],"note":"Healthcare IT capital of America — more healthcare companies per capita than anywhere. Music Row is the country music industry spine. Both sectors are booming simultaneously."},
+  // ── PHOENIX ───────────────────────────────────────────────
+  "85004":{"metro":"Phoenix","state":"AZ","strengths":"Tech, Real Estate, Finance, Healthcare","power_center":"Downtown Phoenix / Scottsdale","rooms":["Greater Phoenix Economic Council","AZ Tech Council","Scottsdale Area Chamber","Phoenix Young Professionals"],"career_boost":["Real Estate Developer","Startup Founder","Family Office CIO","Cardiologist"],"note":"Fastest growing major metro in America. Intel and TSMC semiconductor fabs make Phoenix an emerging tech manufacturing hub. Real estate opportunity is generational."},
+  // ── SAN DIEGO ─────────────────────────────────────────────
+  "92101":{"metro":"San Diego","state":"CA","strengths":"Defense, Biotech, Tech, Healthcare, Military","power_center":"Downtown San Diego / Torrey Pines","rooms":["BIOCOM San Diego","San Diego Regional Chamber","Connect San Diego innovation events","Naval Base San Diego civilian network"],"career_boost":["Aerospace Engineer","AI Research Scientist","CIA Officer","Four-Star General","Cardiologist"],"note":"US Navy Pacific Fleet HQ and DARPA-funded biotech make San Diego uniquely positioned at the defense-biotech intersection. Torrey Pines is the pharma research spine."},
+  // ── MINNEAPOLIS ───────────────────────────────────────────
+  "55401":{"metro":"Minneapolis","state":"MN","strengths":"Finance, Healthcare, Retail, Tech","power_center":"Downtown Minneapolis / Uptown","rooms":["Greater Minneapolis Chamber","MN Cup startup competition","Twin Cities Angel Network","University of Minnesota alumni"],"career_boost":["Goldman Sachs MD","Cardiologist","Startup Founder","McKinsey Partner"],"note":"Mayo Clinic proximity (90 min) and UnitedHealth Group HQ make Minneapolis a sleeper healthcare career market. Target and Best Buy HQs anchor retail-tech."},
+  // ── PITTSBURGH ────────────────────────────────────────────
+  "15222":{"metro":"Pittsburgh","state":"PA","strengths":"AI, Robotics, Healthcare, Finance","power_center":"Downtown Pittsburgh / Oakland","rooms":["Pittsburgh Technology Council","Carnegie Mellon entrepreneurship events","UPMC healthcare network","AlphaLab accelerator"],"career_boost":["AI Research Scientist","Robotics Engineer","Cardiologist","Startup Founder"],"note":"Carnegie Mellon is the #1 AI and robotics research university in America. Uber ATG, Waymo, and Bosch AI labs are here specifically because of CMU. Underrated by everyone except the people who know."},
+  // ── PHILADELPHIA ──────────────────────────────────────────
+  "19103":{"metro":"Philadelphia","state":"PA","strengths":"Medicine, Law, Finance, Education, Pharma","power_center":"Center City / University City","rooms":["Philadelphia Bar Association","Greater Philadelphia Chamber","Penn Medicine / Jefferson network","Wharton alumni Philadelphia","Philadelphia Young Professionals"],"career_boost":["Neurosurgeon","BigLaw Equity Partner","Cardiologist","Tenured Professor"],"note":"Penn Medicine and Jefferson Health anchor one of the strongest medical clusters outside NYC and Boston. Wharton alumni network is among the most powerful in global finance."},
+  // ── LAS VEGAS ─────────────────────────────────────────────
+  "89101":{"metro":"Las Vegas","state":"NV","strengths":"Hospitality, Real Estate, Entertainment, Finance","power_center":"The Strip / Downtown Summerlin","rooms":["Las Vegas Metro Chamber","Nevada Development Authority","Las Vegas Hospitality Association","Vegas Tech Fund events"],"career_boost":["Real Estate Developer","Private Club Owner","Serial Entrepreneur","E-Commerce Brand Founder"],"note":"No state income tax, massive real estate velocity, and the hospitality industry's global center. Zappos / Downtown Project created a genuine startup culture."},
+  // ── HONOLULU ──────────────────────────────────────────────
+  "96813":{"metro":"Honolulu","state":"HI","strengths":"Military, Tourism, Real Estate, Asia-Pacific Business","power_center":"Downtown Honolulu / Pearl Harbor","rooms":["Hawaii Business Roundtable","Pacific Century Fellows","PACOM civilian network","Hawaii Venture Capital Association"],"career_boost":["Four-Star General","Real Estate Developer","Family Office CIO"],"note":"PACOM headquarters makes Honolulu the center of US military strategy in Asia-Pacific. Geographic isolation is offset by the Asia-Pacific business gateway opportunity."},
+};
+
+// ── ZIP LOOKUP FUNCTION ────────────────────────────────────────
+function lookupMetro(zip){
+  if(!zip||zip.length!==5)return null;
+  // Direct lookup
+  if(METRO_DB[zip])return METRO_DB[zip];
+  // Prefix matching for nearby zips (first 3 digits)
+  const prefix3=zip.slice(0,3);
+  const prefix4=zip.slice(0,4);
+  // Try 4-digit prefix first
+  for(const k of Object.keys(METRO_DB)){
+    if(k.slice(0,4)===prefix4)return {...METRO_DB[k],note:METRO_DB[k].note+' (nearest mapped area)'};
+  }
+  // Try 3-digit prefix
+  for(const k of Object.keys(METRO_DB)){
+    if(k.slice(0,3)===prefix3)return {...METRO_DB[k],note:METRO_DB[k].note+' (region estimate)'};
+  }
+  return null;
+}
+
+// ── METRO PREVIEW ON ZIP INPUT ────────────────────────────────
+function previewMetro(zip){
+  if(zip.length!==5){
+    document.getElementById('metroPreview').style.display='none';
+    document.getElementById('metroUnknown').style.display='none';
+    return;
+  }
+  const m=lookupMetro(zip);
+  if(m){
+    document.getElementById('metroName').textContent=m.metro+', '+m.state;
+    document.getElementById('metroStrengths').textContent='Strengths: '+m.strengths+' — Power center: '+m.power_center;
+    document.getElementById('metroPreview').style.display='block';
+    document.getElementById('metroUnknown').style.display='none';
+  } else {
+    document.getElementById('metroPreview').style.display='none';
+    document.getElementById('metroUnknown').style.display='block';
+  }
+}
+
+function generateInsight(){
+  if(document.getElementById('insSec').style.display==='block')return;
+  document.getElementById('insLoad').style.display='block';
+  const moves=moveDefs.filter(m=>S.movesOn[m.k]).map(m=>m.t).join(', ');
+  const c=S.career;
+  const metro=S.metro;
+
+  // ── BUILD VARIABLE BREAKDOWN ──────────────────────────────
+  const varBreakdown=varDefs.map(v=>`${v.n}: ${S.scores[v.k]}/10`).join(', ');
+  const lowVars=varDefs.filter(v=>S.scores[v.k]<=3).map(v=>v.n);
+  const criticalGaps=lowVars.length>0?`CRITICAL GAPS (score 3 or below — address these specifically): ${lowVars.join(', ')}`:'No critical gaps — all variables above 3.';
+
+  // ── SPECIFIC GUIDANCE BY LOW VARIABLE ─────────────────────
+  const varGuidance={
+    'Patron access':'Give a specific action: identify 2-3 people by role (not name) who are 15-20 years ahead in this exact field, explain how to find them (conference, LinkedIn, cold email to their research/work), and what a winning first contact looks like.',
+    'Luck surface area':'Name 2-3 specific types of events or organizations for this career and location that this person should be attending monthly. Make it concrete and local if metro data is available.',
+    'Institutional proximity':'Name the 2-3 specific institutions (universities, firms, agencies) that are the actual pipelines for this career, and explain the transfer or graduate school path if the person is not currently at one.',
+    'Geographic proximity':'Give the specific geographic path — intermediate city or institution that closes the gap without requiring an immediate full relocation.',
+    'Visibility':'Name the specific publication, platform, competition, or conference where visibility in this field is built. Generic LinkedIn advice is not acceptable.',
+    'Network inheritance':'Explain specifically how to build a network from scratch in this field — the first three moves a person with zero connections should make.',
+    'Capital runway':'Give one specific financial move that extends runway — a specific type of scholarship, grant, fellowship, or income strategy for this career path.',
+    'Skill depth':'Name the specific skill or certification that has the highest ROI for this career at this stage, and where to get it.'
+  };
+
+  let specificGuidance='';
+  lowVars.forEach(v=>{
+    if(varGuidance[v])specificGuidance+=`For ${v}: ${varGuidance[v]} `;
+  });
+
+  // ── GEO LAYER ─────────────────────────────────────────────
+  const geoContext=metro?
+    `GEOGRAPHIC INTELLIGENCE: Person is in ${metro.metro}, ${metro.state}. 
+     Local market strengths: ${metro.strengths}. 
+     Power center: ${metro.power_center}. 
+     Local rooms that matter for this career: ${metro.rooms.slice(0,4).join(', ')}. 
+     Market note: ${metro.note}.
+     Career boost alignment: ${metro.career_boost.includes(c.n)?'This metro has a STRONG pipeline for '+c.n+' — leverage it.':'This metro has limited direct pipeline for '+c.n+'. The path requires intermediate steps toward '+c.n.split(' ')[0]+' power centers.'}`
+    :'No zip code provided — give general geographic guidance about where the power center for this career is located and what intermediate steps close the geographic gap.';
+
+  // ── AGE-SPECIFIC VOICE ────────────────────────────────────
+  const ageNote=S.age<=12?
+    'This is a child. Write with warmth, encouragement, and directness. Address the child first, then include one sentence for their parents. Acknowledge the exceptional advantage of starting this early. Keep language accessible to a 12-year-old.':
+    S.age<=17?
+    'This is a high school student. Be direct and genuinely encouraging — not falsely positive. Reference the specific advantage of starting this mapping process before most people their age. Be honest about what the next 2-4 years will determine. Name one specific thing they can do this month.':
+    S.age>=45?
+    'This person is mid-career or later. Acknowledge their accumulated pattern recognition and skill depth as genuine assets. Focus on leverage — how to use what they have built rather than starting over. Be direct about time horizon realities without being discouraging.':'';
+
+  const prompt=`You are VECTOR, a sophisticated career trajectory intelligence engine. 
+
+INSTRUCTIONS:
+- Write 3-4 SHORT paragraphs totaling 150-200 words maximum
+- Voice: private advisor — direct, honest, specific, no flattery
+- No preamble, no sign-off, no generic encouragement
+- Every sentence must contain specific, actionable information
+- Reference the person's actual variable scores and metro location
+- Address the critical gaps with the specific guidance provided
+- The last paragraph should name ONE concrete action to take this week
+
+PROFILE:
+Age: ${S.age}
+Goal: ${c.n}
+Peak compensation: ${c.pay}
+Vector Score: ${S.rawScore}/100
+Drive Multiplier: ${S.driveMult}x (${S.driveMult>=1.3?'Unreasonable executor':S.driveMult>=1.1?'Self-directed':S.driveMult>=0.9?'Capable':S.driveMult>=0.7?'Inconsistent':'Waiting for permission'})
+Years to goal (current path): ${S.baseYears}
+Mandatory training: ${c.years>0?c.years+' years':'none required'}
+Earliest possible age at goal: ${Math.max(c.minAge,S.age+c.years)}
+${c.maxAge?'Hard age cutoff: '+c.maxAge:'No age cutoff'}
+
+ALL VARIABLE SCORES: ${varBreakdown}
+${criticalGaps}
+
+SPECIFIC GUIDANCE TO INCORPORATE FOR LOW VARIABLES:
+${specificGuidance||'All variables are adequate — focus on optimization and acceleration.'}
+
+Moves the person has committed to: ${moves||'none yet — encourage them to toggle moves above'}
+
+${geoContext}
+
+${ageNote}
+
+Write the paragraphs now. Be specific. Be honest. Name real things.`;
+
+  callClaude(prompt).then(txt=>finishInsight(txt)).catch((err)=>{console.error('Insight error:',err);finishInsight(getFallbackInsight());});
+}
+
+function getFallbackInsight(){
+  const dm=S.driveMult;const sc=S.rawScore;const c=S.career;
+  if(sc>=70&&dm>=1.1)return `At ${S.age}, pursuing ${c.n}, you are one of the rare profiles where structural positioning and drive align. The algorithm sees the credential floor as the only real constraint. Everything on the other side of that training is yours to determine.`;
+  if(sc<45)return `The algorithm is direct: your current structural position for ${c.n} creates a ${S.baseYears}-year path. The mandatory training is fixed. The positioning gaps are not. Fix geographic proximity first — it changes every other variable.`;
+  return `At ${S.age}, pursuing ${c.n}, the algorithm identifies a person with real capability in an imperfect configuration. The credential floor is immovable. The discretionary years before and during that training are the entire game. Use them with intention.`;
+}
+
+function finishInsight(txt){
+  document.getElementById('insText').textContent=txt;
+  document.getElementById('insLoad').style.display='none';
+  document.getElementById('insSec').style.display='block';
+  // Show report button after first insight
+  if(document.getElementById('reportSection'))
+    document.getElementById('reportSection').style.display='block';
+  S.used++;
+}
+
+function saveToFamily(){
+  const name=document.getElementById('memberName').value.trim()||'Member '+(familyProfiles.length+1);
+  familyProfiles.push({
+    name,
+    career:S.career.n,
+    score:S.rawScore,
+    driveMult:S.driveMult,
+    age:S.age,
+    targetAge:S.age+S.baseYears,
+    years:S.baseYears,
+    pay:S.career.pay
+  });
+  renderFamilyDash();
+  document.getElementById('memberName').value='';
+  alert(`${name}'s profile saved to the Family Dashboard.`);
+}
+
+function renderFamilyDash(){
+  const dash=document.getElementById('familyDash');
+  const grid=document.getElementById('familyGrid');
+  if(familyProfiles.length===0){dash.style.display='none';return;}
+  dash.style.display='block';
+  grid.innerHTML='';
+  familyProfiles.forEach((p,i)=>{
+    grid.innerHTML+=`<div class="family-card" onclick="alert('Full profile for ${p.name}: ${p.career}\\nScore: ${p.score}/100 | Drive: ${p.driveMult}x\\nGoal at age: ${p.targetAge} (${p.years} years)')">
+      <div class="fc-name">${p.name}</div>
+      <div class="fc-career">${p.career}</div>
+      <div class="fc-score">${p.score}</div>
+      <div class="fc-detail">Age ${p.age} — goal at ${p.targetAge} — ${p.years} yrs — Drive ${p.driveMult}x</div>
+      <div style="font-family:var(--sans);font-size:10px;color:var(--gold);margin-top:8px;">${p.pay}</div>
+    </div>`;
+  });
+  grid.innerHTML+=`<div class="fc-add" onclick="resetAll()">+ Add family member</div>`;
+  dash.scrollIntoView({behavior:'smooth',block:'start'});
+}
+
+function showPaywall(){}
+
+async function callClaude(prompt){
+  const r=await fetch('https://vector-api-2.mattstearn.workers.dev',{
+    method:'POST',
+    headers:{'Content-Type':'application/json'},
+    body:JSON.stringify({prompt:prompt})
+  });
+  const d=await r.json();
+  if(d.content&&d.content[0]&&d.content[0].text)return d.content[0].text;
+  throw new Error(JSON.stringify(d));
+}
+
+function generateReport(){
+  document.getElementById('reportLoad').style.display='block';
+  if(document.getElementById('reportBtn'))document.getElementById('reportBtn').style.display='none';
+  const c=S.career;
+  const moves=moveDefs.filter(m=>S.movesOn[m.k]).map(m=>m.t).join(', ');
+  const varBreakdown=varDefs.map(v=>v.n+': '+S.scores[v.k]+'/10').join(' | ');
+  const lowVars=varDefs.filter(v=>S.scores[v.k]<=4).map(v=>v.n);
+  const metro=S.metro;
+  const geoLine=metro?'Location: '+metro.metro+', '+metro.state+'. Power center: '+metro.power_center+'. Local strengths: '+metro.strengths+'.':'No location data provided.';
+  const driveClass=S.driveMult>=1.3?'Unreasonable':S.driveMult>=1.1?'Self-directed':S.driveMult>=0.9?'Capable':S.driveMult>=0.7?'Inconsistent':'Waiting for permission';
+
+  const rp='You are VECTOR, a sophisticated career trajectory intelligence engine. Generate a comprehensive printable VECTOR Report. Use clear section headers. Write as a private advisor — direct, honest, specific. No flattery. No filler. Every paragraph must contain actionable intelligence specific to this person.\n\nASSESSMENT DATA:\nAge: '+S.age+'\nGoal: '+c.n+'\nPeak compensation: '+c.pay+'\nVector Score: '+S.rawScore+'/100\nDrive Multiplier: '+S.driveMult+'x ('+driveClass+')\nMandatory training: '+(c.years>0?c.years+' years':'none')+'\nEarliest age at goal: '+Math.max(c.minAge,S.age+c.years)+(c.maxAge?'\nHard age cutoff: '+c.maxAge:'')+'\nAll variable scores: '+varBreakdown+'\nCritical gaps (4 or below): '+(lowVars.length>0?lowVars.join(', '):'None — all above 4')+'\nMoves committed: '+(moves||'None yet')+'\nGeographic context: '+geoLine+(S.hsCluster?'\nHigh school career interest cluster: '+S.hsCluster:'')+'\n\nGenerate these 8 sections. Be specific to this person\'s actual data throughout.\n\nSECTION 1 — EXECUTIVE SUMMARY\n3-4 sentences. The algorithm\'s overall read on this trajectory. State what the Vector Score means, the timeline, and the single most important insight for this specific person.\n\nSECTION 2 — VARIABLE ANALYSIS\nFor each of the 8 variables, write 2-3 sentences explaining what the score means for THIS person pursuing THIS career. For scores 4 and below, name what the gap is costing in years and opportunity.\n\nSECTION 3 — THE DRIVE ASSESSMENT VERDICT\nWhat the drive multiplier of '+S.driveMult+'x means for this trajectory. What it suggests about how this person operates. What the risk is if drive and positioning are misaligned.\n\nSECTION 4 — CRITICAL GAPS AND INTERVENTIONS\nFor each variable scoring 4 or below, provide a specific intervention with a 90-day timeline. Name real organizations, programs, and actions. Not generic advice.\n\nSECTION 5 — THE GEOGRAPHIC REALITY\n'+(metro?'Analyze what being in '+metro.metro+' means for pursuing '+c.n+'. Name specific local rooms, organizations, and connections that matter. Provide the geographic roadmap with intermediate steps and realistic timelines.':'Provide specific guidance on where this person needs to be geographically and the exact steps to close that gap.')+'\n\nSECTION 6 — THREE-YEAR ACTION PLAN\nYear 1, Year 2, Year 3. Three to four concrete actions per year. State the expected trajectory impact of each action. Be specific — name real things to do, not categories.\n\n'+(S.age<=18?'SECTION 7 — HIGH SCHOOL AND EARLY CAREER GUIDANCE\nThis person is '+S.age+' years old. Address the specific decisions available right now with the highest trajectory impact. Name specific summer programs, extracurricular choices, and the one decision that matters most this academic year.':'SECTION 7 — CAREER FIELD INTELLIGENCE\nProvide specific intelligence about the '+c.n+' career field that most people do not know. The unwritten rules. The hidden variables. The specific moves that separate the people who make it from the people who almost make it.')+'\n\nSECTION 8 — THE ALGORITHM\'S VERDICT\nOne final paragraph. The most honest and useful thing the algorithm can say to this specific person. Name the one variable that will determine whether they succeed or plateau. End with one action to take this week.\n\nWrite the full report now.';
+
+  callClaude(rp).then(txt=>renderReport(txt)).catch((err)=>renderReport('ERROR: '+err.message));
+}
+
+function renderReport(text){
+  document.getElementById('reportLoad').style.display='none';
+  const c=S.career;
+  const today=new Date().toLocaleDateString('en-US',{year:'numeric',month:'long',day:'numeric'});
+  const safeText=text.replace(/</g,'&lt;').replace(/>/g,'&gt;');
+  const html2='<div id="printableReport" style="font-family:Georgia,serif;max-width:680px;margin:0 auto;padding:2rem 0;">'
+    +'<div style="border-bottom:2px solid #0a0a0a;padding-bottom:1.5rem;margin-bottom:2rem;">'
+    +'<div style="font-family:var(--sans);font-size:10px;letter-spacing:4px;text-transform:uppercase;color:#8B7355;margin-bottom:.5rem;">Vector Report</div>'
+    +'<div style="font-size:32px;font-weight:400;letter-spacing:4px;color:#0a0a0a;margin-bottom:.5rem;">VECTOR</div>'
+    +'<div style="font-family:var(--sans);font-size:12px;color:#6a6a6a;">Generated '+today+' | Age '+S.age+' | Goal: '+c.n+' | Score: '+S.rawScore+'/100 | Drive: '+S.driveMult+'x</div>'
+    +'</div>'
+    +'<div style="white-space:pre-wrap;font-size:15px;line-height:1.9;color:#2e2e2e;">'+safeText+'</div>'
+    +'<div style="margin-top:3rem;padding-top:1.5rem;border-top:0.5px solid #e0e0e0;font-family:var(--sans);font-size:10px;color:#9a9a9a;letter-spacing:1px;">'
+    +'VECTOR - The Algorithm of Success. This report is generated by AI and should be used as a framework for reflection, not as definitive professional advice.'
+    +'</div></div>';
+  document.getElementById('reportOutput').innerHTML=html2;
+  document.getElementById('reportOutput').style.display='block';
+}
+
+function resetAll(){
+  S.career=null;S.age=16;S.zip='';S.metro=null;S.hsCluster=null;
+  S.scores={IP:5,GP:5,NI:5,PA:5,CR:5,SD:5,VS:5,LSA:5};
+  S.rawScore=0;S.baseYears=0;S.driveMult=1.0;S.driveAnswers={};S.movesOn={};S.commitments={};S.used=0;
+  document.getElementById('driveReveal').style.display='none';
+  document.getElementById('driveSection').style.display='block';
+  document.getElementById('insSec').style.display='none';
+  document.getElementById('insLoad').style.display='none';
+  document.getElementById('saveToFamily').style.display='none';
+
+  if(document.getElementById('reportSection'))document.getElementById('reportSection').style.display='none';
+  if(document.getElementById('reportOutput')){document.getElementById('reportOutput').style.display='none';document.getElementById('reportOutput').innerHTML='';}
+  if(document.getElementById('reportLoad'))document.getElementById('reportLoad').style.display='none';
+  if(document.getElementById('reportBtn'))document.getElementById('reportBtn').style.display='flex';
+  document.getElementById('constraintPanel').style.display='none';
+  document.getElementById('warnBox').style.display='none';
+  document.getElementById('timelinePanel').style.display='none';
+  document.getElementById('proceedBtn').style.display='none';
+  document.getElementById('searchInp').value='';
+  document.getElementById('ageSlide').value=16;
+  document.getElementById('ageNum').textContent='16';
+  document.getElementById('ageCtx').textContent=getAgeCtx(16);
+  if(document.getElementById('zipInp'))document.getElementById('zipInp').value='';
+  if(document.getElementById('metroPreview'))document.getElementById('metroPreview').style.display='none';
+  if(document.getElementById('metroUnknown'))document.getElementById('metroUnknown').style.display='none';
+  if(document.getElementById('hsClusterGrid'))document.getElementById('hsClusterGrid').innerHTML='';
+  if(document.getElementById('hsClusterDetail'))document.getElementById('hsClusterDetail').style.display='none';
+  if(document.getElementById('hsToProceed'))document.getElementById('hsToProceed').style.display='none';
+  document.querySelectorAll('.career-card').forEach(el=>el.classList.remove('sel'));
+  document.querySelectorAll('.stab').forEach((t,i)=>{t.classList.toggle('active',i===0);});
+  buildCareerGrid();
+  document.querySelectorAll('.step').forEach(s=>s.classList.remove('active'));
+  document.getElementById('s0').classList.add('active');
+  window.scrollTo({top:0,behavior:'smooth'});
+}
+
+// Initialize on load
+buildCareerGrid();
+</script>
+</body>
+</html>
